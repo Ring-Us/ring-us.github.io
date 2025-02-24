@@ -31,7 +31,8 @@ export default function SignUpPage() {
   // 회원가입 API 요청
   const handleSignUp = async () => {
     if (!role || !password) {
-      console.error('❌ 필수 정보 부족:', { role, email, password });
+      console.log('❌ 필수 정보가 부족합니다.');
+      navigate('/auth/signin'); // 로그인 페이지로 이동
       return;
     }
 
@@ -52,7 +53,11 @@ export default function SignUpPage() {
       // 회원가입 성공 시 `/auth/finish`로 이동
       navigate('/auth/finish');
     } catch (error: any) {
-      console.error('❌ 회원가입 오류:', error.response?.data || error);
+      const errorMessage =
+        error.response?.data?.message ||
+        '회원가입에 실패했습니다. 다시 시도해주세요!';
+      alert(`❌ 오류 발생: ${errorMessage}`); // 오류 메시지를 alert로 표시
+      navigate('/auth/signin'); // 로그인 페이지로 이동
     }
   };
 
@@ -108,7 +113,13 @@ export default function SignUpPage() {
       {/* 뒤로 가기 버튼 */}
       <button
         className="absolute top-8 left-3 rounded-full"
-        onClick={() => setCurrentSection((prev) => Math.max(0, prev - 1))}
+        onClick={() => {
+          if (currentSection === 0) {
+            navigate('/auth/signin'); // 첫 번째 페이지에서 로그인 페이지로 이동
+          } else {
+            setCurrentSection((prev) => Math.max(0, prev - 1));
+          }
+        }}
       >
         <ArrowLeft className="w-6 h-6 text-gray-1" />
       </button>

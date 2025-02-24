@@ -1,25 +1,37 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Router } from '@/app/routes/Router';
-import SplashScreen from '@/auth/components/SplashScreen'; // 경로 수정
-import { useAuthStore } from '@/auth/store/useAuthStore';
+import SplashScreen from '@/auth/components/SplashScreen';
 
 export default function App() {
-  const { isAuthenticated, checkSession } = useAuthStore(); // ✅ 로그인 상태 확인
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function initialize() {
-      await checkSession(); // ✅ 세션 확인 (비동기)
-      console.log('✅ 현재 로그인 상태:', isAuthenticated); // ✅ 세션 확인 후 상태 출력
-
-      // ✅ checkSession 완료 후 로딩 해제
-      setTimeout(() => setIsLoading(false), 2000);
-    }
-    initialize();
+    setTimeout(() => setIsLoading(false), 2000); // SplashScreen을 2초 동안 유지
   }, []);
 
   return (
     <BrowserRouter>{isLoading ? <SplashScreen /> : <Router />}</BrowserRouter>
   );
 }
+
+// import { useState, useEffect } from 'react';
+// import { BrowserRouter } from 'react-router-dom';
+// import { Router } from '@/app/routes/Router';
+// import SplashScreen from '@/auth/components/SplashScreen';
+
+// export default function App() {
+//   const [isLoading, setIsLoading] = useState(
+//     process.env.NODE_ENV === 'development' ? false : true, // 개발 모드에서는 Splash 비활성화
+//   );
+
+//   useEffect(() => {
+//     if (process.env.NODE_ENV !== 'development') {
+//       setTimeout(() => setIsLoading(false), 2000); // 배포 환경에서는 Splash 유지
+//     }
+//   }, []);
+
+//   return (
+//     <BrowserRouter>{isLoading ? <SplashScreen /> : <Router />}</BrowserRouter>
+//   );
+// }

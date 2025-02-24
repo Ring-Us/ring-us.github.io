@@ -20,10 +20,8 @@ export default function SigninPage() {
     try {
       await login(email, password);
 
-      // 로그인 성공 상태를 localStorage에 저장
-      localStorage.setItem('loginSuccess', 'true');
-
-      navigate('/'); // 마이페이지로 이동
+      // 로그인 성공 시 `state`에 성공 메시지를 포함하여 홈페이지로 이동
+      navigate('/', { state: { loginSuccess: true } });
     } catch (error: any) {
       setErrorMessage(error.message);
     }
@@ -35,7 +33,7 @@ export default function SigninPage() {
       animate={{ y: '0%' }} // 위로 올라오는 애니메이션
       exit={{ y: '100%' }} // 닫힐 때 아래로 내려감
       transition={{ duration: 0.3, ease: 'easeOut' }} // 부드러운 애니메이션 효과
-      className="inset-0 bg-white shadow-lg flex flex-col items-center justify-center px-6 relative h-screen"
+      className="inset-0 shadow-lg flex flex-col items-center justify-center px-6 relative h-screen"
     >
       {/* 닫기(X) 버튼 추가 */}
       <button
@@ -95,10 +93,10 @@ export default function SigninPage() {
           </button>
         </div>
 
-        <div className="text-center mt-6 text-[14px] text-gray-2">
+        <div className="text-center mt-6 text-sm text-gray-2">
           아직 링어스 회원이 아니라면?{' '}
           <button
-            className="text-primary-1 font-medium hover:underline"
+            className="text-primary-1 text-sm hover:underline"
             onClick={() => navigate('/auth/signup')}
           >
             회원가입
