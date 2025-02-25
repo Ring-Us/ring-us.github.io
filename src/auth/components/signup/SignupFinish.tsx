@@ -18,7 +18,7 @@ export default function SignupFinish() {
     <div className="h-screen flex flex-col items-center justify-center px-6">
       <img
         className="w-full p-5 mb-3"
-        src="/src/assets/success.png"
+        src="/public/assets/success.png"
         alt="success"
       />
       <h1 className="text-2xl sm:text-3xl 2xl:text-3xl font-bold mb-2">
@@ -27,7 +27,7 @@ export default function SignupFinish() {
       <div className="flex items-center mb-6">
         <img
           className="mr-1 w-[55px]"
-          src="/src/assets/RINGUS.png"
+          src="/public/assets/RINGUS.png"
           alt="ringus"
         />
         <p className="text-[13px] sm:text-md text-gray-1">
