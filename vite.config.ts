@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'url';
 import path from 'path';
 export default defineConfig({
+  base: '/ring-us-frontend',
   plugins: [
     react(),
     VitePWA({
