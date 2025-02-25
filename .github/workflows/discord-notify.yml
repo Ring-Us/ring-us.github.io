@@ -1,0 +1,31 @@
+name: Discord Comment Notification
+
+on:
+  issue_comment:
+    types: [created] # 이슈에 댓글이 생성될 때 트리거
+  pull_request_review_comment:
+    types: [created] # PR 리뷰에 댓글이 생성될 때 트리거
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [[ "${{ github.event_name }}" == "issue_comment" ]]; then
+            COMMENT_URL="${{ github.event.issue.html_url }}"
+            COMMENT_BODY="${{ github.event.comment.body }}"
+            COMMENT_USER="${{ github.event.comment.user.login }}"
+          elif [[ "${{ github.event_name }}" == "pull_request_review_comment" ]]; then
+            COMMENT_URL="${{ github.event.pull_request.html_url }}"
+            COMMENT_BODY="${{ github.event.comment.body }}"
+            COMMENT_USER="${{ github.event.comment.user.login }}"
+          fi
+          curl -X POST -H "Content-Type: application/json" \
+          -d "{
+                \"content\": \"**New comment notification:**\n**URL:** <$COMMENT_URL>\n**User:** \`$COMMENT_USER\`\n**Comment:** \`$COMMENT_BODY\`\" 
+              }" \
+          $DISCORD_WEBHOOK_URL
