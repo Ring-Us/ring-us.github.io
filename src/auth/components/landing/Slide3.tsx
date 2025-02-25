@@ -15,7 +15,7 @@ const Slide3 = () => {
       {/* 이미지 영역 */}
       <div className="w-full h-auto">
         <img
-          src="/public/assets/product-image.png"
+          src="/assets/product-image.png"
           alt="Slide 1"
           className="h-auto w-full object-contain"
         />

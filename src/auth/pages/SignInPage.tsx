@@ -46,7 +46,7 @@ export default function SigninPage() {
       {/* 로고 */}
       <div className="mb-8">
         <img
-          src="/public/assets/logo.png"
+          src="/assets/logo.png"
           alt="Logo"
           className="w-[calc(25vh-20px)] h-auto"
         />

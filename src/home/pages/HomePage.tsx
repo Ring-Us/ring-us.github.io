@@ -37,7 +37,7 @@ export default function HomePage() {
       rating: 5.0,
       reviews: 235,
       successRate: '98%',
-      image: '/src/assets/thumbnail.png',
+      image: '/assets/thumbnail.png',
     },
     {
       name: '이영희',
@@ -46,7 +46,7 @@ export default function HomePage() {
       rating: 4.8,
       reviews: 180,
       successRate: '95%',
-      image: '/src/assets/thumbnail.png',
+      image: '/assets/thumbnail.png',
     },
     {
       name: '박지훈',
@@ -55,7 +55,7 @@ export default function HomePage() {
       rating: 4.9,
       reviews: 210,
       successRate: '97%',
-      image: '/src/assets/thumbnail.png',
+      image: '/assets/thumbnail.png',
     },
   ];
 
