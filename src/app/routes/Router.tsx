@@ -14,6 +14,7 @@ import MentorInfo from '@/mentorship/pages/MentorInfo';
 import MentorProfileEdit from '@/user/pages/ProfileEdit/MentorProfileEdit';
 import Mypage from '@/user/pages/Mypage';
 import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
+import PaymentPage from '@/user/pages/payment/Payment';
 
 
 export const Router = () => {
@@ -33,7 +34,9 @@ export const Router = () => {
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
         <Route path="mentoredit" element={<MentorProfileEdit />}></Route>
+        <Route path="payment" element={<PaymentPage/>}/>
       </Route>
+      
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
         <Route path="info" element={<MentorInfo />} />

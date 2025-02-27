@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'; // 애니메이션 라이브러리 추가
 import { X } from 'lucide-react'; // X 닫기 버튼 추가
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 import { SigninInput } from '@/auth/components/SigninInput';
 import { useAuthStore } from '@/auth/store/useAuthStore'; // Zustand import
 import LoginErrorModal from '@/auth/components/LoginErrorModal'; // 모달 컴포넌트 import
@@ -74,13 +74,13 @@ export default function SigninPage() {
 
         {/* 로그인 버튼 (비활성화 조건 적용) */}
         <div className="mt-6">
-          <AuthButton
+          <GlobalButton
             variant={isLoginEnabled ? 'default' : 'secondary'} // 조건 충족 시 활성화
             onClick={handleLogin}
             disabled={!isLoginEnabled} // 버튼 비활성화
           >
             로그인
-          </AuthButton>
+          </GlobalButton>
         </div>
 
         {/* 비밀번호 찾기 & 회원가입 */}

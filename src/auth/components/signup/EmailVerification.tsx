@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { sendVerificationCode, verifyCode } from '@/auth/api/emailApi';
 
@@ -155,21 +155,21 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
       {/* 버튼 */}
       <div className="absolute bottom-16 w-full flex gap-2">
         {!isCodeSent ? (
-          <AuthButton
+          <GlobalButton
             onClick={handleSendCode}
             variant={isEmailValid ? 'default' : 'secondary'}
             disabled={!isEmailValid}
           >
             인증번호 받기
-          </AuthButton>
+          </GlobalButton>
         ) : (
-          <AuthButton
+          <GlobalButton
             onClick={() => onNext(email)}
             variant={isCodeVerified ? 'default' : 'secondary'}
             disabled={!isCodeVerified}
           >
             다음으로
-          </AuthButton>
+          </GlobalButton>
         )}
       </div>
     </div>
