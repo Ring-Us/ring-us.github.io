@@ -8,7 +8,7 @@ import Slide1 from '../components/landing/Slide1';
 import Slide2 from '../components/landing/Slide2';
 import Slide3 from '../components/landing/Slide3';
 import Slide4 from '../components/landing/Slide4';
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -60,9 +60,9 @@ export default function LandingPage() {
       {/* 마지막 슬라이드에서만 "지금 시작하기" 버튼 표시 */}
       {currentSlide === 3 && (
         <div className="absolute bottom-14 left-5 right-5">
-          <AuthButton variant="default" onClick={handleFinish}>
+          <GlobalButton variant="default" onClick={handleFinish}>
             지금 시작하기
-          </AuthButton>
+          </GlobalButton>
         </div>
       )}
     </div>

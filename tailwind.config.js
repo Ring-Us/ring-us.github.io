@@ -58,9 +58,10 @@ export default {
 		authGreen: '#00943E',
 		authRed: '#E70000',
 		primary: {
-		  '1': '#310EE0',
+		  '1': '#2C0FBF',
 		  '2': '#AEA0F8',
 		  '3': '#636AE8',
+		  '4': '#310EE0',
 		},
 		paymentblue: '#F2EFFF',
 	  },

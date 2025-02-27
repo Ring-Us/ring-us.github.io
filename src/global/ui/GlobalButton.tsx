@@ -12,7 +12,7 @@ interface ButtonProps {
   disabled?: boolean; // disabled 추가
 }
 
-export function AuthButton({
+export function GlobalButton({
   variant = 'default',
   children,
   onClick,
