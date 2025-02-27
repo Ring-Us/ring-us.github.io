@@ -1,5 +1,4 @@
 import React from 'react';
-import marketingImg from '/public/assets/marketingImg.png';
 import { Search } from 'lucide-react';
 
 interface MentorshipHeaderProps {
@@ -29,7 +28,7 @@ const MentorshipHeader: React.FC<MentorshipHeaderProps> = ({
       <div className="flex items-center gap-[14px] mt-[16px]">
         <div className="text-[32px] font-bold text-primary-1">마케팅</div>
         <img
-          src={marketingImg}
+          src={'/assets/marketingImg.png'}
           alt="마케팅 이미지"
           className="w-[44px] h-[44px]"
         />
