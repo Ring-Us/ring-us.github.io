@@ -23,6 +23,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.64.1
         version: 5.64.1(react@18.3.1)
+      '@types/react-icons':
+        specifier: ^2.2.7
+        version: 2.2.7
       axios:
         specifier: ^1.7.9
         version: 1.7.9
@@ -1204,6 +1207,12 @@ packages:
     resolution: {integrity: sha512-P4t6saawp+b/dFrUr2cvkVsfvPguwsxtH6dNIYRllMsefqFzkZk5UIjzyDOv5g1dXIPdG4Sp1yCR4Z6RCUsG/Q==}
     peerDependencies:
       '@types/react': ^18.0.0
+
+  '@types/react-icon-base@2.1.6':
+    resolution: {integrity: sha512-ebbN1JjCm6RxBd3HdI1+8VCdiOI4qMjnl9DIHWJFrB/eYLF4mzIgdL34PIqCJBLY3vlwil9v6IHQvzsa8vgMsg==}
+
+  '@types/react-icons@2.2.7':
+    resolution: {integrity: sha512-qxc8xtwgDG5Ub/WILU9tZa7zxz2UZqOU4yXbBa+Xg+0LbP031NB9gvf1d/ALvHLGCsCf3WEVttNoW/wc30jn1w==}
 
   '@types/react-slick@0.23.13':
     resolution: {integrity: sha512-bNZfDhe/L8t5OQzIyhrRhBr/61pfBcWaYJoq6UDqFtv5LMwfg4NsVDD2J8N01JqdAdxLjOt66OZEp6PX+dGs/A==}
@@ -4623,6 +4632,15 @@ snapshots:
   '@types/react-dom@18.3.5(@types/react@18.3.18)':
     dependencies:
       '@types/react': 18.3.18
+
+  '@types/react-icon-base@2.1.6':
+    dependencies:
+      '@types/react': 18.3.18
+
+  '@types/react-icons@2.2.7':
+    dependencies:
+      '@types/react': 18.3.18
+      '@types/react-icon-base': 2.1.6
 
   '@types/react-slick@0.23.13':
     dependencies:
