@@ -4,7 +4,6 @@ import { RootLayout } from '@/global/layouts/RootLayout';
 import { AuthLayout } from '@/auth/layouts/AuthLayout';
 import { UserLayout } from '@/user/layouts/UserLayout';
 import { MentorshipLayout } from '@/mentorship/layouts/MentorshipLayout';
-import { UserLayout } from '@/user/layouts/UserLayout';
 
 import HomePage from '@/home/pages/HomePage';
 import LandingPage from '@/auth/pages/LandingPage';
@@ -29,11 +28,10 @@ export const Router = () => {
       </Route>
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
+        <Route path="payment" element={<PaymentPage/>}/>
+        </Route>
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList/>}/>
-      </Route>
-      <Route path="/user" element={<UserLayout />}>
-        <Route path="payment" element={<PaymentPage/>}/>
       </Route>
     </Routes>
   );

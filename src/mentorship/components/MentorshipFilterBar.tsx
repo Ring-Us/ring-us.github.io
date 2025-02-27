@@ -1,5 +1,5 @@
 import React from 'react';
-import downIcon from '/src/assets/down.png';
+import downIcon from '../../../public/assets/down.png';
 
 interface MentorshipFilterBarProps {
   selectedField: string | null;

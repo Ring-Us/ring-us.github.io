@@ -52,6 +52,8 @@ export default {
 		  '8' : '#EBEDEF',
 		  '9' : '#7F7D85',
 		  '10' :'#CECFD3',
+		  '11' : '#B9BAC0',
+		  '12' : '#F6F6F7',
 		},
 		authGreen: '#00943E',
 		authRed: '#E70000',

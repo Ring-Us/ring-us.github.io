@@ -24,11 +24,11 @@ const MentorItem: React.FC<MentorItemProps> = ({ mentor, isBookmarked, onToggleB
         <div>
           <div className="text-[16px] font-bold">{mentor.mName}</div>
           <div className="mt-[4px] text-gray-5 text-[12px]">{mentor.mcompany}</div>
-          <div className="text-gray-5 text-[12px]">{mentor.mJobDetail}</div> {/* 변수명 수정 */}
+          <div className="text-gray-5 text-[12px]">{mentor.mJobDetail}</div> 
           <div className="text-gray-5 text-[12px]">{mentor.mYear}</div>
           <div className="flex items-center justify-between gap-[22px] border border-gray-8 px-2 py-0.5 rounded-[5px] mt-[4px] h-[30px]">
             <span className="text-primary-3 text-[12px]">멘토링 횟수</span>
-            <span className="text-gray-5 text-[12px]">{mentor.respond}회</span>
+            <span className="text-gray-5 text-[12px]">{mentor.respond}회</span> {/* 변수명 수정해야함 */}
           </div>
         </div>
       </div>
