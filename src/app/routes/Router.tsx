@@ -9,7 +9,7 @@ import LandingPage from '@/auth/pages/LandingPage';
 import SignInPage from '@/auth/pages/SignInPage';
 import SignUpPage from '@/auth/pages/SignUpPage';
 import SignupFinish from '@/auth/components/signup/SignupFinish';
-import MentorList from '@/mentorship/pages/MentorshipList';
+import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
 
 export const Router = () => {
   return (

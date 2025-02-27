@@ -56,6 +56,7 @@ export default {
 		primary: {
 		  '1': '#310EE0',
 		  '2': '#AEA0F8',
+		  '3': '#636AE8',
 		},
 	  },
 	  extend: {
