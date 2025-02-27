@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { sendVerificationCode, verifyCode } from '@/auth/api/emailApi';
 

@@ -8,7 +8,7 @@ import Slide1 from '../components/landing/Slide1';
 import Slide2 from '../components/landing/Slide2';
 import Slide3 from '../components/landing/Slide3';
 import Slide4 from '../components/landing/Slide4';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 
 export default function LandingPage() {
   const navigate = useNavigate();

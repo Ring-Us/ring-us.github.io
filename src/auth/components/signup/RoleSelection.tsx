@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 
 const RoleSelection = ({
   onNext,

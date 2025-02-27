@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'; // 애니메이션 라이브러리 추가
 import { X } from 'lucide-react'; // X 닫기 버튼 추가
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 import { SigninInput } from '@/auth/components/SigninInput';
 import { useAuthStore } from '@/auth/store/useAuthStore'; // Zustand import
 import LoginErrorModal from '@/auth/components/LoginErrorModal'; // 모달 컴포넌트 import

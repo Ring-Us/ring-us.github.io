@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 import Checkbox from '@/auth/components/Checkbox';
 
 const UsagePolicy = ({
