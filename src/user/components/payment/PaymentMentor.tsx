@@ -8,7 +8,7 @@ const mentorData = {
   
   const PaymentMentor = () => {
     return (
-      <div className="mt-[12px]">
+      <div className="">
         <div className="text-[18px] mb-[8px] font-semibold">제안 멘토</div>
         <div className="border-[1px] border-gray-10 bg-paymentblue rounded-[8px] flex items-center p-[16px]">
           <img className="w-[86px] h-[86px]" src={mentorData.profileImage} alt="profile" />

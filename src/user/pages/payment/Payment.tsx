@@ -12,7 +12,7 @@ const PaymentPage = () => {
       {/* 헤더 */}
       <PaymentHeader />
       
-      <div className="flex flex-col gap-[28px] mt-[56px]">
+      <div className="flex flex-col gap-[28px] mt-[12px]">
         {/* 제안 멘토 */}
         <MentorSection />
 
