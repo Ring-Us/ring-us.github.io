@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 
 const RoleSelection = ({
   onNext,
@@ -20,7 +20,7 @@ const RoleSelection = ({
           준비된 <br /> 멋진 멘토님
         </>
       ),
-      image: '/src/assets/mentor.png',
+      image: '/assets/mentor.png',
     },
     {
       key: 'mentee',
@@ -29,7 +29,7 @@ const RoleSelection = ({
           성실한 <br /> 멘티님
         </>
       ),
-      image: '/src/assets/mentee.png',
+      image: '/assets/mentee.png',
     },
   ];
 
@@ -65,6 +65,7 @@ const RoleSelection = ({
         <AuthButton
           onClick={() => onNext(selectedRole)}
           variant={selectedRole ? 'default' : 'secondary'} // 역할이 선택되었을 때만 활성화
+          disabled={!selectedRole}
         >
           다음으로
         </AuthButton>

@@ -1,110 +1,132 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Progress } from '@/global/ui';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { authApi } from '@/auth/api/authApi'; // 회원가입 API
 import UsagePolicy from '@/auth/components/signup/UsagePolicy';
 import RoleSelection from '@/auth/components/signup/RoleSelection';
 import EmailVerification from '@/auth/components/signup/EmailVerification';
 import CreatePassword from '@/auth/components/signup/CreatePassword';
-import MentorSetup from '@/auth/components/signup/mentor/MentorSetup';
-import MenteeSetup from '@/auth/components/signup/mentee/MenteeSetup';
 
 export default function SignUpPage() {
-  const [currentSection, setCurrentSection] = useState(0); // 현재 섹션 상태
-  const [role, setRole] = useState<string | null>(null); // 역할 상태 (mentor or mentee)
-  const [mentorStep, setMentorStep] = useState(0); // MentorSetup 단계 상태
-  const [menteeStep, setMenteeStep] = useState(0); // MenteeSetup 단계 상태
+  const [currentSection, setCurrentSection] = useState(0);
+  const [role, setRole] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string | null>(null);
+  const [serviceTerms, setServiceTerms] = useState([
+    { tag: 'TERMS_OF_SERVICE', agreed: false },
+    { tag: 'PRIVACY_POLICY', agreed: false },
+    { tag: 'MARKETING_CONSENT', agreed: false },
+  ]);
+
   const navigate = useNavigate();
 
-  // 기본 섹션 정의
-  const baseSections = [
-    { component: <UsagePolicy onNext={() => setCurrentSection(1)} /> },
+  // 약관 동의 상태 업데이트
+  const updateServiceTerms = (tag: string, agreed: boolean) => {
+    setServiceTerms((prev) =>
+      prev.map((term) => (term.tag === tag ? { ...term, agreed } : term)),
+    );
+  };
+
+  // 회원가입 API 요청
+  const handleSignUp = async () => {
+    if (!role || !password) {
+      console.log('❌ 필수 정보가 부족합니다.');
+      navigate('/auth/signin'); // 로그인 페이지로 이동
+      return;
+    }
+
+    const requestData = {
+      memberType: role.toUpperCase(),
+      email,
+      password,
+      serviceTerms: serviceTerms.map((term) => ({
+        tag: term.tag.toUpperCase(),
+        agreed: Boolean(term.agreed),
+      })),
+    };
+
+    try {
+      const response = await authApi(requestData);
+      console.log('✅ 회원가입 성공:', response);
+
+      // 회원가입 성공 시 `/auth/finish`로 이동
+      navigate('/auth/finish');
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        '회원가입에 실패했습니다. 다시 시도해주세요!';
+      alert(`❌ 오류 발생: ${errorMessage}`); // 오류 메시지를 alert로 표시
+      navigate('/auth/signin'); // 로그인 페이지로 이동
+    }
+  };
+
+  // 비밀번호가 설정되면 `handleSignUp()` 실행
+  useEffect(() => {
+    if (password) {
+      handleSignUp();
+    }
+  }, [password]);
+
+  // 회원가입 단계 정의
+  const sections = [
+    {
+      component: (
+        <UsagePolicy
+          onNext={() => setCurrentSection(1)}
+          onAgree={updateServiceTerms}
+        />
+      ),
+    },
     {
       component: (
         <RoleSelection
           onNext={(selectedRole) => {
-            setRole(selectedRole); // 역할 설정
+            setRole(selectedRole);
             setCurrentSection(2);
           }}
         />
       ),
     },
-    { component: <EmailVerification onNext={() => setCurrentSection(3)} /> },
-    { component: <CreatePassword onNext={() => setCurrentSection(4)} /> },
+    {
+      component: (
+        <EmailVerification
+          onNext={(userEmail) => {
+            setEmail(userEmail);
+            setCurrentSection(3);
+          }}
+        />
+      ),
+    },
+    {
+      component: (
+        <CreatePassword onNext={(userPassword) => setPassword(userPassword)} />
+      ),
+    }, // 비밀번호 설정 후 자동 회원가입
   ];
 
-  // 역할에 따른 추가 섹션
-  const additionalSections =
-    role === 'mentor'
-      ? [
-          {
-            component: (
-              <MentorSetup
-                currentStep={mentorStep}
-                setCurrentStep={setMentorStep}
-                onNext={() => navigate('/auth/finish')}
-              />
-            ),
-          },
-        ]
-      : role === 'mentee'
-        ? [
-            {
-              component: (
-                <MenteeSetup
-                  currentStep={menteeStep}
-                  setCurrentStep={setMenteeStep}
-                  onNext={() => navigate('/auth/finish')}
-                />
-              ),
-            },
-          ]
-        : [];
-
-  const sections = [...baseSections, ...additionalSections]; // 전체 섹션 배열
-
-  const handleBack = () => {
-    if (role === 'mentor' && currentSection === sections.length - 1) {
-      if (mentorStep > 0) {
-        setMentorStep((prev) => prev - 1);
-      } else {
-        setCurrentSection((prev) => prev - 1);
-      }
-    } else if (role === 'mentee' && currentSection === sections.length - 1) {
-      if (menteeStep > 0) {
-        setMenteeStep((prev) => prev - 1);
-      } else {
-        setCurrentSection((prev) => prev - 1);
-      }
-    } else if (currentSection === 0) {
-      navigate('/auth/signin'); // 첫 번째 섹션에서 뒤로 가기 -> 로그인 화면으로 이동
-    } else {
-      setCurrentSection((prev) => prev - 1); // 이전 섹션으로 이동
-    }
-  };
+  // 진행률 계산
+  const progressValue = (currentSection / sections.length) * 100;
 
   return (
     <div className="h-screen flex flex-col px-6 relative">
-      {/* 뒤로가기 버튼 */}
+      {/* 뒤로 가기 버튼 */}
       <button
         className="absolute top-8 left-3 rounded-full"
-        onClick={handleBack}
+        onClick={() => {
+          if (currentSection === 0) {
+            navigate('/auth/signin'); // 첫 번째 페이지에서 로그인 페이지로 이동
+          } else {
+            setCurrentSection((prev) => Math.max(0, prev - 1));
+          }
+        }}
       >
         <ArrowLeft className="w-6 h-6 text-gray-1" />
       </button>
 
-      {/* Progress Bar */}
+      {/* 진행률 표시 */}
       <div className="flex justify-center mt-24">
-        <Progress
-          value={
-            role === 'mentor'
-              ? ((currentSection + mentorStep / 3) / sections.length) * 100
-              : role === 'mentee'
-                ? ((currentSection + menteeStep / 2) / sections.length) * 100
-                : (currentSection / sections.length) * 100
-          }
-          className="w-full rounded-md"
-        />
+        <Progress value={progressValue} className="w-full rounded-md" />
       </div>
 
       {/* 현재 섹션 렌더링 */}

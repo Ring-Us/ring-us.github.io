@@ -24,7 +24,7 @@ export function SigninInput({
   const LucideIcon = icons[icon] || User; // 아이콘이 없을 경우 기본 아이콘 설정
 
   return (
-    <div className="flex items-center w-full h-[55px] px-4 border rounded-md border-gray-300 focus-within:border-primary-1">
+    <div className="flex items-center w-full h-[55px] px-4 border rounded-md border-gray-3 focus-within:border-primary-1">
       {/* Lucide 아이콘 */}
       <div className="mr-4 text-gray-2">
         <LucideIcon className="w-6 h-6" />
@@ -35,7 +35,7 @@ export function SigninInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="flex-1 text-[14px] text-gray-700 placeholder-gray-400 focus:outline-none"
+        className="flex-1 text-[14px] focus:outline-none"
       />
     </div>
   );

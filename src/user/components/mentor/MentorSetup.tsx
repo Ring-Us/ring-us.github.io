@@ -1,17 +1,14 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
-import FileUpload from '@/auth/components/FileUpload';
-import MentorProfile from '@/auth/components/signup/mentor/MentorProfile'; // 프로필 설정 컴포넌트 추가
+import { AuthButton } from '@/global/ui/GlobalButton';
+import FileUpload from '@/user/components/FileUpload';
+import MentorProfile from '@/user/components/mentor/MentorProfile'; // 프로필 설정 컴포넌트 추가
 
 const MentorSetup = ({
-  currentStep,
-  setCurrentStep,
   onNext,
 }: {
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
-  onNext: () => void;
+  onNext: (uploadedFiles: (File | null)[]) => void;
 }) => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [uploadedFiles, setUploadedFiles] = useState<(File | null)[]>([
     null,
     null,
@@ -49,7 +46,7 @@ const MentorSetup = ({
     {
       content: (
         <MentorProfile
-          onNext={onNext} // 프로필 설정 완료 시 다음으로 이동
+          onNext={() => onNext(uploadedFiles)} // 프로필 설정 완료 시 업로드한 파일 정보 전달
         />
       ),
     },
@@ -59,7 +56,7 @@ const MentorSetup = ({
     if (currentStep < sections.length - 1) {
       setCurrentStep(currentStep + 1); // 다음 섹션으로 이동
     } else {
-      onNext(); // 모든 섹션 완료 후 상위 단계로 이동
+      onNext(uploadedFiles); // 모든 섹션 완료 후 파일 정보 전달
     }
   };
 

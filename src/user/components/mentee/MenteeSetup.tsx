@@ -1,21 +1,15 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
-import FileUpload from '@/auth/components/FileUpload';
-import MenteeProfile from '@/auth/components/signup/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
+import { AuthButton } from '@/global/ui/GlobalButton';
+import FileUpload from '@/user/components/FileUpload';
+import MenteeProfile from '@/user/components/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
 
-const MentorSetup = ({
-  currentStep,
-  setCurrentStep,
+const MenteeSetup = ({
   onNext,
 }: {
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
-  onNext: () => void;
+  onNext: (uploadedFiles: (File | null)[]) => void;
 }) => {
-  const [uploadedFiles, setUploadedFiles] = useState<(File | null)[]>([
-    null,
-    null,
-  ]);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [uploadedFiles, setUploadedFiles] = useState<(File | null)[]>([null]);
 
   const sections = [
     {
@@ -35,7 +29,7 @@ const MentorSetup = ({
     {
       content: (
         <MenteeProfile
-          onNext={onNext} // 프로필 설정 완료 시 다음으로 이동
+          onNext={() => onNext(uploadedFiles)} // 프로필 설정 완료 시 업로드한 파일 정보 전달
         />
       ),
     },
@@ -45,16 +39,13 @@ const MentorSetup = ({
     if (currentStep < sections.length - 1) {
       setCurrentStep(currentStep + 1); // 다음 섹션으로 이동
     } else {
-      onNext(); // 모든 섹션 완료 후 상위 단계로 이동
+      onNext(uploadedFiles); // 모든 섹션 완료 후 파일 정보 전달
     }
   };
 
   const isNextEnabled = () => {
     if (currentStep === 0) {
       return uploadedFiles[0] !== null;
-    }
-    if (currentStep === 1) {
-      return uploadedFiles[1] !== null;
     }
     return true; // 마지막 섹션은 항상 활성화
   };
@@ -79,4 +70,4 @@ const MentorSetup = ({
   );
 };
 
-export default MentorSetup;
+export default MenteeSetup;

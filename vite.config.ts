@@ -3,7 +3,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'url';
 import path from 'path';
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -49,9 +48,9 @@ export default defineConfig({
     }),
   ],
   server: {
-    hmr: {
-      overlay: false,
-    },
+    port: 5178, // 포트 5178로 변경 -> 임시로 서버 연결위해 사용
+    strictPort: true, // 사용 중이면 오류 발생 (다른 포트로 변경되지 않음)
+    host: true, // 네트워크에서도 접근 가능하도록 설정 (선택 사항)
   },
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
@@ -60,7 +59,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
-        sw: './sw.js',
       },
     },
   },

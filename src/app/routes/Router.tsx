@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 
 import { RootLayout } from '@/global/layouts/RootLayout';
 import { AuthLayout } from '@/auth/layouts/AuthLayout';
-import { MentorshipLayout } from '@/mentorship/layouts/MentorshipLayout';
 import { UserLayout } from '@/user/layouts/UserLayout';
+import { MentorshipLayout } from '@/mentorship/layouts/MentorshipLayout';
 
 import HomePage from '@/home/pages/HomePage';
 import LandingPage from '@/auth/pages/LandingPage';
@@ -12,7 +12,9 @@ import SignUpPage from '@/auth/pages/SignUpPage';
 import SignupFinish from '@/auth/components/signup/SignupFinish';
 import MentorInfo from '@/mentorship/pages/MentorInfo';
 import MentorProfileEdit from '@/user/pages/ProfileEdit/MentorProfileEdit';
-import { User } from 'lucide-react';
+import Mypage from '@/user/pages/Mypage';
+import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
+
 
 export const Router = () => {
   return (
@@ -28,12 +30,13 @@ export const Router = () => {
         <Route path="finish" element={<SignupFinish />} />
       </Route>
 
-      <Route path="/mentorship" element={<MentorshipLayout />}>
-        <Route path="info" element={<MentorInfo />} />
-      </Route>
-
       <Route path="/user" element={<UserLayout />}>
+        <Route path="" element={<Mypage />} />
         <Route path="mentoredit" element={<MentorProfileEdit />}></Route>
+      </Route>
+      <Route path="/mentorship" element={<MentorshipLayout />}>
+        <Route path="" element={<MentorList />} />
+        <Route path="info" element={<MentorInfo />} />
       </Route>
     </Routes>
   );
