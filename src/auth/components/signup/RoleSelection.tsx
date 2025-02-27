@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 
 const RoleSelection = ({
   onNext,
@@ -62,13 +62,13 @@ const RoleSelection = ({
 
       {/* 다음으로 버튼 */}
       <div className="absolute bottom-16 w-full">
-        <AuthButton
+        <GlobalButton
           onClick={() => onNext(selectedRole)}
           variant={selectedRole ? 'default' : 'secondary'} // 역할이 선택되었을 때만 활성화
           disabled={!selectedRole}
         >
           다음으로
-        </AuthButton>
+        </GlobalButton>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import SignUpPage from '@/auth/pages/SignUpPage';
 import SignupFinish from '@/auth/components/signup/SignupFinish';
 import Mypage from '@/user/pages/Mypage';
 import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
+import PaymentPage from '@/user/pages/payment/Payment';
 
 export const Router = () => {
   return (
@@ -27,7 +28,8 @@ export const Router = () => {
       </Route>
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
-      </Route>
+        <Route path="payment" element={<PaymentPage/>}/>
+        </Route>
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
       </Route>

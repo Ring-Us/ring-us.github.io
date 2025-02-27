@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 import Checkbox from '@/auth/components/Checkbox';
 
 const UsagePolicy = ({
@@ -105,13 +105,13 @@ const UsagePolicy = ({
 
       {/* 다음 버튼 */}
       <div className="absolute bottom-16 w-full">
-        <AuthButton
+        <GlobalButton
           variant={isAllRequiredChecked ? 'default' : 'secondary'}
           onClick={onNext}
           disabled={!isAllRequiredChecked}
         >
           다음으로
-        </AuthButton>
+        </GlobalButton>
       </div>
     </div>
   );
