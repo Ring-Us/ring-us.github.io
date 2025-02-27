@@ -9,6 +9,8 @@ export default {
 		sm: '6px',
 	  },
 	  colors: {
+		...require('tailwindcss/colors'),
+
 		background: 'hsl(var(--background))',
 		foreground: 'hsl(var(--foreground))',
 		card: {
@@ -115,6 +117,9 @@ export default {
 		},
 		screens: {
 		  'max-420': { max: '420px' }, // 사용자 정의 최대 너비
+		},
+		backgroundImage: {
+			"mentor-gradient": "linear-gradient(135deg, #9384E2 0%, #5C44DC 43%, #4527D8 74%, #310EE0 98%)",
 		},
 	  },
 	},
