@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
-import FileUpload from '@/auth/components/FileUpload';
-import MenteeProfile from '@/auth/components/signup/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
+import { AuthButton } from '@/global/ui/GlobalButton';
+import FileUpload from '@/user/components/FileUpload';
+import MenteeProfile from '@/user/components/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
 
 const MenteeSetup = ({
   onNext,

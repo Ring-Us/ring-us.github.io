@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "echo 'ringus.my' > ./dist/CNAME && gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -19,6 +20,7 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.4.4",
     "lucide-react": "^0.473.0",
     "path-browserify": "^1.0.1",
     "react": "^18.3.1",
@@ -28,7 +30,9 @@
     "react-svg": "^16.2.0",
     "shadcn-ui": "^0.9.4",
     "slick-carousel": "^1.8.1",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "tailwind-scrollbar-hide": "^2.0.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.13.5",
@@ -48,6 +52,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "gh-pages": "^6.3.0",
     "globals": "^15.14.0",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",

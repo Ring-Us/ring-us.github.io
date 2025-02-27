@@ -1,23 +1,25 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
-import { sendVerificationCode, verifyCode } from '@/auth/api/emailApi'; // ✅ API 함수 import
+import { sendVerificationCode, verifyCode } from '@/auth/api/emailApi';
 
 const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
-  const [email, setEmail] = useState(''); // 이메일 상태
-  const [isEmailValid, setIsEmailValid] = useState(false); // 이메일 유효성 상태
-  const [isCodeSent, setIsCodeSent] = useState(false); // 인증번호 전송 상태
-  const [verificationCode, setVerificationCode] = useState(''); // 인증번호 상태
-  const [isCodeVerified, setIsCodeVerified] = useState(false); // 인증 성공 여부
-  const [codeError, setCodeError] = useState(''); // 인증번호 오류 메시지
-  const [successMessage, setSuccessMessage] = useState(''); // 인증 성공 메시지
+  const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isCodeSent, setIsCodeSent] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [isCodeVerified, setIsCodeVerified] = useState(false);
+  const [codeError, setCodeError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [attemptCount, setAttemptCount] = useState(0); // 인증 실패 시도 횟수 추가
+  const MAX_ATTEMPTS = 5; // 최대 시도 횟수 지정
 
   // 이메일 입력 핸들러
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
 
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 유효성 정규식
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     setIsEmailValid(regex.test(value));
 
     if (codeError) {
@@ -30,65 +32,65 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
     setVerificationCode(e.target.value);
   };
 
-  // 이메일 인증번호 요청 (버튼 클릭 시 실행)
+  // 이메일 인증번호 요청
   const handleSendCode = async () => {
     if (!isEmailValid) return;
 
     try {
-      await sendVerificationCode(email); // 백엔드에 이메일 전송
-      setIsCodeSent(true); // 인증번호 입력 화면으로 전환
+      await sendVerificationCode(email);
+      setIsCodeSent(true);
+      setAttemptCount(0); // 인증번호 재전송 시 시도 횟수 초기화
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        const { status } = error.response.data;
-
-        if (status === 409) {
-          setCodeError('이미 사용된 이메일입니다. 다른 이메일로 가입해주세요.');
-        } else {
-          setCodeError('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-        }
-      } else {
-        setCodeError('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-      }
+      setCodeError('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
     }
   };
 
-  // 인증번호 검증 (버튼 클릭 시 실행)
+  // 인증번호 검증
   const handleVerifyCode = async () => {
     if (!verificationCode) return;
 
     try {
-      const response = await verifyCode(email, verificationCode); // 백엔드 요청
-      //console.log('백엔드 응답:', response);
+      const response = await verifyCode(email, verificationCode);
 
-      // 응답 상태에 따른 예외 처리
       if (response.status === 200 || response.status === 201) {
-        setIsCodeVerified(true); // 인증 성공 시 버튼 활성화
-        setCodeError(''); // 오류 메시지 초기화
+        setIsCodeVerified(true);
+        setCodeError('');
         setSuccessMessage('✅ 인증이 성공하였습니다!');
+        setAttemptCount(0); // 인증 성공 시 시도 횟수 초기화
       } else {
         throw new Error(response.message || '인증번호가 올바르지 않습니다.');
       }
     } catch (error: any) {
+      let errorMsg = '❌ 인증번호가 올바르지 않습니다.';
       if (error.response) {
-        const { status, message } = error.response.data;
+        const { status, message, remainingAttempts } = error.response.data;
 
         if (status === 400) {
-          setCodeError('❌ 인증번호가 올바르지 않습니다.');
+          setAttemptCount((prev) => prev + 1); // 실패 시 카운트 증가
+          const attemptsLeft =
+            remainingAttempts ?? MAX_ATTEMPTS - (attemptCount + 1); // 남은 시도 횟수 계산
+
+          errorMsg = `❌ 인증번호가 올바르지 않습니다. (${attemptCount + 1}/${MAX_ATTEMPTS}회 시도)`;
+
+          if (attemptsLeft <= 0) {
+            errorMsg = '❌ 인증번호를 5회 틀렸습니다. 다시 요청해주세요.';
+          }
         } else if (status === 403) {
           if (message.includes('TTL')) {
-            setCodeError('❌ 인증번호가 만료되었습니다. 다시 요청해주세요.');
+            errorMsg = '❌ 인증번호가 만료되었습니다. 다시 요청해주세요.';
           } else if (message.includes('5회')) {
-            setCodeError('❌ 인증번호를 5회 틀렸습니다. 다시 요청해주세요.');
+            errorMsg = '❌ 인증번호를 5회 틀렸습니다. 다시 요청해주세요.';
           } else {
-            setCodeError('❌ 인증이 거부되었습니다.');
+            errorMsg = '❌ 인증이 거부되었습니다.';
           }
         } else {
-          setCodeError('❌ 인증 실패. 다시 시도해주세요.');
+          errorMsg = '❌ 인증 실패. 다시 시도해주세요.';
         }
       } else {
-        setCodeError('❌ 서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+        errorMsg = '❌ 서버 오류가 발생했습니다. 나중에 다시 시도해주세요.';
       }
 
+      setCodeError(errorMsg);
       setIsCodeVerified(false);
       setSuccessMessage('');
     }
@@ -127,7 +129,7 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
             error={
               (!isEmailValid && email.length > 0
                 ? '올바른 이메일을 입력해주세요. '
-                : '') || codeError // 이메일 오류가 없으면 codeError를 표시
+                : '') || codeError
             }
           />
         </div>
@@ -140,18 +142,13 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
             value={verificationCode}
             onChange={handleCode}
             buttonLabel="인증번호 확인"
-            onButtonClick={handleVerifyCode} // 인증번호 확인 버튼 추가
-            error={codeError} // 인증 실패 시 오류 메시지 표시
+            onButtonClick={handleVerifyCode}
+            error={codeError}
             successMessage={successMessage}
           />
           <div className="p-2 text-gray-2 text-xs">
             메일이 안 왔을 경우, 스팸함을 확인해주세요.
           </div>
-          {/* {successMessage && (
-            <div className=" text-authGreen text-sm font-bold">
-              {successMessage}
-            </div>
-          )} */}
         </div>
       )}
 
