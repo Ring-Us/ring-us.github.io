@@ -1,5 +1,6 @@
 import React from 'react';
-import downIcon from '../../../public/assets/down.png';
+import downIcon from '/public/assets/down.png';
+
 
 interface MentorshipFilterBarProps {
   selectedField: string | null;
@@ -34,7 +35,6 @@ const MentorshipFilterBar: React.FC<MentorshipFilterBarProps> = ({
             {selectedSubField ? selectedSubField : '세부직무'}
             <img src={downIcon} alt="다운 아이콘" className="w-5 h-5 ml-1" />
           </button>
-
         </div>
       </div>
     </div>

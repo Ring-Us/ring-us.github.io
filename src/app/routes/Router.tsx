@@ -31,7 +31,7 @@ export const Router = () => {
         <Route path="payment" element={<PaymentPage/>}/>
         </Route>
       <Route path="/mentorship" element={<MentorshipLayout />}>
-        <Route path="" element={<MentorList/>}/>
+        <Route path="" element={<MentorList />} />
       </Route>
     </Routes>
   );

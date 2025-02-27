@@ -1,5 +1,6 @@
 import React from 'react';
-import downIcon from '../../../public/assets/down.png';
+import downIcon from '/public/assets/down.png';
+
 
 interface MentorshipSortDropdownProps {
   sortOption: string;

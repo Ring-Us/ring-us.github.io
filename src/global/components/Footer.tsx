@@ -9,7 +9,7 @@ const Footer = () => {
     { name: '홈', path: '/', icon: <Home size={24} /> },
     {
       name: '멘토링 현황',
-      path: '/mentoring',
+      path: '/mentorship',
       icon: <ClipboardList size={24} />,
     },
     { name: '북마크', path: '/bookmark', icon: <Bookmark size={24} /> },
