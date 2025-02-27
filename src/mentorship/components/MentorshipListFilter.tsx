@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import closeIcon from '/src/assets/close.png';
+import { X } from 'lucide-react'; // X 닫기 버튼 추가
 
 interface MentorshipListFilterProps {
   filterType: string;
@@ -26,8 +26,8 @@ const fieldOptions: string[] = [
 ];
 
 const subFieldOptions: { [key: string]: string[] } = {
-  '전체': [],
-  '마케팅': [
+  전체: [],
+  마케팅: [
     '브랜드 마케팅',
     '퍼포먼스 마케팅',
     '디지털/소셜 마케팅',
@@ -51,7 +51,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     '창업',
     '기타',
   ],
-  '디자인': [
+  디자인: [
     'UX/UI디자인',
     '그래픽 디자인',
     '상품 디자인',
@@ -60,7 +60,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     '아트 디렉터',
     '기타',
   ],
-  '개발': [
+  개발: [
     '프론트엔드',
     '백엔드',
     '풀스택 개발자',
@@ -71,12 +71,8 @@ const subFieldOptions: { [key: string]: string[] } = {
     '보안 엔지니어',
     '기타',
   ],
-  '대학원': [
-    '국내 대학원',
-    '해외 대학원',
-    '기타',
-  ],
-  '인사': [
+  대학원: ['국내 대학원', '해외 대학원', '기타'],
+  인사: [
     '인사기획',
     '채용담당',
     '인재육성/교육담당',
@@ -87,7 +83,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     '리크루터',
     '기타',
   ],
-  '영업': [
+  영업: [
     '기업영업(B2B)',
     '개인영업(B2C)',
     '해외영업',
@@ -98,7 +94,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     'CSM/CX',
     '기타',
   ],
-  '금융': [
+  금융: [
     '컨설턴트',
     'VC/투자',
     'IB/PE/대체투자',
@@ -106,7 +102,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     '회계/재무',
     '기타',
   ],
-  '데이터': [
+  데이터: [
     '데이터 사이언티스트',
     '데이터 엔지니어',
     '데이터 애널리스트',
@@ -116,7 +112,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     '리서치 애널리스트',
     '기타',
   ],
-  '의료': [
+  의료: [
     '임상의사',
     '임상연구원',
     '의료기기 연구개발',
@@ -124,7 +120,7 @@ const subFieldOptions: { [key: string]: string[] } = {
     '바이오 연구원',
     '기타',
   ],
-  '법률': [
+  법률: [
     '변호사',
     '법무담당',
     '특허담당',
@@ -163,7 +159,7 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
             </h2>
             {/* 닫기 버튼 */}
             <button onClick={onClose} className="p-1">
-              <img src={closeIcon} alt="닫기 버튼" className="w-[24px] h-[24px]" />
+              <X className="w-6 h-6 text-gray-1" />
             </button>
           </div>
         </div>
@@ -179,7 +175,9 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
                   onClose();
                 }}
                 className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${
-                  selectedField === field ? 'border-primary-1 text-primary-1' : 'bg-gray-100 text-gray-800'
+                  selectedField === field
+                    ? 'border-primary-1 text-primary-1'
+                    : 'bg-gray-100 text-gray-800'
                 }`}
               >
                 {field}
@@ -191,7 +189,9 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
         {/* 세부직무 필터 */}
         {filterType === '세부직무' && (
           <div className="flex flex-col gap-[20px] mt-[34px] mx-auto px-3 mb-[10px]">
-            {selectedField && subFieldOptions[selectedField] && subFieldOptions[selectedField].length > 0 ? (
+            {selectedField &&
+            subFieldOptions[selectedField] &&
+            subFieldOptions[selectedField].length > 0 ? (
               subFieldOptions[selectedField].map((subField) => (
                 <button
                   key={subField}
@@ -200,14 +200,18 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
                     onClose();
                   }}
                   className={`rounded-[8px] text-[12px] text-start text-gray-2 ${
-                    selectedSubField === subField ? ' text-primary-1' : 'bg-gray-100 text-gray-800'
+                    selectedSubField === subField
+                      ? ' text-primary-1'
+                      : 'bg-gray-100 text-gray-800'
                   }`}
                 >
                   {subField}
                 </button>
               ))
             ) : (
-              <div className="text-center text-gray-600">먼저 직무를 선택하세요.</div>
+              <div className="text-center text-gray-600">
+                먼저 직무를 선택하세요.
+              </div>
             )}
           </div>
         )}

@@ -27,8 +27,9 @@ export const Router = () => {
       </Route>
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
+      </Route>
       <Route path="/mentorship" element={<MentorshipLayout />}>
-        <Route path="" element={<MentorList/>}/>
+        <Route path="" element={<MentorList />} />
       </Route>
     </Routes>
   );

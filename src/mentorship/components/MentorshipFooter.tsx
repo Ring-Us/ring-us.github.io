@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import homeIcon from '../../assets/footer_home.png';
-import BookmarkIcon from '../../assets/footer_bookmark.png';
-import mentoringIcon from '../../assets/footer_mentoring.png';
-import myIcon from '../../assets/footeer_my.png';
+import { Home, Bookmark, User, ClipboardList } from 'lucide-react';
 
 interface MentorshipFooterProps {
   isVisible: boolean;
@@ -20,22 +17,26 @@ const MentorshipFooter: React.FC<MentorshipFooterProps> = ({ isVisible }) => {
     >
       <div className="flex justify-around">
         {[
-          { menu: '홈', img: homeIcon, link: '/' },
-          { menu: '북마크', img: BookmarkIcon},
-          { menu: '멘토링 현황', img: mentoringIcon, link: '/mentorship' },
-          { menu: '마이', img: myIcon },
-        ].map(({ menu, img, link }) =>
+          { menu: '홈', icon: <Home size={24} />, link: '/' },
+          {
+            menu: '멘토링 현황',
+            icon: <ClipboardList size={24} />,
+            link: '/mentorship',
+          },
+          { menu: '북마크', icon: <Bookmark size={24} />, link: '/bookmark' },
+          { menu: '마이', icon: <User size={24} />, link: '/user' },
+        ].map(({ menu, icon, link }) =>
           link ? (
             <Link key={menu} to={link} className="text-center w-[47px]">
-              <img src={img} alt={menu} className="w-[21px] h-[21px] mx-auto" />
+              <div className="w-[21px] h-[21px] mx-auto">{icon}</div>
               <div className="text-[10px]">{menu}</div>
             </Link>
           ) : (
             <div key={menu} className="text-center w-[47px]">
-              <img src={img} alt={menu} className="w-[21px] h-[21px] mx-auto" />
+              <div className="w-[21px] h-[21px] mx-auto">{icon}</div>
               <div className="text-[10px]">{menu}</div>
             </div>
-          )
+          ),
         )}
       </div>
     </div>
