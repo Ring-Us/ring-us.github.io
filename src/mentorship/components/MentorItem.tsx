@@ -1,7 +1,7 @@
 import React from 'react';
-import profileImage from '/public/assets/Profile.png';
-import bookmark from '/public/assets/bookmark.png';
-import bookmarkSaved from '/public/assets/bookmarksaved.png';
+import profileImage from '../public/assets/Profile.png';
+import bookmark from '../public/assets/bookmark.png';
+import bookmarkSaved from '../public/assets/bookmarksaved.png';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
 
 interface MentorItemProps {

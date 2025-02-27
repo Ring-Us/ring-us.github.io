@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 import FileUpload from '@/user/components/FileUpload';
 import MenteeProfile from '@/user/components/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
 
@@ -58,12 +58,12 @@ const MenteeSetup = ({
       {/* 버튼 영역 */}
       <div className="absolute bottom-16 w-full flex justify-between">
         {currentStep < sections.length - 1 && (
-          <AuthButton
+          <GlobalButton
             variant={isNextEnabled() ? 'default' : 'secondary'}
             onClick={handleNext}
           >
             다음으로
-          </AuthButton>
+          </GlobalButton>
         )}
       </div>
     </div>

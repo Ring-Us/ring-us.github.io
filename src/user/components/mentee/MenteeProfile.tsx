@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AuthButton } from '@/global/ui/GlobalButton';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import ModalInput from '@/user/components/ModalInput';
 
@@ -160,12 +160,12 @@ const MenteeProfile = ({ onNext }: { onNext: () => void }) => {
 
       {/* 완료 버튼 */}
       <div className="flex-none py-9">
-        <AuthButton
+        <GlobalButton
           onClick={onNext}
           variant={isFormValid ? 'default' : 'secondary'}
         >
           완료
-        </AuthButton>
+        </GlobalButton>
       </div>
     </div>
   );
