@@ -1,7 +1,4 @@
 import React from 'react';
-import profileImage from '../public/assets/Profile.png';
-import bookmark from '../public/assets/bookmark.png';
-import bookmarkSaved from '../public/assets/bookmarksaved.png';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
 
 interface MentorItemProps {
@@ -18,14 +15,16 @@ const MentorItem: React.FC<MentorItemProps> = ({
   return (
     <div className="bg-white p-4 border-b relative w-min-[361px]">
       <img
-        src={isBookmarked ? bookmarkSaved : bookmark}
+        src={
+          isBookmarked ? '/assets/bookmarksaved.png' : '/assets/bookmark.png'
+        }
         alt="저장 아이콘"
         className="w-[14px] h-[18px] absolute top-2 right-2 cursor-pointer"
         onClick={() => onToggleBookmark(mentor.mName)}
       />
       <div className="flex items-center space-x-[13px]">
         <img
-          src={profileImage}
+          src={'/assets/Profile.png'}
           alt="프로필"
           className="w-[78px] h-[78px] rounded-full object-cover"
         />

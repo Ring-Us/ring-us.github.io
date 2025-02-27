@@ -1,5 +1,4 @@
 import React from 'react';
-import downIcon from '/public/assets/down.png';
 
 interface MentorshipSortDropdownProps {
   sortOption: string;
@@ -18,7 +17,7 @@ const MentorshipSortDropdown: React.FC<MentorshipSortDropdownProps> = ({
           onChange={(e) => onSortChange(e.target.value)}
           className="text-[12px] text-gray-2 appearance-none cursor-pointer focus:outline-none w-full pr-[26px]"
           style={{
-            backgroundImage: `url(${downIcon})`,
+            backgroundImage: `url(${'/assets/down.png'})`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'right center',
             backgroundSize: '24px 24px',
