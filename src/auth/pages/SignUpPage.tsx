@@ -7,14 +7,12 @@ import UsagePolicy from '@/auth/components/signup/UsagePolicy';
 import RoleSelection from '@/auth/components/signup/RoleSelection';
 import EmailVerification from '@/auth/components/signup/EmailVerification';
 import CreatePassword from '@/auth/components/signup/CreatePassword';
-import MentorSetup from '@/auth/components/signup/mentor/MentorSetup';
-import MenteeSetup from '@/auth/components/signup/mentee/MenteeSetup';
 
 export default function SignUpPage() {
   const [currentSection, setCurrentSection] = useState(0);
   const [role, setRole] = useState<string | null>(null);
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string | null>(null); // 수정 (null로 초기화)
+  const [password, setPassword] = useState<string | null>(null);
   const [serviceTerms, setServiceTerms] = useState([
     { tag: 'TERMS_OF_SERVICE', agreed: false },
     { tag: 'PRIVACY_POLICY', agreed: false },
@@ -23,11 +21,6 @@ export default function SignUpPage() {
 
   const navigate = useNavigate();
 
-  // 현재 섹션을 다음 단계로 이동하는 함수
-  const handleNext = () => {
-    setCurrentSection((prev) => prev + 1);
-  };
-
   // 약관 동의 상태 업데이트
   const updateServiceTerms = (tag: string, agreed: boolean) => {
     setServiceTerms((prev) =>
@@ -35,46 +28,54 @@ export default function SignUpPage() {
     );
   };
 
-  // 회원가입 API 요청 (CreatePassword 완료 후 실행)
-  useEffect(() => {
-    if (password) {
-      handleSignUp();
-    }
-  }, [password]); // password가 변경될 때 실행
-
+  // 회원가입 API 요청
   const handleSignUp = async () => {
     if (!role || !password) {
-      console.error('❌ 필수 정보 부족:', { role, email, password });
+      console.log('❌ 필수 정보가 부족합니다.');
+      navigate('/auth/signin'); // 로그인 페이지로 이동
       return;
     }
-
-    const formattedServiceTerms = serviceTerms.map((term) => ({
-      tag: term.tag.toUpperCase(),
-      agreed: Boolean(term.agreed),
-    }));
 
     const requestData = {
       memberType: role.toUpperCase(),
       email,
       password,
-      serviceTerms: formattedServiceTerms,
+      serviceTerms: serviceTerms.map((term) => ({
+        tag: term.tag.toUpperCase(),
+        agreed: Boolean(term.agreed),
+      })),
     };
 
     try {
       const response = await authApi(requestData);
-      console.log('✅ 서버 응답:', response);
-    } catch (error: any) {
-      console.error('❌ 회원가입 오류 발생:', error.response?.data || error);
-    }
+      console.log('✅ 회원가입 성공:', response);
 
-    handleNext(); // 회원가입 후 다음 단계로 이동
+      // 회원가입 성공 시 `/auth/finish`로 이동
+      navigate('/auth/finish');
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        '회원가입에 실패했습니다. 다시 시도해주세요!';
+      alert(`❌ 오류 발생: ${errorMessage}`); // 오류 메시지를 alert로 표시
+      navigate('/auth/signin'); // 로그인 페이지로 이동
+    }
   };
 
-  // 기본 회원가입 단계
-  const baseSections = [
+  // 비밀번호가 설정되면 `handleSignUp()` 실행
+  useEffect(() => {
+    if (password) {
+      handleSignUp();
+    }
+  }, [password]);
+
+  // 회원가입 단계 정의
+  const sections = [
     {
       component: (
-        <UsagePolicy onNext={handleNext} onAgree={updateServiceTerms} />
+        <UsagePolicy
+          onNext={() => setCurrentSection(1)}
+          onAgree={updateServiceTerms}
+        />
       ),
     },
     {
@@ -82,7 +83,7 @@ export default function SignUpPage() {
         <RoleSelection
           onNext={(selectedRole) => {
             setRole(selectedRole);
-            handleNext();
+            setCurrentSection(2);
           }}
         />
       ),
@@ -92,56 +93,33 @@ export default function SignUpPage() {
         <EmailVerification
           onNext={(userEmail) => {
             setEmail(userEmail);
-            handleNext();
+            setCurrentSection(3);
           }}
         />
       ),
     },
     {
       component: (
-        <CreatePassword
-          onNext={(userPassword) => {
-            setPassword(userPassword);
-          }}
-        />
-      ), // 비밀번호 상태 변경 후 `useEffect` 실행
-    },
+        <CreatePassword onNext={(userPassword) => setPassword(userPassword)} />
+      ),
+    }, // 비밀번호 설정 후 자동 회원가입
   ];
-
-  // 추가 설정 페이지 (회원가입 후 mentor/mentee 설정)
-  const mentorSections = [
-    { component: <MentorSetup onNext={() => navigate('/auth/finish')} /> },
-  ];
-  const menteeSections = [
-    { component: <MenteeSetup onNext={() => navigate('/auth/finish')} /> },
-  ];
-
-  const additionalSections = role
-    ? role === 'mentor'
-      ? mentorSections
-      : menteeSections
-    : [];
-  const sections = [...baseSections, ...additionalSections];
 
   // 진행률 계산
-  const totalSteps = sections.length;
-  const progressValue = (currentSection / totalSteps) * 100;
-
-  // 뒤로 가기 버튼 처리
-  const handleBack = () => {
-    if (currentSection > 0) {
-      setCurrentSection((prev) => prev - 1);
-    } else {
-      navigate('/auth/signin');
-    }
-  };
+  const progressValue = (currentSection / sections.length) * 100;
 
   return (
     <div className="h-screen flex flex-col px-6 relative">
       {/* 뒤로 가기 버튼 */}
       <button
         className="absolute top-8 left-3 rounded-full"
-        onClick={handleBack}
+        onClick={() => {
+          if (currentSection === 0) {
+            navigate('/auth/signin'); // 첫 번째 페이지에서 로그인 페이지로 이동
+          } else {
+            setCurrentSection((prev) => Math.max(0, prev - 1));
+          }
+        }}
       >
         <ArrowLeft className="w-6 h-6 text-gray-1" />
       </button>

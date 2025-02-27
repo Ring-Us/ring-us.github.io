@@ -6,11 +6,11 @@ export const authApi = async (requestData: {
   password: string;
   serviceTerms: any[];
 }) => {
-  console.log('📡 백엔드로 전송할 최종 데이터:', requestData);
+  //console.log('백엔드로 전송할 최종 데이터:', requestData);
 
   try {
     const response = await apiClient.post(
-      '/api/v1/auth/signup', // ✅ 환경변수를 적용했으므로 상대 경로 사용 가능!
+      '/v1/auth/signup', // 환경변수를 적용했으므로 상대 경로 사용 가능!
       requestData,
     );
     return response.data;

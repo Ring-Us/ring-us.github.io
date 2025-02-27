@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { Check } from 'lucide-react';
 
@@ -90,7 +90,7 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
           variant={isFormValid ? 'default' : 'secondary'}
           disabled={!isFormValid} // 버튼 비활성화 적용
         >
-          다음으로
+          회원가입 완료
         </AuthButton>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthButton } from '@/auth/components/AuthButton';
+import { AuthButton } from '@/global/ui/GlobalButton';
 
 const RoleSelection = ({
   onNext,
@@ -20,7 +20,7 @@ const RoleSelection = ({
           준비된 <br /> 멋진 멘토님
         </>
       ),
-      image: '/src/assets/mentor.png',
+      image: '/assets/mentor.png',
     },
     {
       key: 'mentee',
@@ -29,7 +29,7 @@ const RoleSelection = ({
           성실한 <br /> 멘티님
         </>
       ),
-      image: '/src/assets/mentee.png',
+      image: '/assets/mentee.png',
     },
   ];
 
