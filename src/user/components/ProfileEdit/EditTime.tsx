@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { MentorData } from "@/user/types";
 import { TimeSelectModal } from "@/mentorship/components/TimeSelectModal";
-import arrowdown from "@/assets/arrowdown.png";
 
 interface EditTimeProps {
   mentorData: MentorData;
@@ -50,7 +49,7 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
         onClick={() => setIsModalOpen(true)}
       >
         {`${mentorData.timezone.startTime.period} ${mentorData.timezone.startTime.hour}:${mentorData.timezone.startTime.minute} ~ ${mentorData.timezone.endTime.period} ${mentorData.timezone.endTime.hour}:${mentorData.timezone.endTime.minute}`}
-        <img src={arrowdown} alt="arrowdown" className="w-6 h-6" />
+        <img src="/assets/arrowdown.png" alt="arrowdown" className="w-6 h-6" />
       </button>
       
       {/* 시간대 선택 모달 */}

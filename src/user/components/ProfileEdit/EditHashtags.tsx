@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { MentorData } from "@/user/types";
 
-import exit from "@/assets/exit.png";
-import add from "@/assets/add.png";
-
 interface EditHashtagsProps {
   mentorData: MentorData;
   setMentorData: React.Dispatch<React.SetStateAction<MentorData>>;
@@ -55,7 +52,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
               onClick={() => removeHashtag(tag)}
               className="ml-2"
             >
-              <img src={exit} alt="exit" className="w-4 v-4" />
+              <img src="/assets/exit.png" alt="exit" className="w-4 v-4" />
             </button>
           </div>
         ))}
@@ -71,7 +68,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
             placeholder="추가"
           />
           <button onClick={addHashtag} className="ml-2">
-            <img src={add} alt="add" className="w-4 v-4" />
+            <img src="/assets/add.png" alt="add" className="w-4 v-4" />
           </button>
         </div>
       </div>

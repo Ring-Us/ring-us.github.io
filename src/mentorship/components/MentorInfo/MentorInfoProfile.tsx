@@ -1,5 +1,3 @@
-import ringusprofile from "@/assets/ringusprofile.png";
-
 interface MentorInfoProfileProps {
   nickname: string;
   name: string;
@@ -13,7 +11,7 @@ const MentorInfoProfile = ({ nickname, name, role, experience, count }: MentorIn
         <div className="text-white px-14 pb-10 pt-6">
             <div className="flex items-center">
                 <img
-                    src={ringusprofile}
+                    src="/assets/ringusprofile.png"
                     alt="멘토 프로필"
                     className="w-20 h-20 rounded-[50px] border-[1px] border-white object-cover"
                 />

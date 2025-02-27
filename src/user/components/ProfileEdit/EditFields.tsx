@@ -1,10 +1,5 @@
 import { MentorData } from "@/user/types";
 
-import mentorinfo1 from "@/assets/mentorinfo1.png";
-import mentorinfo2 from "@/assets/mentorinfo2.png";
-import mentorinfo3 from "@/assets/mentorinfo3.png";
-import mentorinfo4 from "@/assets/mentorinfo4.png";
-
 interface EditFieldsProps {
   mentorData: MentorData;
   setMentorData: React.Dispatch<React.SetStateAction<MentorData>>;
@@ -22,10 +17,10 @@ const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
   };
 
   const fields = [
-    { img: mentorinfo1, title: "취업 준비" },
-    { img: mentorinfo2, title: "업계 동향" },
-    { img: mentorinfo3, title: "면접 대비" },
-    { img: mentorinfo4, title: "커리어 고민" }
+    { img: "/assets/mentorinfo1.png", title: "취업 준비" },
+    { img: "/assets/mentorinfo2.png", title: "업계 동향" },
+    { img: "/assets/mentorinfo3.png", title: "면접 대비" },
+    { img: "/assets/mentorinfo4.png", title: "커리어 고민" }
   ];
 
   return (

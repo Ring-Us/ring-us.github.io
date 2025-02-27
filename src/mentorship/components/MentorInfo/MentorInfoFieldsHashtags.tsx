@@ -1,8 +1,3 @@
-import mentorinfo1 from "@/assets/mentorinfo1.png";
-import mentorinfo2 from "@/assets/mentorinfo2.png";
-import mentorinfo3 from "@/assets/mentorinfo3.png";
-import mentorinfo4 from "@/assets/mentorinfo4.png";
-
 interface MentorInfoFieldsHashtagsProps {
     mentoringField: string[];
     hashtags: string[];
@@ -16,7 +11,10 @@ const MentorInfoFieldsHashtags = ({ mentoringField, hashtags }: MentorInfoFields
             <div className="grid grid-cols-2 gap-4 px-7">
                 {mentoringField.map((field, index) => (
                     <div key={index} className="text-[14px] border-[1px] border-primary-1 rounded-[10px] flex flex-col items-center justify-center p-2">
-                        <img src={[mentorinfo1, mentorinfo2, mentorinfo3, mentorinfo4][index]} alt={field} className="w-[60px] h-[60px]" />
+                        <img 
+                            src={["/assets/mentorinfo1.png", "/assets/mentorinfo2.png", "/assets/mentorinfo3.png", "/assets/mentorinfo4.png"][index]}
+                            alt={field} className="w-[60px] h-[60px]"
+                        />
                         <div>{field}</div>
                     </div>
                 ))}

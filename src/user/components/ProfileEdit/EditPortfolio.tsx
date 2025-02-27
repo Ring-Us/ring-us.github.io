@@ -67,7 +67,7 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
               <span className="text-[#94939B] ml-1">({(file.size / 1000000).toFixed(1)}MB)</span>
             </div>
             <button onClick={(e) => { e.stopPropagation(); removeFile(index); }}>
-              <img src={exit} alt="exit" className="w-4 h-4" />
+              <img src="/assets/exit.png" alt="exit" className="w-4 h-4" />
             </button>
           </div>
         ))}

@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-import exit from "@/assets/exit.png";
-import arrowdown from "@/assets/arrowdown.png";
-
 interface TimeSelectModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -117,7 +114,7 @@ export const TimeSelectModal = ({
                 <div className="flex justify-between items-center mb-8">
                     <h2 className="font-bold text-[16px]">선호 시간대</h2>
                     <button onClick={onClose}>
-                        <img src={exit} alt="close" className="w-6 h-6" />
+                        <img src="/assets/exit.png" alt="close" className="w-6 h-6" />
                     </button>
                 </div>
 
@@ -133,7 +130,7 @@ export const TimeSelectModal = ({
                             }}
                         >
                             {`${startPeriod} ${startHour}:${startMinute}`}
-                            <img src={arrowdown} alt="arrow" className="w-6 h-6 ml-4" />
+                            <img src="/assets/arrowdown.png" alt="arrowdown" className="w-6 h-6 ml-4" />
                         </button>
                     </div>
 
@@ -163,7 +160,7 @@ export const TimeSelectModal = ({
                             }}
                         >
                             {`${endPeriod} ${endHour}:${endMinute}`}
-                            <img src={arrowdown} alt="arrow" className="w-6 h-6 ml-4" />
+                            <img src="/assets/arrowdown.png" alt="arrowdown" className="w-6 h-6 ml-4" />
                         </button>
                     </div>
 

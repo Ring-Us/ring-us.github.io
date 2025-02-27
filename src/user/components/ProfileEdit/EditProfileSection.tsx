@@ -1,10 +1,4 @@
 import { useState } from "react";
-import ringusprofile from "@/assets/ringusprofile.png";
-import camera from "@/assets/camera.png";
-import profilename from "@/assets/profilename.png";
-import profileemail from "@/assets/profileemail.png";
-import profileschool from "@/assets/profileschool.png";
-import profilejob from "@/assets/profilejob.png";
 
 interface EditProfileSectionProps {
   mentorData: {
@@ -44,7 +38,7 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
           {/* 프로필 사진 */}
           <label className="relative w-20 h-20 rounded-[50px] border-[1px] object-cover overflow-hidden cursor-pointer">
             <img 
-              src={profileImage || ringusprofile}
+              src={profileImage || "/assets/ringusprofile.png"}
               alt="멘토 프로필"
               className="w-full h-full object-cover"
             />
@@ -57,18 +51,18 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
             />
             
             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-              <img src={camera} alt="camera" className="w-6 h-6" />
+              <img src="/assets/camera.png" alt="camera" className="w-6 h-6" />
             </div>
           </label>
           
           {/* 이름 & 메일 */}
           <div className="ml-5 flex-1">
             <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2">
-              <img src={profilename} alt="profilename" className="w-6 h-6 mr-3" />
+              <img src="/assets/profilename.png" alt="profilename" className="w-6 h-6 mr-3" />
               <span className="text-[#94939B] text-[14px]">{mentorData.nickname}</span>
             </div>
             <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2">
-              <img src={profileemail} alt="profileemail" className="w-6 h-6 mr-3" />
+              <img src="/assets/profileemail.png" alt="profileemail" className="w-6 h-6 mr-3" />
               <span className="text-[#94939B] text-[14px]">{mentorData.email}</span>
             </div>
           </div>
@@ -77,15 +71,15 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
         {/* 학력 & 회사/직무/경력 */}
         <div className="mt-6">
           <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2">
-            <img src={profileschool} alt="profileschool" className="w-6 h-6 mr-3" />
+            <img src="/assets/profileschool.png" alt="profileschool" className="w-6 h-6 mr-3" />
             <span className="text-[#94939B] text-[14px]">{mentorData.education.schoolName}</span>
           </div>
           <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2">
-            <img src={profilejob} alt="profilejob" className="w-6 h-6 mr-3" />
+            <img src="/assets/profilejob.png" alt="profilejob" className="w-6 h-6 mr-3" />
             <span className="text-[#94939B] text-[14px]">{mentorData.organization.role} {mentorData.organization.experience}</span>
           </div>
           <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2">
-            <img src={profilejob} alt="profilejob" className="w-6 h-6 mr-3" />
+            <img src="/assets/profilejob.png" alt="profilejob" className="w-6 h-6 mr-3" />
             <span className="text-[#94939B] text-[14px]">{mentorData.organization.name}</span>
           </div>
         </div>

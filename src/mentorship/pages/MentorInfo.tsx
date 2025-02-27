@@ -8,10 +8,6 @@ import MentorInfoTime from '../components/MentorInfo/MentorInfoTime';
 import MentorInfoMessage from '../components/MentorInfo/MentorInfoMessage';
 import MentorInfoPortfolio from '../components/MentorInfo/MentorInfoPortfolio';
 
-import backwhite from '@/assets/backwhite.png';
-import bookmark from '@/assets/bookmark.png';
-import bookmarkfill from '@/assets/bookmarkfill.png';
-
 const MentorInfo = () => {
     const navigate = useNavigate();
     const [isBookmarked, setIsBookmarked] = useState(false);
@@ -71,12 +67,12 @@ const MentorInfo = () => {
                 {/* 헤더 */}
                 <div className="flex justify-between mx-6 mt-[50px]">
                     <img 
-                        src={backwhite} alt="backwhite" 
+                        src="/assets/backwhite.png" alt="backwhite" 
                         className="w-6 h-6 cursor-pointer"
                         onClick={() => navigate("/auth")}
                     />
                     <img 
-                        src={isBookmarked ? bookmarkfill : bookmark}
+                        src={isBookmarked ? "/assets/bookmarkfill.png" : "/assets/bookmark.png"}
                         alt="bookmark"
                         className="w-6 h-6 cursor-pointer"
                         onClick={toggleBookmark}
@@ -98,7 +94,7 @@ const MentorInfo = () => {
                 summary={mentorData.summary}
                 bio={mentorData.bio}
             />
-            
+
             {/* 선호 시간대 */}
             <MentorInfoTime
                 availableDays={mentorData.availableDays} 

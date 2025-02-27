@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 
 import { MentorData } from "@/user/types";
 import EditProfileSection from "@/user/components/ProfileEdit/EditProfileSection";
@@ -11,12 +10,10 @@ import EditMessage from "@/user/components/ProfileEdit/EditMessage";
 import EditHashtags from "@/user/components/ProfileEdit/EditHashtags";
 import EditPortfolio from "@/user/components/ProfileEdit/EditPortfolio";
 
-import backblack from '@/assets/backblack.png';
-
 const MentorProfileEdit = () => {
   const navigate = useNavigate();
 
-  // 임시 데이터 (API 연결 없이 사용)
+  // 임시 데이터
   const [mentorData, setMentorData] = useState<MentorData>({
     nickname: "바이",
     email: "abcd@gmail.com",
@@ -64,7 +61,7 @@ const MentorProfileEdit = () => {
             {/* 헤더 */}
             <div className="flex justify-between mx-6 mt-[50px]">
                 <img 
-                    src={backblack} alt="backwhite" 
+                    src="/assets/backblack.png" alt="backblack" 
                     className="w-6 h-6 cursor-pointer"
                     onClick={() => navigate("/mentorship/info")}
                 />
