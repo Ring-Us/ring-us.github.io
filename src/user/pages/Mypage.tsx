@@ -14,7 +14,7 @@ export default function MyPage() {
   };
 
   return (
-    <div className="relative max-w-[600px] mx-auto w-full">
+    <div className="relative mx-auto w-full">
       {/* 상단바 */}
       <div className="flex justify-between items-center">
         <div></div>

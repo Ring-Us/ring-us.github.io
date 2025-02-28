@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import FileUpload from '@/user/components/FileUpload';
-import MenteeProfile from '@/user/components/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
+import MenteeProfile from '@/user/components/profile/mentee/MenteeProfile'; // 프로필 설정 컴포넌트 추가
 
 const MenteeSetup = ({
   onNext,

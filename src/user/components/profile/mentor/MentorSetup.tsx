@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import FileUpload from '@/user/components/FileUpload';
-import MentorProfile from '@/user/components/mentor/MentorProfile'; // 프로필 설정 컴포넌트 추가
+import MentorProfile from '@/user/components/profile/mentor/MentorProfile'; // 프로필 설정 컴포넌트 추가
 
 const MentorSetup = ({
   onNext,
