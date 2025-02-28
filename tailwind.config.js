@@ -9,6 +9,8 @@ export default {
 		sm: '6px',
 	  },
 	  colors: {
+		...require('tailwindcss/colors'),
+
 		background: 'hsl(var(--background))',
 		foreground: 'hsl(var(--foreground))',
 		card: {
@@ -50,14 +52,20 @@ export default {
 		  '6': '#F2F2F6',
 		  '7': '#7E7D84',
 		  '8' : '#EBEDEF',
+		  '9' : '#7F7D85',
+		  '10' :'#CECFD3',
+		  '11' : '#B9BAC0',
+		  '12' : '#F6F6F7',
 		},
 		authGreen: '#00943E',
 		authRed: '#E70000',
 		primary: {
-		  '1': '#310EE0',
+		  '1': '#2C0FBF',
 		  '2': '#AEA0F8',
 		  '3': '#636AE8',
+		  '4': '#310EE0',
 		},
+		paymentblue: '#F2EFFF',
 	  },
 	  extend: {
 		borderRadius: {
@@ -109,6 +117,9 @@ export default {
 		},
 		screens: {
 		  'max-420': { max: '420px' }, // 사용자 정의 최대 너비
+		},
+		backgroundImage: {
+			"mentor-gradient": "linear-gradient(135deg, #9384E2 0%, #5C44DC 43%, #4527D8 74%, #310EE0 98%)",
 		},
 	  },
 	},
