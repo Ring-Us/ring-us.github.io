@@ -119,7 +119,7 @@ export default {
 		  'max-420': { max: '420px' }, // 사용자 정의 최대 너비
 		},
 		backgroundImage: {
-			"mentor-gradient": "linear-gradient(135deg, #9384E2 0%, #5C44DC 43%, #4527D8 74%, #310EE0 98%)",
+			"mentor-gradient": "linear-gradient(135deg, #825EF3 0%, #6C51F6 43%, #674CF3 74%, #5B3FEA 98%)",
 		},
 	  },
 	},

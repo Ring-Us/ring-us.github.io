@@ -10,8 +10,11 @@ import LandingPage from '@/auth/pages/LandingPage';
 import SignInPage from '@/auth/pages/SignInPage';
 import SignUpPage from '@/auth/pages/SignUpPage';
 import SignupFinish from '@/auth/components/signup/SignupFinish';
-import MentorInfo from '@/mentorship/pages/MentorInfo';
+import MentorInfoView from '@/mentorship/pages/MentorInfoView';
+import MentorInfo from '@/user/pages/ProfileEdit/MentorInfo';
 import MentorProfileEdit from '@/user/pages/ProfileEdit/MentorProfileEdit';
+import MenteeInfo from '@/user/pages/ProfileEdit/MenteeInfo';
+import MenteeProfileEdit from '@/user/pages/ProfileEdit/MenteeProfileEdit';
 import Mypage from '@/user/pages/Mypage';
 import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
 import PaymentPage from '@/user/pages/payment/Payment';
@@ -33,13 +36,16 @@ export const Router = () => {
 
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
+        <Route path="mentorinfo" element={<MentorInfo />}></Route>
         <Route path="mentoredit" element={<MentorProfileEdit />}></Route>
+        <Route path="menteeinfo" element={<MenteeInfo />}></Route>
+        <Route path="menteeedit" element={<MenteeProfileEdit />}></Route>
         <Route path="payment" element={<PaymentPage/>}/>
       </Route>
       
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
-        <Route path="info" element={<MentorInfo />} />
+        <Route path="info" element={<MentorInfoView />} />
       </Route>
     </Routes>
   );

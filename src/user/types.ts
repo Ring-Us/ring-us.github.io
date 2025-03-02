@@ -12,9 +12,10 @@ export interface MentorData {
   };
   count: string;
 
-  summary: string;
-  bio: string;
-
+  introduction: {
+    summary: string;
+    bio: string;
+  };
   availableDays: string[];
   timezone: {
     startTime: {
@@ -33,9 +34,9 @@ export interface MentorData {
   mentoringField: string[];
   hashtags: string[];
   message: string;
-  portfolio: {
+  portfolio: { 
     url: string;
     description: string;
     size: number;
-}[];
+  }[];
 }

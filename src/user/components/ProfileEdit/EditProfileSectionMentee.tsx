@@ -1,34 +1,41 @@
 import { useState } from "react";
+
 import { User } from 'lucide-react';
 import { Mail } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
 
-interface EditProfileSectionProps {
-  mentorData: {
+interface EditProfileSectionMenteeProps {
+  menteeData: {
     nickname: string;
     email: string;
     education: {
       schoolName: string;
       major: string;
     };
-    organization: {
-      name: string;
-      role: string;
-      experience: number;
+    image: {
+      fileName: string;
+      filePath: string;
     };
   };
+  setMenteeData: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSectionMenteeProps) => {
 
   // 프로필 사진 업로드
   const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const imageURL = URL.createObjectURL(file);
-      setProfileImage(imageURL);
+      
+      setMenteeData((prevData: any) => ({
+        ...prevData,
+        image: {
+          fileName: file.name,
+          filePath: imageURL,
+        },
+      }));
     }
   };
 
@@ -42,7 +49,7 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
           {/* 프로필 사진 */}
           <label className="relative w-20 h-20 rounded-[50px] border-[1px] object-cover overflow-hidden cursor-pointer">
             <img 
-              src={profileImage || "/assets/ringusprofile.png"}
+              src={menteeData.image.filePath || "/assets/ringusprofile.png"}
               alt="멘토 프로필"
               className="w-full h-full object-cover"
             />
@@ -68,7 +75,7 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]">{mentorData.nickname}</span>
+              <span className="text-[#94939B] text-[14px]">{menteeData.nickname}</span>
             </div>
             <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
               <Mail
@@ -77,7 +84,7 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]">{mentorData.email}</span>
+              <span className="text-[#94939B] text-[14px]">{menteeData.email}</span>
             </div>
           </div>
         </div>
@@ -91,7 +98,7 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
               color="#94939b"
               className="mr-2.5"
             />
-            <span className="text-[#94939B] text-[14px]">{mentorData.education.schoolName}</span>
+            <span className="text-[#94939B] text-[14px]">{menteeData.education.schoolName}</span>
           </div>
           <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
             <BriefcaseBusiness
@@ -100,20 +107,11 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
               color="#94939b"
               className="mr-3 ml-0.5"
             />
-            <span className="text-[#94939B] text-[14px]">{mentorData.organization.role} {mentorData.organization.experience}</span>
-          </div>
-          <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
-            <BriefcaseBusiness
-              size={22}
-              strokeWidth={1.0}
-              color="#94939b"
-              className="mr-3 ml-0.5"
-            />
-            <span className="text-[#94939B] text-[14px]">{mentorData.organization.name}</span>
+            <span className="text-[#94939B] text-[14px]">{menteeData.education.major}</span>
           </div>
         </div>
       </div>
     );
 };
 
-export default EditProfileSection;
+export default EditProfileSectionMentee;
