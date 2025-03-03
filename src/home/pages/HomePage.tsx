@@ -60,18 +60,18 @@ export default function HomePage() {
   ];
 
   const categories = [
-    { name: '마케팅', icon: '📢' },
-    { name: '서비스 기획', icon: '📅' },
-    { name: '디자인', icon: '✏️' },
-    { name: '개발', icon: '💻' },
-    { name: '대학원', icon: '🎓' },
-    { name: '인사', icon: '👤' },
-    { name: '영업', icon: '📊' },
-    { name: '금융', icon: '💰' },
-    { name: '데이터', icon: '📈' },
-    { name: '의료', icon: '💜' },
-    { name: '법률', icon: '🏛️' },
-    { name: '전체', icon: '🌍' },
+    { name: '마케팅', icon: '/assets/main/marketing.png' },
+    { name: '서비스 기획', icon: '/assets/main/service_planning.png' },
+    { name: '디자인', icon: '/assets/main/design.png' },
+    { name: '개발', icon: '/assets/main/develop.png' },
+    { name: '대학원', icon: '/assets/main/graduate_school.png' },
+    { name: '인사', icon: '/assets/main/human_resources.png' },
+    { name: '영업', icon: '/assets/main/sales.png' },
+    { name: '금융', icon: '/assets/main/finance.png' },
+    { name: '데이터', icon: '/assets/main/data.png' },
+    { name: '의료', icon: '/assets/main/medical.png' },
+    { name: '법률', icon: '/assets/main/law.png' },
+    { name: '전체', icon: '/assets/main/overall.png' },
   ];
 
   // 세션 체크가 끝나기 전에는 로딩 화면 표시
@@ -98,24 +98,25 @@ export default function HomePage() {
         </motion.div>
       )}
 
-      {/* 검색창 */}
-      <div className="px-7 mt-14">
-        <div className="flex items-center w-full h-[46px] bg-gray-4 rounded-[30px] px-4">
-          <Search className="w-5 h-5 text-gray-2" />
-          <input
-            type="text"
-            className="w-full bg-gray-4 px-2 text-sm outline-none ml-2"
-            placeholder="회사, 직무, 대학원으로 검색하기"
-          />
-        </div>
+      <div className="p-5 mt-10 ml-5">
+        <img
+          src="/assets/main/mainlogo.png"
+          alt="mainlogo"
+          className="w-auto h-[25px]"
+        />
       </div>
 
-      {/* 카테고리 아이콘 목록 */}
       <div className="grid grid-cols-4 gap-5 px-8 mt-9 text-center">
         {categories.map((category) => (
-          <div key={category.name} className="flex flex-col items-center">
-            <span className="text-2xl">{category.icon}</span>
-            <span className="mt-2 text-sm text-gray-1">{category.name}</span>
+          <div key={category.name} className="flex flex-col items-center gap-2">
+            <img
+              src={category.icon}
+              alt={category.name}
+              className="w-10 h-10 object-contain"
+            />
+            <span className="text-sm text-gray-1 mt-3 leading-none">
+              {category.name}
+            </span>
           </div>
         ))}
       </div>
