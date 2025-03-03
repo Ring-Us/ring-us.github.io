@@ -14,7 +14,8 @@ import MentorInfo from '@/mentorship/pages/MentorInfo';
 import MentorProfileEdit from '@/user/pages/ProfileEdit/MentorProfileEdit';
 import Mypage from '@/user/pages/Mypage';
 import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
-import UpdateProfile from '@/user/pages/UpdateProfile';
+import MentorProfile from '@/user/pages/MentorProfileRegistration';
+import MenteeProfile from '@/user/pages/MenteeProfileRegistration';
 import PaymentPage from '@/user/pages/payment/Payment';
 
 export const Router = () => {
@@ -33,7 +34,9 @@ export const Router = () => {
 
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
-        <Route path="profile" element={<UpdateProfile />} />
+        <Route path="mentor-profile" element={<MentorProfile />} />
+        <Route path="mentee-profile" element={<MenteeProfile />} />
+
         <Route path="mentoredit" element={<MentorProfileEdit />}></Route>
         <Route path="payment" element={<PaymentPage />} />
       </Route>

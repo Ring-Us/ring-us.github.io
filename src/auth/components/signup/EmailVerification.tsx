@@ -41,7 +41,10 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
       setIsCodeSent(true);
       setAttemptCount(0); // 인증번호 재전송 시 시도 횟수 초기화
     } catch (error: any) {
-      setCodeError('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      const serverMessage =
+        error.response?.data?.message ||
+        '서버 오류가 발생했습니다. 나중에 다시 시도해주세요.';
+      setCodeError(`❌ ${serverMessage}`);
     }
   };
 
@@ -65,7 +68,9 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
       if (error.response) {
         const { status, message, remainingAttempts } = error.response.data;
 
-        if (status === 400) {
+        if (message) {
+          errorMsg = `❌ ${message}`; // 서버에서 받은 오류 메시지 그대로 출력
+        } else if (status === 400) {
           setAttemptCount((prev) => prev + 1); // 실패 시 카운트 증가
           const attemptsLeft =
             remainingAttempts ?? MAX_ATTEMPTS - (attemptCount + 1); // 남은 시도 횟수 계산
