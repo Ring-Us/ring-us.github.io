@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Fragment } from 'react'; 
 
-export const UserLayout = () => {
+export const StatusLayout = () => {
   return (
     <Fragment>
       <div className="w-full h-dvh flex justify-center bg-bgCanvasWhite overflow-y-auto overflow-x-hidden">

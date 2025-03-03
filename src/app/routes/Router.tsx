@@ -4,6 +4,7 @@ import { RootLayout } from '@/global/layouts/RootLayout';
 import { AuthLayout } from '@/auth/layouts/AuthLayout';
 import { UserLayout } from '@/user/layouts/UserLayout';
 import { MentorshipLayout } from '@/mentorship/layouts/MentorshipLayout';
+import { StatusLayout } from '@/user/layouts/StatusLayout';
 
 import HomePage from '@/home/pages/HomePage';
 import LandingPage from '@/auth/pages/LandingPage';
@@ -13,6 +14,7 @@ import SignupFinish from '@/auth/components/signup/SignupFinish';
 import Mypage from '@/user/pages/Mypage';
 import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
 import PaymentPage from '@/user/pages/payment/Payment';
+import MenteeStatus from '@/user/pages/status/mentee/Menteestatus';
 
 export const Router = () => {
   return (
@@ -26,10 +28,16 @@ export const Router = () => {
         <Route path="signup" element={<SignUpPage />} />
         <Route path="finish" element={<SignupFinish />} />
       </Route>
+
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
         <Route path="payment" element={<PaymentPage/>}/>
+        <Route path="status" element={<StatusLayout />}>
+          <Route path="mentee" element={<MenteeStatus />} />
+          {/*<Route path="mentor" element={<MentorStatus />} />*/}
         </Route>
+      </Route>
+
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
       </Route>
