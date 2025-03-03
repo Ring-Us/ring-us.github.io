@@ -4,14 +4,15 @@ interface MentorInfoProfileProps {
   role: string;
   experience: number;
   count: string;
+  image: string;
 }
 
-const MentorInfoProfile = ({ nickname, name, role, experience, count }: MentorInfoProfileProps) => {
+const MentorInfoProfile = ({ nickname, name, role, experience, count, image }: MentorInfoProfileProps) => {
     return (
         <div className="text-white px-14 pb-10 pt-6">
             <div className="flex items-center">
                 <img
-                    src="/assets/ringusprofile.png"
+                    src={image || "/assets/ringusprofile.png"}
                     alt="멘토 프로필"
                     className="w-20 h-20 rounded-[50px] border-[1px] border-white object-cover"
                 />

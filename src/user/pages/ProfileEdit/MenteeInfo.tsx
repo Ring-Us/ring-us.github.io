@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import MenteeInfoProfile from '@/user/components/profileInfo/MenteeInfoProfile';
 import MenteeInfoBio from '@/user/components/profileInfo/MenteeInfoBio';
@@ -65,11 +66,11 @@ const MenteeInfo = () => {
 
       {/* 수정 버튼 */}
       <div className="text-center px-4 mb-5 mt-auto">
-        <button 
-          className="w-full h-[56px] bg-[#2C0FBF] text-white rounded-[10px] text-[16px]"
-          onClick={() => navigate("/user/menteeedit")}>
-            수정하기
-        </button>
+        <GlobalButton
+          onClick={() => navigate("/user/menteeedit")}
+        >
+          수정하기
+        </GlobalButton>
       </div>
     </div>
   );

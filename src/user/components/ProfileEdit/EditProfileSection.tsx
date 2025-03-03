@@ -19,11 +19,15 @@ interface EditProfileSectionProps {
       role: string;
       experience: number;
     };
+    image: {
+      fileName: string;
+      filePath: string;
+    };
   };
+  setMentorData: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 프로필 사진 업로드
@@ -31,14 +35,29 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const imageURL = URL.createObjectURL(file);
-      setProfileImage(imageURL);
+
+      setMentorData((prevData: any) => ({
+        ...prevData,
+        image: {
+          fileName: file.name,
+          filePath: imageURL,
+        },
+      }));
+      
       setIsModalOpen(false);
     }
   };
 
   // 기본 프로필로 변경
   const resetProfileImage = () => {
-    setProfileImage(null);
+    setMentorData((prevData: any) => ({
+      ...prevData,
+      image: {
+        fileName: "",
+        filePath: "",
+      },
+    }));
+    
     setIsModalOpen(false);
   };
 
@@ -55,7 +74,7 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
             onClick={() => setIsModalOpen(true)}
           >
             <img 
-              src={profileImage || "/assets/ringusprofile.png"}
+              src={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
               alt="멘토 프로필"
               className="w-full h-full object-cover"
             />
@@ -120,13 +139,13 @@ const EditProfileSection = ({ mentorData }: EditProfileSectionProps) => {
         </div>
 
         {/* 🔹 모달 컴포넌트 사용 */}
-      {isModalOpen && (
-        <EditImageModal
-          onClose={() => setIsModalOpen(false)}
-          onResetProfile={resetProfileImage}
-          onUploadProfile={handleProfileUpload}
-        />
-      )}
+        {isModalOpen && (
+          <EditImageModal
+            onClose={() => setIsModalOpen(false)}
+            onResetProfile={resetProfileImage}
+            onUploadProfile={handleProfileUpload}
+          />
+        )}
     </div>
   );
 };

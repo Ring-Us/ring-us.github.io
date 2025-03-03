@@ -11,6 +11,10 @@ export interface MentorData {
     experience: number;
   };
   count: string;
+  image: {
+    fileName: string;
+    filePath: string;
+  };
 
   introduction: {
     summary: string;
