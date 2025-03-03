@@ -4,6 +4,7 @@ import { User } from 'lucide-react';
 import { Mail } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
+import EditImageModal from "./EditImageModal";
 
 interface EditProfileSectionMenteeProps {
   menteeData: {
@@ -22,6 +23,7 @@ interface EditProfileSectionMenteeProps {
 }
 
 const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSectionMenteeProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 프로필 사진 업로드
   const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,22 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
           filePath: imageURL,
         },
       }));
+
+      setIsModalOpen(false);
     }
+  };
+
+  // 기본 프로필로 변경
+  const resetProfileImage = () => {
+    setMenteeData((prevData: any) => ({
+      ...prevData,
+      image: {
+        fileName: "",
+        filePath: "",
+      },
+    }));
+
+    setIsModalOpen(false);
   };
 
   return (
@@ -47,18 +64,14 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
         <div className="flex items-center ml-5">
 
           {/* 프로필 사진 */}
-          <label className="relative w-20 h-20 rounded-[50px] border-[1px] object-cover overflow-hidden cursor-pointer">
+          <label 
+            className="relative w-20 h-20 rounded-[50px] border-[1px] object-cover overflow-hidden cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          >
             <img 
               src={menteeData.image.filePath || "/assets/ringusprofile.png"}
               alt="멘토 프로필"
               className="w-full h-full object-cover"
-            />
-
-            <input
-              type="file"
-              className="hidden"
-              accept="image/*"
-              onChange={handleProfileUpload}
             />
             
             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
@@ -110,7 +123,16 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
             <span className="text-[#94939B] text-[14px]">{menteeData.education.major}</span>
           </div>
         </div>
-      </div>
+
+        {/* 🔹 모달 컴포넌트 사용 */}
+        {isModalOpen && (
+          <EditImageModal
+            onClose={() => setIsModalOpen(false)}
+            onResetProfile={resetProfileImage}
+            onUploadProfile={handleProfileUpload}
+          />
+        )}
+    </div>
     );
 };
 

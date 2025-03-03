@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { MenteeData } from "@/user/menteetypes";
 import EditProfileSectionMentee from "@/user/components/ProfileEdit/EditProfileSectionMentee";
 import EditBio from "@/user/components/ProfileEdit/EditBio";
+import { GlobalButton } from "@/global/ui/GlobalButton";
 
 const MenteeProfileEdit = () => {
   const navigate = useNavigate();
@@ -64,15 +65,13 @@ const MenteeProfileEdit = () => {
             
       {/* 저장 버튼 */}
       <div className="text-center px-4 mb-5 mt-20">
-        <button 
-          className={`w-full h-[56px] text-white rounded-[10px] text-[16px]
-            ${isFormComplete ? "bg-[#2C0FBF]" : "bg-[#C1B8F2]"}`}
+        <GlobalButton
           // onClick={() => isFormComplete && navigate("/user/menteeinfo")}
           onClick={handleSave}
           disabled={!isFormComplete}
         >
           작성 완료
-        </button>
+        </GlobalButton>
       </div>
     </div>
   );

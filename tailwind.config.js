@@ -61,7 +61,7 @@ export default {
 		authRed: '#E70000',
 		primary: {
 		  '1': '#2C0FBF',
-		  '2': '#AEA0F8',
+		  '2': '#C1B8F2',
 		  '3': '#636AE8',
 		  '4': '#310EE0',
 		},
