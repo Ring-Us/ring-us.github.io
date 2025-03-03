@@ -1,6 +1,5 @@
 import { MentorData } from "@/user/types";
-
-import exit from '@/assets/exit.png';
+import { X } from "lucide-react";
 
 interface EditPortfolioProps {
   mentorData: MentorData;
@@ -67,7 +66,10 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
               <span className="text-[#94939B] ml-1">({(file.size / 1000000).toFixed(1)}MB)</span>
             </div>
             <button onClick={(e) => { e.stopPropagation(); removeFile(index); }}>
-              <img src="/assets/exit.png" alt="exit" className="w-4 h-4" />
+              < X
+                size={16}
+                strokeWidth={1.0}
+              />
             </button>
           </div>
         ))}
