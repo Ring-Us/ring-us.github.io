@@ -1,4 +1,4 @@
-import apiClient from '@/auth/api/apiClient';
+import axiosInstance from '@/global/api/axiosInstance';
 
 export const authApi = async (requestData: {
   memberType: string;
@@ -9,7 +9,7 @@ export const authApi = async (requestData: {
   //console.log('백엔드로 전송할 최종 데이터:', requestData);
 
   try {
-    const response = await apiClient.post(
+    const response = await axiosInstance.post(
       '/v1/auth/signup', // 환경변수를 적용했으므로 상대 경로 사용 가능!
       requestData,
     );
