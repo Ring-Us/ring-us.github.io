@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { MentorData } from "@/user/types";
-import { TimeSelectModal } from "@/mentorship/components/TimeSelectModal";
+import { useState } from 'react';
+import { MentorData } from '@/types';
+import { TimeSelectModal } from '@/mentorship/components/TimeSelectModal';
 
 interface EditTimeProps {
   mentorData: MentorData;
@@ -10,8 +10,8 @@ interface EditTimeProps {
 const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const days = ["월", "화", "수", "목", "금", "토", "일"];
-    
+  const days = ['월', '화', '수', '목', '금', '토', '일'];
+
   // 요일 선택
   const toggleSelection = (day: string) => {
     setMentorData((prev) => ({
@@ -34,7 +34,7 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
           <button
             key={day}
             className={`text-[16px] border-[1px] rounded-[10px] p-2 
-              ${mentorData.availableDays.includes(day) ? "bg-[#F2EFFF] text-primary-1 border-primary-1" : "border-[#94939B] text-[#94939B]"}`}
+              ${mentorData.availableDays.includes(day) ? 'bg-[#F2EFFF] text-primary-1 border-primary-1' : 'border-[#94939B] text-[#94939B]'}`}
             onClick={() => toggleSelection(day)}
           >
             {day}
@@ -51,23 +51,35 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
         {`${mentorData.timezone.startTime.period} ${mentorData.timezone.startTime.hour}:${mentorData.timezone.startTime.minute} ~ ${mentorData.timezone.endTime.period} ${mentorData.timezone.endTime.hour}:${mentorData.timezone.endTime.minute}`}
         <img src="/assets/arrowdown.png" alt="arrowdown" className="w-6 h-6" />
       </button>
-      
+
       {/* 시간대 선택 모달 */}
       <TimeSelectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         startPeriod={mentorData.timezone.startTime.period}
-        setStartPeriod={(value) => setMentorData((prev) => ({ ...prev, startPeriod: value }))}
+        setStartPeriod={(value) =>
+          setMentorData((prev) => ({ ...prev, startPeriod: value }))
+        }
         startHour={mentorData.timezone.startTime.hour}
-        setStartHour={(value) => setMentorData((prev) => ({ ...prev, startHour: value }))}
+        setStartHour={(value) =>
+          setMentorData((prev) => ({ ...prev, startHour: value }))
+        }
         startMinute={mentorData.timezone.startTime.minute}
-        setStartMinute={(value) => setMentorData((prev) => ({ ...prev, startMinute: value }))}
+        setStartMinute={(value) =>
+          setMentorData((prev) => ({ ...prev, startMinute: value }))
+        }
         endPeriod={mentorData.timezone.endTime.period}
-        setEndPeriod={(value) => setMentorData((prev) => ({ ...prev, endPeriod: value }))}
+        setEndPeriod={(value) =>
+          setMentorData((prev) => ({ ...prev, endPeriod: value }))
+        }
         endHour={mentorData.timezone.endTime.hour}
-        setEndHour={(value) => setMentorData((prev) => ({ ...prev, endHour: value }))}
+        setEndHour={(value) =>
+          setMentorData((prev) => ({ ...prev, endHour: value }))
+        }
         endMinute={mentorData.timezone.endTime.minute}
-        setEndMinute={(value) => setMentorData((prev) => ({ ...prev, endMinute: value }))}
+        setEndMinute={(value) =>
+          setMentorData((prev) => ({ ...prev, endMinute: value }))
+        }
       />
     </div>
   );

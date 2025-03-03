@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { MentorData } from "@/user/types";
+import { useState } from 'react';
+import { MentorData } from '@/types';
 
 interface EditHashtagsProps {
   mentorData: MentorData;
@@ -7,7 +7,7 @@ interface EditHashtagsProps {
 }
 
 const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
-  const [newTag, setNewTag] = useState("");
+  const [newTag, setNewTag] = useState('');
 
   // 해시태그 추가 (최대 8개, 글자수 15자 제한)
   const addHashtag = () => {
@@ -15,11 +15,11 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
 
     if (!trimmedTag) return;
     if (mentorData.hashtags.length >= 8) {
-      alert("해시태그는 최대 8개까지 추가할 수 있습니다.");
+      alert('해시태그는 최대 8개까지 추가할 수 있습니다.');
       return;
     }
     if (trimmedTag.length > 15) {
-      alert("해시태그는 최대 15자까지 입력 가능합니다.");
+      alert('해시태그는 최대 15자까지 입력 가능합니다.');
       return;
     }
     if (!mentorData.hashtags.includes(trimmedTag)) {
@@ -27,7 +27,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
         ...prev,
         hashtags: [...prev.hashtags, trimmedTag],
       }));
-      setNewTag("");
+      setNewTag('');
     }
   };
 
@@ -42,21 +42,21 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
   return (
     <div className="px-4 my-2">
       <div className="font-bold text-[16px] my-4">경험 해시태그</div>
-      
+
       {/* 해시태그 목록 */}
       <div className="flex flex-wrap gap-1">
         {mentorData.hashtags.map((tag, index) => (
-          <div key={index} className="flex items-center border rounded-[10px] px-3 py-2 text-[14px]">
+          <div
+            key={index}
+            className="flex items-center border rounded-[10px] px-3 py-2 text-[14px]"
+          >
             #{tag}
-            <button
-              onClick={() => removeHashtag(tag)}
-              className="ml-2"
-            >
+            <button onClick={() => removeHashtag(tag)} className="ml-2">
               <img src="/assets/exit.png" alt="exit" className="w-4 v-4" />
             </button>
           </div>
         ))}
-        
+
         {/* 해시태그 추가 */}
         <div className="flex items-center border rounded-[10px] px-3 py-2 text-[14px]">
           <span className="text-gray-700">#</span>

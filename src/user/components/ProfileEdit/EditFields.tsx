@@ -1,4 +1,4 @@
-import { MentorData } from "@/user/types";
+import { MentorData } from '@/types';
 
 interface EditFieldsProps {
   mentorData: MentorData;
@@ -6,7 +6,6 @@ interface EditFieldsProps {
 }
 
 const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
-
   const toggleSelection = (field: string) => {
     setMentorData((prev) => ({
       ...prev,
@@ -17,10 +16,10 @@ const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
   };
 
   const fields = [
-    { img: "/assets/mentorinfo1.png", title: "취업 준비" },
-    { img: "/assets/mentorinfo2.png", title: "업계 동향" },
-    { img: "/assets/mentorinfo3.png", title: "면접 대비" },
-    { img: "/assets/mentorinfo4.png", title: "커리어 고민" }
+    { img: '/assets/mentorinfo1.png', title: '취업 준비' },
+    { img: '/assets/mentorinfo2.png', title: '업계 동향' },
+    { img: '/assets/mentorinfo3.png', title: '면접 대비' },
+    { img: '/assets/mentorinfo4.png', title: '커리어 고민' },
   ];
 
   return (
@@ -31,10 +30,14 @@ const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
           <button
             key={field.title}
             className={`text-[14px] border-[1px] rounded-[10px] flex flex-col items-center justify-center p-2 
-              ${mentorData.mentoringField.includes(field.title) ? "bg-[#F2EFFF] text-primary-1 border-primary-1" : "border-[#94939B] text-[#94939B]"}`}
+              ${mentorData.mentoringField.includes(field.title) ? 'bg-[#F2EFFF] text-primary-1 border-primary-1' : 'border-[#94939B] text-[#94939B]'}`}
             onClick={() => toggleSelection(field.title)}
           >
-            <img src={field.img} alt={field.title} className="w-[60px] h-[60px]" />
+            <img
+              src={field.img}
+              alt={field.title}
+              className="w-[60px] h-[60px]"
+            />
             <span>{field.title}</span>
           </button>
         ))}
