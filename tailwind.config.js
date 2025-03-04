@@ -9,6 +9,8 @@ export default {
 		sm: '6px',
 	  },
 	  colors: {
+		...require('tailwindcss/colors'),
+
 		background: 'hsl(var(--background))',
 		foreground: 'hsl(var(--foreground))',
 		card: {
@@ -59,7 +61,7 @@ export default {
 		authRed: '#E70000',
 		primary: {
 		  '1': '#2C0FBF',
-		  '2': '#AEA0F8',
+		  '2': '#C1B8F2',
 		  '3': '#636AE8',
 		  '4': '#310EE0',
 		  '5': '#2E12BA',
@@ -117,6 +119,9 @@ export default {
 		},
 		screens: {
 		  'max-420': { max: '420px' }, // 사용자 정의 최대 너비
+		},
+		backgroundImage: {
+			"mentor-gradient": "linear-gradient(135deg, #825EF3 0%, #6C51F6 43%, #674CF3 74%, #5B3FEA 98%)",
 		},
 	  },
 	},
