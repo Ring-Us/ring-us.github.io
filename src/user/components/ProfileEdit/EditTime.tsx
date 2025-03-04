@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { MentorData } from '@/types';
+import { MentorData } from '@/user/types';
 import { TimeSelectModal } from '@/mentorship/components/TimeSelectModal';
+import { ChevronDown } from 'lucide-react';
 
 interface EditTimeProps {
   mentorData: MentorData;
@@ -49,7 +50,7 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
         onClick={() => setIsModalOpen(true)}
       >
         {`${mentorData.timezone.startTime.period} ${mentorData.timezone.startTime.hour}:${mentorData.timezone.startTime.minute} ~ ${mentorData.timezone.endTime.period} ${mentorData.timezone.endTime.hour}:${mentorData.timezone.endTime.minute}`}
-        <img src="/assets/arrowdown.png" alt="arrowdown" className="w-6 h-6" />
+        <ChevronDown size={26} strokeWidth={1.0} color="#94939b" />
       </button>
 
       {/* 시간대 선택 모달 */}

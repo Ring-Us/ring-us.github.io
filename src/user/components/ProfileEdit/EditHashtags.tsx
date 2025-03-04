@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { MentorData } from '@/types';
+import { MentorData } from '@/user/types';
+import { X } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 interface EditHashtagsProps {
   mentorData: MentorData;
@@ -52,7 +54,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
           >
             #{tag}
             <button onClick={() => removeHashtag(tag)} className="ml-2">
-              <img src="/assets/exit.png" alt="exit" className="w-4 v-4" />
+              <X size={16} strokeWidth={1.0} />
             </button>
           </div>
         ))}
@@ -68,7 +70,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
             placeholder="추가"
           />
           <button onClick={addHashtag} className="ml-2">
-            <img src="/assets/add.png" alt="add" className="w-4 v-4" />
+            <Plus size={16} strokeWidth={1.0} />
           </button>
         </div>
       </div>

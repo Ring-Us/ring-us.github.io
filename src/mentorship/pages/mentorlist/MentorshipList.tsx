@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
-import MentorshipHeader from '@/mentorship/components/MentorshipHeader';
-import MentorshipFilterBar from '@/mentorship/components/MentorshipFilterBar';
-import MentorshipSortDropdown from '@/mentorship/components/MentorshipSortDropdown';
-import MentorList from '@/mentorship/components/MentorList';
-import MentorshipFooter from '@/mentorship/components/MentorshipFooter';
+import MentorshipHeader from '@/mentorship/components/mentorlist/MentorshipHeader';
+import MentorshipFilterBar from '@/mentorship/components/mentorlist/MentorshipFilterBar';
+import MentorshipSortDropdown from '@/mentorship/components/mentorlist/MentorshipSortDropdown';
+import MentorList from '@/mentorship/components/mentorlist/MentorList';
 import Footer from '@/global/components/Footer';
-import MentorshipListFilter from '@/mentorship/components/MentorshipListFilter';
+import MentorshipListFilter from '@/mentorship/components/mentorlist/MentorshipListFilter';
 
 const mentorshipData: MentorType[] = [
   {

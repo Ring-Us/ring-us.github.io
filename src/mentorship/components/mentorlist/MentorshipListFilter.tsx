@@ -159,7 +159,7 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
             </h2>
             {/* 닫기 버튼 */}
             <button onClick={onClose} className="p-1">
-              <X className="w-6 h-6 text-gray-1" />
+              <X strokeWidth={1} className="w-6 h-6 text-gray-1" />
             </button>
           </div>
         </div>

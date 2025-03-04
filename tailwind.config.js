@@ -61,9 +61,11 @@ export default {
 		authRed: '#E70000',
 		primary: {
 		  '1': '#2C0FBF',
-		  '2': '#AEA0F8',
+		  '2': '#C1B8F2',
 		  '3': '#636AE8',
 		  '4': '#310EE0',
+		  '5': '#2E12BA',
+		  '6' : '#3715DE',
 		},
 		paymentblue: '#F2EFFF',
 	  },
@@ -119,7 +121,7 @@ export default {
 		  'max-420': { max: '420px' }, // 사용자 정의 최대 너비
 		},
 		backgroundImage: {
-			"mentor-gradient": "linear-gradient(135deg, #9384E2 0%, #5C44DC 43%, #4527D8 74%, #310EE0 98%)",
+			"mentor-gradient": "linear-gradient(135deg, #825EF3 0%, #6C51F6 43%, #674CF3 74%, #5B3FEA 98%)",
 		},
 	  },
 	},

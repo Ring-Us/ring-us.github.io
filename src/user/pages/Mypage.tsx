@@ -63,7 +63,7 @@ export default function MyPage() {
           <div className="flex-1 text-[22px] font-bold text-[#ffffff] text-center">
             마이
           </div>
-          <Search className="w-5 h-5 text-[#ffffff]" />
+          <Search strokeWidth={1} className="m-5 w-5 h-5 text-gray-1" />
         </div>
 
         {/* 프로필 정보 */}

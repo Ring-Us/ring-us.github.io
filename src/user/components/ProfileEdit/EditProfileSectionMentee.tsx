@@ -6,28 +6,23 @@ import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
 import EditImageModal from "./EditImageModal";
 
-interface EditProfileSectionProps {
-  mentorData: {
+interface EditProfileSectionMenteeProps {
+  menteeData: {
     nickname: string;
     email: string;
     education: {
       schoolName: string;
       major: string;
     };
-    organization: {
-      name: string;
-      role: string;
-      experience: number;
-    };
     image: {
       fileName: string;
       filePath: string;
     };
   };
-  setMentorData: React.Dispatch<React.SetStateAction<any>>;
+  setMenteeData: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionProps) => {
+const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSectionMenteeProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 프로필 사진 업로드
@@ -35,29 +30,29 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const imageURL = URL.createObjectURL(file);
-
-      setMentorData((prevData: any) => ({
+      
+      setMenteeData((prevData: any) => ({
         ...prevData,
         image: {
           fileName: file.name,
           filePath: imageURL,
         },
       }));
-      
+
       setIsModalOpen(false);
     }
   };
 
   // 기본 프로필로 변경
   const resetProfileImage = () => {
-    setMentorData((prevData: any) => ({
+    setMenteeData((prevData: any) => ({
       ...prevData,
       image: {
         fileName: "",
         filePath: "",
       },
     }));
-    
+
     setIsModalOpen(false);
   };
 
@@ -74,7 +69,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
             onClick={() => setIsModalOpen(true)}
           >
             <img 
-              src={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
+              src={menteeData.image.filePath || "/assets/ringusprofile.png"}
               alt="멘토 프로필"
               className="w-full h-full object-cover"
             />
@@ -93,7 +88,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]">{mentorData.nickname}</span>
+              <span className="text-[#94939B] text-[14px]">{menteeData.nickname}</span>
             </div>
             <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
               <Mail
@@ -102,7 +97,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]">{mentorData.email}</span>
+              <span className="text-[#94939B] text-[14px]">{menteeData.email}</span>
             </div>
           </div>
         </div>
@@ -116,7 +111,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
               color="#94939b"
               className="mr-2.5"
             />
-            <span className="text-[#94939B] text-[14px]">{mentorData.education.schoolName}</span>
+            <span className="text-[#94939B] text-[14px]">{menteeData.education.schoolName}</span>
           </div>
           <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
             <BriefcaseBusiness
@@ -125,16 +120,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
               color="#94939b"
               className="mr-3 ml-0.5"
             />
-            <span className="text-[#94939B] text-[14px]">{mentorData.organization.role} {mentorData.organization.experience}</span>
-          </div>
-          <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
-            <BriefcaseBusiness
-              size={22}
-              strokeWidth={1.0}
-              color="#94939b"
-              className="mr-3 ml-0.5"
-            />
-            <span className="text-[#94939B] text-[14px]">{mentorData.organization.name}</span>
+            <span className="text-[#94939B] text-[14px]">{menteeData.education.major}</span>
           </div>
         </div>
 
@@ -147,7 +133,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
           />
         )}
     </div>
-  );
+    );
 };
 
-export default EditProfileSection;
+export default EditProfileSectionMentee;

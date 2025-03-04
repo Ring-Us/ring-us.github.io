@@ -97,7 +97,6 @@ export default function HomePage() {
           로그인 되었습니다.
         </motion.div>
       )}
-
       <div className="p-5 mt-10 ml-5">
         <img
           src="/assets/main/mainlogo.png"
@@ -138,7 +137,10 @@ export default function HomePage() {
                   alt={mentor.name}
                   className="w-[80px] h-[80px] object-cover"
                 />
-                <Bookmark className="absolute top-2 right-2 text-white" />
+                <Bookmark
+                  strokeWidth={1}
+                  className="absolute top-2 right-2 text-white"
+                />
               </div>
               <h3 className="mt-2 text-lg font-semibold">{mentor.name}</h3>
               <p className="text-sm text-gray-2">{mentor.field}</p>

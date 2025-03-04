@@ -11,10 +11,15 @@ export interface MentorData {
     experience: number;
   };
   count: string;
+  image: {
+    fileName: string;
+    filePath: string;
+  };
 
-  summary: string;
-  bio: string;
-
+  introduction: {
+    summary: string;
+    bio: string;
+  };
   availableDays: string[];
   timezone: {
     startTime: {
@@ -33,9 +38,9 @@ export interface MentorData {
   mentoringField: string[];
   hashtags: string[];
   message: string;
-  portfolio: {
+  portfolio: { 
     url: string;
     description: string;
     size: number;
-}[];
+  }[];
 }
