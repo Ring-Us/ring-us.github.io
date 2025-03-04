@@ -14,7 +14,7 @@ const MentorshipHeader: React.FC<MentorshipHeaderProps> = ({
     <div className="w-full max-w-2xl mt-[16px] px-4">
       {/* 검색창 */}
       <div className="w-full p-2 h-[48px] flex items-center bg-gray-6 rounded-[30px]">
-        <Search className="m-5 w-5 h-5 text-gray-1" />
+        <Search strokeWidth={1} className="m-5 w-5 h-5 text-gray-1" />
         <input
           type="text"
           placeholder="회사, 직무, 학과, 닉네임으로 검색하기"

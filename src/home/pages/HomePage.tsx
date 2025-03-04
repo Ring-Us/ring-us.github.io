@@ -101,7 +101,7 @@ export default function HomePage() {
       {/* 검색창 */}
       <div className="px-7 mt-14">
         <div className="flex items-center w-full h-[46px] bg-gray-4 rounded-[30px] px-4">
-          <Search className="w-5 h-5 text-gray-2" />
+          <Search strokeWidth={1} className="w-5 h-5 text-gray-2" />
           <input
             type="text"
             className="w-full bg-gray-4 px-2 text-sm outline-none ml-2"
@@ -137,7 +137,7 @@ export default function HomePage() {
                   alt={mentor.name}
                   className="w-[80px] h-[80px] object-cover"
                 />
-                <Bookmark className="absolute top-2 right-2 text-white" />
+                <Bookmark strokeWidth={1} className="absolute top-2 right-2 text-white" />
               </div>
               <h3 className="mt-2 text-lg font-semibold">{mentor.name}</h3>
               <p className="text-sm text-gray-2">{mentor.field}</p>

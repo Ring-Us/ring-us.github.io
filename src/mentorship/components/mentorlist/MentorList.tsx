@@ -1,6 +1,6 @@
 import React from 'react';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
-import MentorItem from '@/mentorship/components/MentorItem';
+import MentorItem from '@/mentorship/components/mentorlist/MentorItem';
 
 interface MentorListProps {
   mentors: MentorType[];

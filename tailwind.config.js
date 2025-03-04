@@ -64,6 +64,8 @@ export default {
 		  '2': '#C1B8F2',
 		  '3': '#636AE8',
 		  '4': '#310EE0',
+		  '5': '#2E12BA',
+		  '6' : '#3715DE',
 		},
 		paymentblue: '#F2EFFF',
 	  },

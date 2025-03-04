@@ -121,7 +121,7 @@ export default function SignUpPage() {
           }
         }}
       >
-        <ArrowLeft className="w-6 h-6 text-gray-1" />
+        <ArrowLeft strokeWidth={1} className="w-6 h-6 text-gray-1" />
       </button>
 
       {/* 진행률 표시 */}

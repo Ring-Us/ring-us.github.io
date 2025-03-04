@@ -18,7 +18,7 @@ export default function MyPage() {
       {/* 상단바 */}
       <div className="flex justify-between items-center">
         <div></div>
-        <Search className="m-5 w-5 h-5 text-gray-1" />
+        <Search strokeWidth={1} className="m-5 w-5 h-5 text-gray-1" />
       </div>
 
       {/* 프로필 정보 */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
+import { Bookmark } from 'lucide-react';
 
 interface MentorItemProps {
   mentor: MentorType;
@@ -14,14 +15,18 @@ const MentorItem: React.FC<MentorItemProps> = ({
 }) => {
   return (
     <div className="bg-white p-4 border-b relative w-min-[361px]">
-      <img
-        src={
-          isBookmarked ? '/assets/bookmarksaved.png' : '/assets/bookmark.png'
-        }
-        alt="저장 아이콘"
-        className="w-[14px] h-[18px] absolute top-2 right-2 cursor-pointer"
+      <div
+        className="absolute top-2 right-2 cursor-pointer"
         onClick={() => onToggleBookmark(mentor.mName)}
-      />
+         >
+        <Bookmark strokeWidth={1}
+          className={`w-[24px] h-[24px] ${
+            isBookmarked
+              ? 'stroke-primary-4 fill-primary-4'
+              : 'stroke-gray-2 fill-none'
+          }`}
+        />
+      </div>
       <div className="flex items-center space-x-[13px]">
         <img
           src={'/assets/Profile.png'}
