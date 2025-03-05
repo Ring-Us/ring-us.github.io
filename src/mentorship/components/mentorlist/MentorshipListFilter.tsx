@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { X } from 'lucide-react'; // X 닫기 버튼 추가
+import React, { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
 
 interface MentorshipListFilterProps {
   filterType: string;
@@ -140,83 +140,115 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
   selectedSubField,
   onSubFieldSelect,
 }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
   useEffect(() => {
-    // '세부직무'가 아닌 경우 세부직무 선택값 초기화
     if (filterType !== '세부직무') {
       onSubFieldSelect(null);
     }
   }, [filterType, onSubFieldSelect]);
 
+  const handleClose = () => {
+    setIsClosing(true);
+  };
+
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-[600px] h-full bg-[#000] bg-opacity-75 flex justify-center items-end z-50">
-      <div className="bg-[#fff] w-full rounded-t-[20px] p-4 min-h-[366px]">
-        <div className="pl-3 mt-[10px]">
-          {/* 필터 제목 */}
-          <div className="flex justify-between items-center">
-            <h2 className="text-[16px] font-bold">
-              {filterType === '직무' && '직무 선택'}
-              {filterType === '세부직무' && '세부직무 선택'}
-            </h2>
-            {/* 닫기 버튼 */}
-            <button onClick={onClose} className="p-1">
-              <X strokeWidth={1} className="w-6 h-6 text-gray-1" />
-            </button>
-          </div>
-        </div>
-
-        {/* 직무 필터 */}
-        {filterType === '직무' && (
-          <div className="grid grid-cols-3 gap-x-[11px] mt-[34px] gap-y-[13px]">
-            {fieldOptions.map((field) => (
-              <button
-                key={field}
-                onClick={() => {
-                  onFieldSelect(field);
-                  onClose();
-                }}
-                className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${
-                  selectedField === field
-                    ? 'border-primary-1 text-primary-1'
-                    : 'bg-gray-100 text-gray-800'
-                }`}
-              >
-                {field}
+    <>
+      {/* 필터 슬라이드로 닫히도록 */}
+      <style>{`
+        @keyframes slideDown {
+          from {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateY(100%);
+            opacity: 0;
+          }
+        }
+        .animate-slide-out {
+          animation: slideDown 300ms forwards;
+        }
+      `}</style>
+      <div
+        className="fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-[600px] h-full bg-[#000] bg-opacity-75 flex justify-center items-end z-50"
+        onClick={handleClose}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          onAnimationEnd={handleAnimationEnd}
+          className={`bg-[#fff] w-full rounded-t-[20px] p-4 min-h-[366px] ${isClosing ? 'animate-slide-out' : ''}`}
+        >
+          <div className="pl-3 mt-[10px]">
+            <div className="flex justify-between items-center">
+              <h2 className="text-[16px] font-bold">
+                {filterType === '직무' && '직무 선택'}
+                {filterType === '세부직무' && '세부직무 선택'}
+              </h2>
+              <button onClick={handleClose} className="p-1">
+                <X strokeWidth={1} className="w-6 h-6 text-gray-1" />
               </button>
-            ))}
+            </div>
           </div>
-        )}
 
-        {/* 세부직무 필터 */}
-        {filterType === '세부직무' && (
-          <div className="flex flex-col gap-[20px] mt-[34px] mx-auto px-3 mb-[10px]">
-            {selectedField &&
-            subFieldOptions[selectedField] &&
-            subFieldOptions[selectedField].length > 0 ? (
-              subFieldOptions[selectedField].map((subField) => (
+          {filterType === '직무' && (
+            <div className="grid grid-cols-3 gap-x-[11px] mt-[34px] gap-y-[13px]">
+              {fieldOptions.map((field) => (
                 <button
-                  key={subField}
+                  key={field}
                   onClick={() => {
-                    onSubFieldSelect(subField);
-                    onClose();
+                    onFieldSelect(field);
+                    handleClose();
                   }}
-                  className={`rounded-[8px] text-[12px] text-start text-gray-2 ${
-                    selectedSubField === subField
-                      ? ' text-primary-1'
+                  className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${
+                    selectedField === field
+                      ? 'border-primary-1 text-primary-1'
                       : 'bg-gray-100 text-gray-800'
                   }`}
                 >
-                  {subField}
+                  {field}
                 </button>
-              ))
-            ) : (
-              <div className="text-center text-gray-600">
-                먼저 직무를 선택하세요.
-              </div>
-            )}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+
+          {filterType === '세부직무' && (
+            <div className="flex flex-col gap-[20px] mt-[34px] mx-auto px-3 mb-[10px]">
+              {selectedField &&
+              subFieldOptions[selectedField] &&
+              subFieldOptions[selectedField].length > 0 ? (
+                subFieldOptions[selectedField].map((subField) => (
+                  <button
+                    key={subField}
+                    onClick={() => {
+                      onSubFieldSelect(subField);
+                      handleClose();
+                    }}
+                    className={`rounded-[8px] text-[12px] text-start text-gray-2 ${
+                      selectedSubField === subField
+                        ? ' text-primary-1'
+                        : 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
+                    {subField}
+                  </button>
+                ))
+              ) : (
+                <div className="text-center text-gray-2 mt-[20px]">
+                  먼저 직무를 선택하세요.
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

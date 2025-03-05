@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 
-
 interface MentorshipFilterBarProps {
   selectedField: string | null;
   selectedSubField: string | null;
@@ -21,19 +20,29 @@ const MentorshipFilterBar: React.FC<MentorshipFilterBarProps> = ({
           {/* 직무 필터 버튼 */}
           <button
             onClick={() => onFilterClick('직무')}
-            className="pr-2 pl-3 py-1 border-[1px] border-gray-2 rounded-[30px] text-gray-2 text-[12px] flex items-center gap-[4px]"
+            className={`pr-2 pl-3 py-1 border-[1px] rounded-[30px] text-[12px] flex items-center gap-[4px]
+              ${
+                selectedField
+                  ? 'border-primary-4 text-primary-4 bg-paymentblue'
+                  : 'border-gray-2 text-gray-2'
+              }`}
           >
             {selectedField ? selectedField : '직무'}
-            <ChevronDown strokeWidth={1}/>
+            <ChevronDown strokeWidth={1} />
           </button>
 
-          {/* 직무/세부직무 필터 버튼 */}
+          {/* 세부직무 필터 버튼 */}
           <button
             onClick={() => onFilterClick('세부직무')}
-            className="pr-2 pl-3 py-1 border-[1px] border-gray-2 rounded-[30px] text-gray-2 text-[12px] flex items-center gap-[4px]"
+            className={`pr-2 pl-3 py-1 border-[1px] rounded-[30px] text-[12px] flex items-center gap-[4px]
+              ${
+                selectedSubField
+                  ? 'border-primary-4 text-primary-4 bg-paymentblue'
+                  : 'border-gray-2 text-gray-2'
+              }`}
           >
             {selectedSubField ? selectedSubField : '세부직무'}
-            <ChevronDown strokeWidth={1}/>
+            <ChevronDown strokeWidth={1} />
           </button>
         </div>
       </div>
