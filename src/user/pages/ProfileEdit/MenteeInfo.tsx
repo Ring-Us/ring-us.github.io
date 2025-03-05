@@ -37,7 +37,7 @@ const MenteeInfo = () => {
       <div className="bg-mentor-gradient rounded-b-[30px]">
 
         {/* 헤더 */}
-        <div className="flex justify-between items-center mx-6 mt-[30px]">
+        <div className="flex justify-between items-center mx-4 mt-[30px]">
           <ArrowLeft
             size={24}
             strokeWidth={1.0}

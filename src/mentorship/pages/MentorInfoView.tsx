@@ -30,7 +30,7 @@ const MentorInfoView = () => {
         role: "브랜드 마케팅/카피라이팅",
         experience: 6,
       },
-      count: "716",
+      count: 716,
       image: {
         fileName: "",
         filePath: "",
@@ -75,7 +75,7 @@ const MentorInfoView = () => {
       <div className="bg-mentor-gradient rounded-b-[30px]">
 
         {/* 헤더 */}
-        <div className="flex justify-between mx-6 mt-[30px]">
+        <div className="flex justify-between mx-4 mt-[30px]">
           <ArrowLeft
             size={24}
             strokeWidth={1.0}
@@ -131,7 +131,7 @@ const MentorInfoView = () => {
       {/* 멘토링 제안하기 버튼 */}
       <div className="text-center px-4 mb-5 mt-10">
         <GlobalButton
-          onClick={() => navigate("/mentorship")}
+          onClick={() => navigate("/mentorship/suggestion")}
         >
           멘토링 제안하기
         </GlobalButton>

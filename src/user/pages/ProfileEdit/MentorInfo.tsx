@@ -28,7 +28,7 @@ const MentorInfo = () => {
         role: "브랜드 마케팅/카피라이팅",
         experience: 6,
       },
-      count: "716",
+      count: 716,
       image: {
         fileName: "",
         filePath: "",
@@ -62,7 +62,7 @@ const MentorInfo = () => {
       <div className="bg-mentor-gradient rounded-b-[30px]">
 
         {/* 헤더 */}
-        <div className="flex justify-between items-center mx-6 mt-[30px]">
+        <div className="flex justify-between items-center mx-4 mt-[30px]">
           <ArrowLeft
             size={24}
             strokeWidth={1.0}

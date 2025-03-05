@@ -10,7 +10,7 @@ interface EditBioProps {
 
 const EditBio = ({ mentorData, setMentorData, menteeData, setMenteeData }: EditBioProps) => {
 
-  if (!mentorData && !menteeData) return null; // 데이터가 없으면 렌더링 X
+  if (!mentorData && !menteeData) return null;
 
   return (
     <div className="px-4 my-2">

@@ -3,7 +3,7 @@ interface MentorInfoProfileProps {
   name: string;
   role: string;
   experience: number;
-  count: string;
+  count: number;
   image: string;
 }
 
