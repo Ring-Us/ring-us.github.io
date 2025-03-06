@@ -25,10 +25,10 @@ function Calendar({
       locale={ko}
       month={currentMonth}
       onMonthChange={setCurrentMonth}
-      className={cn("", className)}
+      className={cn("w-full", className)}
       disabled={(date) => date.getMonth() !== currentMonth.getMonth()}
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        months: "w-full flex flex-col space-y-4",
         month: "space-y-4",
         caption: "flex justify-between py-0 relative items-center",
         caption_label: "text-[16px] font-medium",
@@ -43,7 +43,7 @@ function Calendar({
         head_cell: "w-10 text-[12px] text-[#878787] font-medium",
         row: "flex justify-between mt-0 px-2",
         cell: cn(
-          "relative text-center focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
+          "relative text-center focus-within:relative focus-within:z-20",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
@@ -56,7 +56,7 @@ function Calendar({
         day_range_end: "day-range-end",
         day_selected:
           "bg-[#512DF1] text-white focus:bg-[#512DF1] focus:text-white",
-        day_today: "bg-accent",
+        day_today: "",
         day_outside:
           "day-outside opacity-40",
         day_disabled: "opacity-40 text-[#878787]",

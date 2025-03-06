@@ -11,10 +11,10 @@ const Suggestion = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen flex flex-col relative overflow-y-auto">
+    <div className="h-screen flex flex-col relative overflow-hidden">
 
       {/* 헤더 */}
-      <div className="flex justify-between items-center mx-4 mt-[30px]">
+      <div className="sticky flex justify-between items-center px-4 py-3 border-b">
         <ArrowLeft
           size={24}
           strokeWidth={1.0}
@@ -25,7 +25,7 @@ const Suggestion = () => {
         <div className="w-6 h-6"></div>
       </div>
 
-      <div className="pt-3">
+      <div className="overflow-y-auto py-2">
         {/* 설명 */}
         <SuggestInfo />
 
@@ -38,7 +38,7 @@ const Suggestion = () => {
       </div>
 
       {/* 제안하기 버튼 */}
-      <div className="px-4 my-5">
+      <div className="sticky px-4 py-4 border-t">
         <GlobalButton
           onClick={() => navigate("/user/payment")}
         >

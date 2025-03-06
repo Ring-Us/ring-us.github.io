@@ -23,7 +23,7 @@ const DateTimeSelectModal: React.FC<DateTimeSelectModalProps> = ({ isOpen, onClo
   };
 
   return isOpen ? (
-    <div className="fixed inset-0 bg-black/75 flex items-end justify-center">
+    <div className="fixed inset-0 bg-black/75 flex items-end justify-center z-50">
       <div className="bg-white w-full max-w-[600px] h-[90%] rounded-t-[30px] p-8 flex flex-col relative">
 
         {/* 헤더 */}
