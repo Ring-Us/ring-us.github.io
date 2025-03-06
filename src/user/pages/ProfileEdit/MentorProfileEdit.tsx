@@ -60,8 +60,8 @@ const MentorProfileEdit = () => {
 
   // 수정된 내용을 localStorage에 저장하는 함수 (API 연결 시 제거)
   const handleSave = () => {
-    localStorage.setItem("mentorData", JSON.stringify(mentorData)); // ✅ localStorage에 저장
-    navigate("/user/mentorinfo"); // ✅ 수정 완료 후 MentorInfo로 이동
+    localStorage.setItem("mentorData", JSON.stringify(mentorData)); // localStorage에 저장
+    navigate("/user/mentorinfo"); // 수정 완료 후 MentorInfo로 이동
   };
 
   // 작성 완료 버튼 활성화 여부 확인
@@ -71,10 +71,10 @@ const MentorProfileEdit = () => {
     mentorData.availableDays.length > 0;
 
   return (
-    <div className="h-screen flex flex-col relative overflow-y-auto">
+    <div className="h-screen flex flex-col relative overflow-hidden">
 
       {/* 헤더 */}
-      <div className="flex justify-between items-center mx-4 mt-[30px]">
+      <div className="sticky flex justify-between items-center px-4 py-3 h-[55px] border-b">
         <ArrowLeft
           size={24}
           strokeWidth={1.0}
@@ -85,29 +85,33 @@ const MentorProfileEdit = () => {
         <div className="w-6 h-6"></div>
       </div>
           
-      {/* 프로필 섹션 */}
-      <EditProfileSection mentorData={mentorData} setMentorData={setMentorData} />
+      <div className="overflow-y-auto pt-2 pb-4">
 
-      {/* 자기소개 섹션 */}
-      <EditBio mentorData={mentorData} setMentorData={setMentorData} />
-      
-      {/* 선호 시간대 */}
-      <EditTime mentorData={mentorData} setMentorData={setMentorData} />
+        {/* 프로필 섹션 */}
+        <EditProfileSection mentorData={mentorData} setMentorData={setMentorData} />
 
-      {/* 멘토링 분야 */}
-      <EditFields mentorData={mentorData} setMentorData={setMentorData} />
+        {/* 자기소개 섹션 */}
+        <EditBio mentorData={mentorData} setMentorData={setMentorData} />
+        
+        {/* 선호 시간대 */}
+        <EditTime mentorData={mentorData} setMentorData={setMentorData} />
 
-      {/* 멘티에게 전하고 싶은 말 */}
-      <EditMessage mentorData={mentorData} setMentorData={setMentorData} />
-      
-      {/* 경험 해시태그 */}
-      <EditHashtags mentorData={mentorData} setMentorData={setMentorData} />
+        {/* 멘토링 분야 */}
+        <EditFields mentorData={mentorData} setMentorData={setMentorData} />
 
-      {/* 포트폴리오*/}
-      <EditPortfolio mentorData={mentorData} setMentorData={setMentorData} />
-              
+        {/* 멘티에게 전하고 싶은 말 */}
+        <EditMessage mentorData={mentorData} setMentorData={setMentorData} />
+        
+        {/* 경험 해시태그 */}
+        <EditHashtags mentorData={mentorData} setMentorData={setMentorData} />
+
+        {/* 포트폴리오*/}
+        <EditPortfolio mentorData={mentorData} setMentorData={setMentorData} />
+
+      </div>
+
       {/* 저장 버튼 */}
-      <div className="text-center px-4 mb-5 mt-10">
+      <div className="sticky px-4 py-4 border-t">
         <GlobalButton
           onClick={handleSave}
           disabled={!isFormComplete}

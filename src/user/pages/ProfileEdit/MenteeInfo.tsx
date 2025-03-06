@@ -31,41 +31,45 @@ const MenteeInfo = () => {
   });
 
   return (
-    <div className="h-screen flex flex-col relative overflow-y-auto">
+    <div className="h-screen flex flex-col relative overflow-hidden">
 
-      {/* 보라색 */}
-      <div className="bg-mentor-gradient rounded-b-[30px]">
+      <div className="overflow-y-auto">
 
-        {/* 헤더 */}
-        <div className="flex justify-between items-center mx-4 mt-[30px]">
-          <ArrowLeft
-            size={24}
-            strokeWidth={1.0}
-            className="text-white cursor-pointer"
-            onClick={() => navigate("/user")}
+        {/* 보라색 */}
+        <div className="bg-mentor-gradient rounded-b-[30px]">
+
+          {/* 헤더 */}
+          <div className="flex justify-between items-center px-4 py-3 h-[55px]">
+            <ArrowLeft
+              size={24}
+              strokeWidth={1.0}
+              className="text-white cursor-pointer"
+              onClick={() => navigate("/user")}
+            />
+            <span className="text-[20px] text-[#fff] font-[500]">멘티 프로필</span>
+            <div className="w-6 h-6"></div>
+          </div>
+              
+          {/* 프로필 섹션 */}
+          <MenteeInfoProfile 
+            nickname={menteeData.nickname}
+            email={menteeData.email}
+            schoolName={menteeData.education.schoolName}
+            major={menteeData.education.major}
+            image={menteeData.image.filePath}
           />
-          <span className="text-[20px] text-[#fff] font-[500]">멘티 프로필</span>
-          <div className="w-6 h-6"></div>
         </div>
-            
-        {/* 프로필 섹션 */}
-        <MenteeInfoProfile 
-          nickname={menteeData.nickname}
-          email={menteeData.email}
-          schoolName={menteeData.education.schoolName}
-          major={menteeData.education.major}
-          image={menteeData.image.filePath}
+
+        {/* 자기소개 */}
+        <MenteeInfoBio 
+          summary={menteeData.introduction.summary}
+          bio={menteeData.introduction.bio}
         />
       </div>
 
-      {/* 자기소개 */}
-      <MenteeInfoBio 
-        summary={menteeData.introduction.summary}
-        bio={menteeData.introduction.bio}
-      />
 
       {/* 수정 버튼 */}
-      <div className="text-center px-4 mb-5 mt-auto">
+      <div className="sticky text-center px-4 py-4 mt-auto border-t">
         <GlobalButton
           onClick={() => navigate("/user/menteeedit")}
         >

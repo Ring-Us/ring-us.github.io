@@ -14,7 +14,7 @@ const Suggestion = () => {
     <div className="h-screen flex flex-col relative overflow-hidden">
 
       {/* 헤더 */}
-      <div className="sticky flex justify-between items-center px-4 py-3 border-b">
+      <div className="sticky flex justify-between items-center px-4 py-3 h-[55px] border-b">
         <ArrowLeft
           size={24}
           strokeWidth={1.0}
@@ -25,7 +25,7 @@ const Suggestion = () => {
         <div className="w-6 h-6"></div>
       </div>
 
-      <div className="overflow-y-auto py-2">
+      <div className="overflow-y-auto pt-2 pb-4">
         {/* 설명 */}
         <SuggestInfo />
 

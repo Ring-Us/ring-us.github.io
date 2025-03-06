@@ -33,8 +33,8 @@ const MenteeProfileEdit = () => {
 
   // 수정된 내용을 localStorage에 저장하는 함수 (api 연결시 제거)
   const handleSave = () => {
-    localStorage.setItem("menteeData", JSON.stringify(menteeData)); // ✅ localStorage에 저장
-    navigate("/user/menteeinfo"); // ✅ 수정 완료 후 MenteeInfo로 이동
+    localStorage.setItem("menteeData", JSON.stringify(menteeData)); // localStorage에 저장
+    navigate("/user/menteeinfo"); // 수정 완료 후 MenteeInfo로 이동
   };
 
   // 작성 완료 버튼 활성화 여부 확인
@@ -43,10 +43,10 @@ const MenteeProfileEdit = () => {
     menteeData.introduction.bio.trim() !== "";
 
   return (
-    <div className="h-screen flex flex-col relative overflow-y-auto">
+    <div className="h-screen flex flex-col relative overflow-hidden">
 
       {/* 헤더 */}
-      <div className="flex justify-between items-center mx-4 mt-[30px]">
+      <div className="flex justify-between items-center px-4 py-3 h-[55px] border-b">
         <ArrowLeft
           size={24}
           strokeWidth={1.0}
@@ -57,14 +57,18 @@ const MenteeProfileEdit = () => {
           <div className="w-6 h-6"></div>
       </div>
         
-      {/* 프로필 섹션 */}
-      <EditProfileSectionMentee menteeData={menteeData} setMenteeData={setMenteeData} />
+      <div className="overflow-y-auto pt-2 pb-4">
 
-      {/* 자기소개 섹션 */}
-      <EditBio menteeData={menteeData} setMenteeData={setMenteeData} />
+        {/* 프로필 섹션 */}
+        <EditProfileSectionMentee menteeData={menteeData} setMenteeData={setMenteeData} />
+
+        {/* 자기소개 섹션 */}
+        <EditBio menteeData={menteeData} setMenteeData={setMenteeData} />
+        
+      </div>
             
       {/* 저장 버튼 */}
-      <div className="text-center px-4 mb-5 mt-20">
+      <div className="sticky px-4 py-4 border-t">
         <GlobalButton
           // onClick={() => isFormComplete && navigate("/user/menteeinfo")}
           onClick={handleSave}
