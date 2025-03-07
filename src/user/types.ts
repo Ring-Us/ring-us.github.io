@@ -31,14 +31,13 @@ export interface MentorData {
       period: string;
       hour: string;
       minute: string;
-
     };
   };
-    
+
   mentoringField: string[];
   hashtags: string[];
   message: string;
-  portfolio: { 
+  portfolio: {
     url: string;
     description: string;
     size: number;

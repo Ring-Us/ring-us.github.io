@@ -33,7 +33,8 @@ export default function SigninPage() {
       animate={{ y: '0%' }} // 위로 올라오는 애니메이션
       exit={{ y: '100%' }} // 닫힐 때 아래로 내려감
       transition={{ duration: 0.3, ease: 'easeOut' }} // 부드러운 애니메이션 효과
-      className="inset-0 shadow-lg flex flex-col items-center justify-center px-6 relative h-screen"
+      className="inset-0 shadow-lg flex flex-col items-center justify-center px-6 relative h-screen "
+      style={{ height: '100dvh' }}
     >
       {/* 닫기(X) 버튼 추가 */}
       <button
@@ -53,7 +54,7 @@ export default function SigninPage() {
       </div>
 
       {/* 로그인 폼 */}
-      <div className="w-full max-w-[600px] space-y-4">
+      <div className="w-full space-y-4">
         {/* 이메일 입력 */}
         <SigninInput
           type="email"
@@ -107,6 +108,7 @@ export default function SigninPage() {
       {/* 로그인 실패 모달 */}
       {errorMessage && (
         <LoginErrorModal
+          title="로그인 오류"
           message={errorMessage}
           onClose={() => setErrorMessage(null)}
         />

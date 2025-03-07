@@ -158,7 +158,7 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
       )}
 
       {/* 버튼 */}
-      <div className="absolute bottom-16 w-full flex gap-2">
+      <div className="absolute bottom-[34px] w-full flex gap-2">
         {!isCodeSent ? (
           <GlobalButton
             onClick={handleSendCode}

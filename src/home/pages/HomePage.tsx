@@ -84,7 +84,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="h-fullflex flex-col relative">
       {/* 로그인 성공 메시지 */}
       {showLoginMessage && (
         <motion.div
@@ -97,7 +97,8 @@ export default function HomePage() {
           로그인 되었습니다.
         </motion.div>
       )}
-      <div className="p-5 mt-10 ml-5">
+      {/* 메인 로고 */}
+      <div className="p-5 mt-3 ml-3">
         <img
           src="/assets/main/mainlogo.png"
           alt="mainlogo"
@@ -105,7 +106,7 @@ export default function HomePage() {
         />
       </div>
 
-      <div className="grid grid-cols-4 gap-5 px-8 mt-9 text-center">
+      <div className="grid grid-cols-4 gap-5 px-8 mt-5 text-center">
         {categories.map((category) => (
           <div key={category.name} className="flex flex-col items-center gap-2">
             <img
@@ -121,7 +122,7 @@ export default function HomePage() {
       </div>
 
       {/* 추천 멘토 섹션 */}
-      <div className="mt-14 px-7">
+      <div className="mt-14 px-7 mb-20">
         <h2 className="text-lg font-semibold">
           회원님이 관심있어 할 멘토 추천
         </h2>

@@ -104,7 +104,7 @@ const UsagePolicy = ({
       </div>
 
       {/* 다음 버튼 */}
-      <div className="absolute bottom-16 w-full">
+      <div className="absolute bottom-[34px] w-full">
         <GlobalButton
           variant={isAllRequiredChecked ? 'default' : 'secondary'}
           onClick={onNext}

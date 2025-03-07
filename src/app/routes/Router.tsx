@@ -21,7 +21,7 @@ import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
 import MentorProfile from '@/user/pages/MentorProfileRegistration';
 import MenteeProfile from '@/user/pages/MenteeProfileRegistration';
 import PaymentPage from '@/user/pages/payment/Payment';
-import MenteeStatus from '@/user/pages/status/mentee/Menteestatus';
+import MenteeStatus from '@/user/pages/status/mentee/MenteeStatus';
 
 export const Router = () => {
   return (

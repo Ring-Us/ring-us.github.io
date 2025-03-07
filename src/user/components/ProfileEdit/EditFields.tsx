@@ -1,4 +1,4 @@
-import { MentorData } from '@/types';
+import { MentorData } from '@/user/types';
 
 interface EditFieldsProps {
   mentorData: MentorData;

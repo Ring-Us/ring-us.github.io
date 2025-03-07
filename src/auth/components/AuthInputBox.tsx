@@ -42,7 +42,7 @@ export function AuthInputBox({
         <input
           id={label}
           type={type}
-          className={`flex-1 h-[45px] pl-2 text-sm focus:outline-none ${className}`}
+          className={`flex-1 h-[45px] pl-2 text-[16px] focus:outline-none ${className}`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
