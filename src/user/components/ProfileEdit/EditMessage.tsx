@@ -1,11 +1,11 @@
-import { MentorData } from "@/user/types";
+import { MentorData } from '@/user/types';
 
 interface EditMessageProps {
   mentorData: MentorData;
   setMentorData: React.Dispatch<React.SetStateAction<MentorData>>;
 }
 
-const EditMessage = ({ mentorData, setMentorData }: EditMessageProps) => {  
+const EditMessage = ({ mentorData, setMentorData }: EditMessageProps) => {
   return (
     <div className="px-4 my-2">
       <div className="font-bold text-[16px] my-4">멘티에게 전하고 싶은 말</div>

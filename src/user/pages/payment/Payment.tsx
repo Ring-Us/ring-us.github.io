@@ -8,10 +8,10 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 
 const PaymentPage = () => {
   return (
-    <div className="p-4 pt-0 min-h-screen flex flex-col overflow-auto">
+    <div className="p-4 pt-0 h-screen flex flex-col overflow-auto">
       {/* 헤더 */}
       <PaymentHeader />
-      
+
       <div className="flex flex-col gap-[28px] mt-[12px]">
         {/* 제안 멘토 */}
         <MentorSection />
@@ -26,14 +26,12 @@ const PaymentPage = () => {
         <PaymentMethodSection />
       </div>
 
-        {/* 정책 */}
-        <PolicySection />
+      {/* 정책 */}
+      <PolicySection />
 
-        <div className="flex bottom-0 left-0 w-full mx-auto bg-white py-4 z-50">
-            <GlobalButton>
-                결제하기
-            </GlobalButton>
-        </div>
+      <div className="flex bottom-0 left-0 w-full mx-auto bg-white py-4 z-50">
+        <GlobalButton>결제하기</GlobalButton>
+      </div>
     </div>
   );
 };

@@ -1,9 +1,11 @@
 interface LoginErrorModalProps {
+  title: string;
   message: string;
   onClose: () => void;
 }
 
 export default function LoginErrorModal({
+  title,
   message,
   onClose,
 }: LoginErrorModalProps) {
@@ -17,10 +19,11 @@ export default function LoginErrorModal({
           className="w-full m-14 max-w-[600px] bg-[#ffffff] rounded-[15px] shadow-lg p-6 text-center relative"
           onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫힘 방지
         >
-          <p className="text-gray-1">{message}</p>
+          <h2 className="mt-2 text-lg font-bold">{title}</h2>
+          <p className="mt-4 text-gray-1">{message}</p>
           <button
             onClick={onClose}
-            className="mt-4 w-full py-2 bg-[#130c0c] text-[#ffffff] rounded-lg"
+            className="mt-7 w-full py-3 bg-primary-1 text-[#ffffff] rounded-lg"
           >
             확인
           </button>

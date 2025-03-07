@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import apiClient from '@/auth/api/apiClient';
+import axiosInstance from '@/global/api/axiosInstance';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -17,7 +17,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   login: async (email, password) => {
     try {
-      const response = await apiClient.post('/v1/auth/login', {
+      const response = await axiosInstance.post('/v1/auth/login', {
         email,
         password,
       });
@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: async () => {
     try {
-      await apiClient.post('/v1/auth/logout');
+      await axiosInstance.post('/v1/auth/logout');
       set({ isAuthenticated: false, user: null, isSessionChecked: true }); // 로그아웃 후에도 isSessionChecked 유지
     } catch (error) {
       console.error('❌ 로그아웃 실패:', error);
@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   checkSession: async () => {
     try {
-      const response = await apiClient.get('/v1/members/check-session');
+      const response = await axiosInstance.get('/v1/members/check-session');
       set({ isAuthenticated: true, isSessionChecked: true });
     } catch (error: any) {
       if (error.response?.status === 401) {

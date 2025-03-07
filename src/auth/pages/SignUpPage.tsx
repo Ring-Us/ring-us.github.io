@@ -109,10 +109,10 @@ export default function SignUpPage() {
   const progressValue = (currentSection / sections.length) * 100;
 
   return (
-    <div className="h-screen flex flex-col px-6 relative">
+    <div className="h-[100dvh] flex flex-col px-6 relative">
       {/* 뒤로 가기 버튼 */}
       <button
-        className="absolute top-8 left-3 rounded-full"
+        className="absolute top-5 left-3 rounded-full"
         onClick={() => {
           if (currentSection === 0) {
             navigate('/auth/signin'); // 첫 번째 페이지에서 로그인 페이지로 이동

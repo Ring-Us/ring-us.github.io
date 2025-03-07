@@ -18,9 +18,10 @@ import MenteeInfo from '@/user/pages/ProfileEdit/MenteeInfo';
 import MenteeProfileEdit from '@/user/pages/ProfileEdit/MenteeProfileEdit';
 import Mypage from '@/user/pages/Mypage';
 import MentorList from '@/mentorship/pages/mentorlist/MentorshipList';
+import MentorProfile from '@/user/pages/MentorProfileRegistration';
+import MenteeProfile from '@/user/pages/MenteeProfileRegistration';
 import PaymentPage from '@/user/pages/payment/Payment';
-import MenteeStatus from '@/user/pages/status/mentee/Menteestatus';
-
+import MenteeStatus from '@/user/pages/status/mentee/MenteeStatus';
 
 export const Router = () => {
   return (
@@ -38,11 +39,13 @@ export const Router = () => {
 
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
+        <Route path="mentor-profile" element={<MentorProfile />} />
+        <Route path="mentee-profile" element={<MenteeProfile />} />
         <Route path="mentorinfo" element={<MentorInfo />}></Route>
         <Route path="mentoredit" element={<MentorProfileEdit />}></Route>
         <Route path="menteeinfo" element={<MenteeInfo />}></Route>
         <Route path="menteeedit" element={<MenteeProfileEdit />}></Route>
-        <Route path="payment" element={<PaymentPage/>}/>
+        <Route path="payment" element={<PaymentPage />} />
         <Route path="status" element={<StatusLayout />}>
           <Route path="mentee" element={<MenteeStatus />} />
           {/*<Route path="mentor" element={<MentorStatus />} />*/}

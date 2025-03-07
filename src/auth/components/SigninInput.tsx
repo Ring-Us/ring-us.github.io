@@ -35,7 +35,7 @@ export function SigninInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="flex-1 text-[14px] focus:outline-none"
+        className="flex-1 text-[16px] focus:outline-none"
       />
     </div>
   );

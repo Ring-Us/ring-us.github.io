@@ -61,7 +61,7 @@ const RoleSelection = ({
       </div>
 
       {/* 다음으로 버튼 */}
-      <div className="absolute bottom-16 w-full">
+      <div className="absolute bottom-[34px] w-full">
         <GlobalButton
           onClick={() => onNext(selectedRole)}
           variant={selectedRole ? 'default' : 'secondary'} // 역할이 선택되었을 때만 활성화
