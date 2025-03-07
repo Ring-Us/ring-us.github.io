@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
-import MentorshipHeader from '@/mentorship/components/MentorshipHeader';
-import MentorshipFilterBar from '@/mentorship/components/MentorshipFilterBar';
-import MentorshipSortDropdown from '@/mentorship/components/MentorshipSortDropdown';
-import MentorList from '@/mentorship/components/MentorList';
-import MentorshipFooter from '@/mentorship/components/MentorshipFooter';
+import MentorshipHeader from '@/mentorship/components/mentorlist/MentorshipHeader';
+import MentorshipFilterBar from '@/mentorship/components/mentorlist/MentorshipFilterBar';
+import MentorshipSortDropdown from '@/mentorship/components/mentorlist/MentorshipSortDropdown';
+import MentorList from '@/mentorship/components/mentorlist/MentorList';
 import Footer from '@/global/components/Footer';
-import MentorshipListFilter from '@/mentorship/components/MentorshipListFilter';
+import MentorshipListFilter from '@/mentorship/components/mentorlist/MentorshipListFilter';
 
 const mentorshipData: MentorType[] = [
   {
@@ -103,9 +102,8 @@ const mentorshipData: MentorType[] = [
 
 const MentorshipList = () => {
   const [isFooterVisible, setIsFooterVisible] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredMentors, setFilteredMentors] = useState(mentorshipData);
-  const [sortOption, setSortOption] = useState('review');
+  // filteredMentors를 직접 정렬 결과로 관리하거나 useMemo로 파생 데이터로 관리
+  const [sortOption, setSortOption] = useState('respond'); // 기본값을 'respond'로 변경!
   const [filterType, setFilterType] = useState<string | null>(null);
   const [selectedField, setSelectedField] = useState<string | null>(null);
   const [selectedSubField, setSelectedSubField] = useState<string | null>(null);
@@ -133,14 +131,28 @@ const MentorshipList = () => {
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // sortOption 변경 시, mentorshipData를 정렬해서 filteredMentors에 업데이트!
+  const sortedMentors = useMemo(() => {
+    const dataCopy = [...mentorshipData];
+    if (sortOption === 'respond') {
+      // 멘토링 횟수가 많은 순으로 내림차순 정렬
+      dataCopy.sort((a, b) => b.respond - a.respond);
+    } else if (sortOption === 'mYear') {
+      // mYear가 '5년차' 같은 문자열이므로 숫자만 추출해서 오름차순 정렬
+      dataCopy.sort((a, b) => {
+        const yearA = parseInt(a.mYear);
+        const yearB = parseInt(b.mYear);
+        return yearA - yearB;
+      });
+    }
+    return dataCopy;
+  }, [sortOption]);
+
   return (
     <div className="h-screen flex flex-col bg-gray-100 relative">
       {/* 헤더 */}
-      <div className="sticky top-0 w-full max-w-[600px] mx-auto bg-gray-100 z-20">
-        <MentorshipHeader
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-        />
+      <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-gray-100 z-20">
+        <MentorshipHeader />
         <MentorshipFilterBar
           selectedField={selectedField}
           selectedSubField={selectedSubField}
@@ -156,10 +168,10 @@ const MentorshipList = () => {
       {/* 스크롤 영역 */}
       <div
         ref={scrollContainerRef}
-        className="flex-grow overflow-y-auto pb-[60px] no-scrollbar"
+        className="flex-grow overflow-y-auto pb-[60px] mt-[16px] no-scrollbar"
       >
         <MentorList
-          mentors={filteredMentors}
+          mentors={sortedMentors}  // 정렬된 리스트를 전달
           bookmarked={bookmarked}
           onToggleBookmark={(mName) =>
             setBookmarked((prev) => ({ ...prev, [mName]: !prev[mName] }))
@@ -180,7 +192,6 @@ const MentorshipList = () => {
       )}
 
       {/* 푸터 */}
-      {/* <MentorshipFooter isVisible={isFooterVisible} /> */}
       <Footer />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
-import MentorItem from '@/mentorship/components/MentorItem';
+import MentorItem from '@/mentorship/components/mentorlist/MentorItem';
 
 interface MentorListProps {
   mentors: MentorType[];
@@ -14,7 +14,7 @@ const MentorList: React.FC<MentorListProps> = ({
   onToggleBookmark,
 }) => {
   return (
-    <div className="w-full px-[16px] pt-[4px] space-y-4">
+    <div className="w-full px-0 pt-[4px] space-y-4">
       {mentors.length > 0 ? (
         mentors.map((mentor) => (
           <MentorItem

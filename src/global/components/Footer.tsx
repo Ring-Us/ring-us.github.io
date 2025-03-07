@@ -6,14 +6,14 @@ const Footer = () => {
   const location = useLocation();
 
   const menuItems = [
-    { name: '홈', path: '/', icon: <Home size={24} /> },
+    { name: '홈', path: '/', icon: <Home size={24} strokeWidth={1}/> },
     {
       name: '멘토링 현황',
       path: '/mentorship',
-      icon: <ClipboardList size={24} />,
+      icon: <ClipboardList size={24} strokeWidth={1}/>,
     },
-    { name: '북마크', path: '/bookmark', icon: <Bookmark size={24} /> },
-    { name: '마이', path: '/user', icon: <User size={24} /> },
+    { name: '북마크', path: '/bookmark', icon: <Bookmark size={24} strokeWidth={1}/> },
+    { name: '마이', path: '/user', icon: <User size={24} strokeWidth={1}/> },
   ];
 
   return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IoChevronDownSharp } from "react-icons/io5";
+import { ChevronDown } from 'lucide-react';
 
 const CouponSection = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,9 +13,10 @@ const CouponSection = () => {
         <div className={selectedCoupon === "선택" ? "text-gray-2" : "text-[#000]"}>
           {selectedCoupon}
         </div>
-        <IoChevronDownSharp 
-          className="h-[24px] w-[24px] text-gray-2 stroke-[3]" 
-          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} 
+        <ChevronDown
+          strokeWidth={1}
+          className="h-[24px] w-[24px] text-gray-2"
+          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
         />
       </div>
       {isOpen && (

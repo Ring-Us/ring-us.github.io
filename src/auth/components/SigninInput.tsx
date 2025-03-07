@@ -27,7 +27,7 @@ export function SigninInput({
     <div className="flex items-center w-full h-[55px] px-4 border rounded-md border-gray-3 focus-within:border-primary-1">
       {/* Lucide 아이콘 */}
       <div className="mr-4 text-gray-2">
-        <LucideIcon className="w-6 h-6" />
+        <LucideIcon strokeWidth={1} className="w-6 h-6" />
       </div>
       {/* 입력 필드 */}
       <input
@@ -35,7 +35,7 @@ export function SigninInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="flex-1 text-[14px] focus:outline-none"
+        className="flex-1 text-[16px] focus:outline-none"
       />
     </div>
   );

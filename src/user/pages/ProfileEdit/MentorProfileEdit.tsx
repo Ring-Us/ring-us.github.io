@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from "lucide-react";
-import { GlobalButton } from "@/global/ui/GlobalButton";
+import { ArrowLeft } from 'lucide-react';
+import { GlobalButton } from '@/global/ui/GlobalButton';
 
-import { MentorData } from "@/user/types";
-import EditProfileSection from "@/user/components/ProfileEdit/EditProfileSection";
-import EditBio from "@/user/components/ProfileEdit/EditBio";
-import EditFields from "@/user/components/ProfileEdit/EditFields";
-import EditTime from "@/user/components/ProfileEdit/EditTime";
-import EditMessage from "@/user/components/ProfileEdit/EditMessage";
-import EditHashtags from "@/user/components/ProfileEdit/EditHashtags";
-import EditPortfolio from "@/user/components/ProfileEdit/EditPortfolio";
+import { MentorData } from '@/user/types';
+import EditProfileSection from '@/user/components/ProfileEdit/EditProfileSection';
+import EditBio from '@/user/components/ProfileEdit/EditBio';
+import EditFields from '@/user/components/ProfileEdit/EditFields';
+import EditTime from '@/user/components/ProfileEdit/EditTime';
+import EditMessage from '@/user/components/ProfileEdit/EditMessage';
+import EditHashtags from '@/user/components/ProfileEdit/EditHashtags';
+import EditPortfolio from '@/user/components/ProfileEdit/EditPortfolio';
 
 const MentorProfileEdit = () => {
   const navigate = useNavigate();
-
+  
   // 테스트용 멘티 데이터 && localStorage에서 데이터 불러오기 (api 연결시 제거)
   const [mentorData, setMentorData] = useState<MentorData>(() => {
     const savedData = localStorage.getItem("mentorData");
@@ -44,16 +44,16 @@ const MentorProfileEdit = () => {
         startTime: { period: "오전", hour: "10", minute: "00"},
         endTime: { period: "오후", hour: "18", minute: "00"},
       },
-
-      mentoringField: ["취업 준비", "커리어 고민"],
-      hashtags: ["마케팅", "브랜드마케팅",],
-      message: "안녕하세요, 멘티 여러분!\n브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.",
+      mentoringField: ['취업 준비', '커리어 고민'],
+      hashtags: ['마케팅', '브랜드마케팅'],
+      message:
+        '안녕하세요, 멘티 여러분!\n브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.',
       portfolio: [
         {
-          url: "https://example.com/portfolio1.pdf",
-          description: "브랜드 마케팅 포트폴리오.pdf",
+          url: 'https://example.com/portfolio1.pdf',
+          description: '브랜드 마케팅 포트폴리오.pdf',
           size: 25000000,
-        },
+         },
       ],
     };
   });
@@ -66,13 +66,13 @@ const MentorProfileEdit = () => {
 
   // 작성 완료 버튼 활성화 여부 확인
   const isFormComplete =
-    mentorData.introduction.summary.trim() !== "" &&
-    mentorData.introduction.bio.trim() !== "" &&
+    mentorData.introduction.summary.trim() !== '' &&
+    mentorData.introduction.bio.trim() !== '' &&
     mentorData.availableDays.length > 0;
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
-
+      
       {/* 헤더 */}
       <div className="sticky flex justify-between items-center px-4 py-3 h-[55px] border-b">
         <ArrowLeft
