@@ -15,7 +15,7 @@ const MenteeCertification = ({
   selectedFile,
 }: MenteeCertificationProps) => {
   return (
-    <div className="relative h-full flex flex-col w-full">
+    <div className="h-[calc(100dvh-10dvh)] flex flex-col relative">
       <FileUpload
         title="학생 인증을 완료해주세요!"
         description="* 재학 증명서, 학생증, 졸업 증명서가 해당됩니다."
@@ -24,7 +24,7 @@ const MenteeCertification = ({
         isUploading={isUploading}
       />
 
-      <div className="absolute bottom-16 w-full flex justify-between">
+      <div className="absolute bottom-[34px] w-full">
         <GlobalButton
           variant={selectedFile ? 'default' : 'secondary'}
           onClick={onSubmit}

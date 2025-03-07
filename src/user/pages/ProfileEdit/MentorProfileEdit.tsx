@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
-import { MentorData } from '@/types';
+import { MentorData } from '@/user/types';
 import EditProfileSection from '@/user/components/ProfileEdit/EditProfileSection';
 import EditBio from '@/user/components/ProfileEdit/EditBio';
 import EditFields from '@/user/components/ProfileEdit/EditFields';

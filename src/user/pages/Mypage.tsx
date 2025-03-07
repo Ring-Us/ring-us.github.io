@@ -4,19 +4,25 @@ import { useAuthStore } from '@/auth/store/useAuthStore';
 import axiosInstance from '@/global/api/axiosInstance';
 import { Search } from 'lucide-react';
 import Footer from '@/global/components/Footer';
+import MypageModal from '@/user/components/MypageModal';
 
 export default function MyPage() {
   const { isAuthenticated, logout } = useAuthStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [isProfileRegistered, setIsProfileRegistered] = useState(false); // 추가: 상태 분리
 
-  // 백엔드에서 유저 정보 가져오기 (MyPage 내에서만 관리)
+  // 백엔드에서 유저 정보 가져오기
   const fetchUserData = async () => {
     try {
       const response = await axiosInstance.get('/v1/members/me');
-      setUserData(response.data.data);
-      console.log('사용자 정보: ', response.data.data);
+      //console.log('📌 응답 데이터:', response.data.data);
+
+      if (response.data.data) {
+        setUserData(response.data.data);
+      }
     } catch (error) {
       console.error('❌ 사용자 정보 불러오기 실패:', error);
     } finally {
@@ -26,11 +32,30 @@ export default function MyPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchUserData(); // 로그인한 경우만 요청
+      fetchUserData();
     } else {
       setLoading(false);
+      setShowModal(true);
     }
   }, [isAuthenticated]);
+
+  // userData가 업데이트될 때 isProfileRegistered 값 업데이트
+  useEffect(() => {
+    if (userData) {
+      setIsProfileRegistered(userData.isProfileRegisterd); // 프로필 등록 여부 반영
+    }
+  }, [userData]);
+
+  // 로그인 모달 버튼 핸들러
+  const handleConfirm = () => {
+    setShowModal(false);
+    navigate('/auth/signin');
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate('/');
+  };
 
   // 로그아웃 처리
   const handleLogout = () => {
@@ -38,15 +63,17 @@ export default function MyPage() {
     navigate('/auth/signin');
   };
 
-  // 프로필 등록 여부 & 멘토/멘티 확인
-  const isProfileRegistered = userData?.isProfileRegisterd;
+  // 프로필 이미지 설정 (기본값 포함)
+  const profileImageUrl =
+    isProfileRegistered && userData?.imgUrl
+      ? userData.imgUrl
+      : '/assets/ringusprofile.png';
   const isMentor = userData?.memberType === 'MENTOR';
   const profileEditPath = isMentor ? '/user/mentoredit' : '/user/menteeedit';
   const profileRegistrationPath = isMentor
     ? '/user/mentor-profile'
     : '/user/mentee-profile';
 
-  // 로딩 상태 표시
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -57,31 +84,40 @@ export default function MyPage() {
 
   return (
     <div className="relative mx-auto w-full h-screen">
+      {/* 로그인 모달 */}
+      {showModal && (
+        <MypageModal
+          title="로그인하기"
+          message="로그인이 필요합니다.<br> 로그인 페이지로 이동하시겠습니까?"
+          onConfirm={handleConfirm}
+          onClose={handleCloseModal}
+        />
+      )}
+
       {/* 상단바 */}
       <div className="bg-mentor-gradient pt-6">
         <div className="flex items-center w-full px-5">
-          <div className="flex-1 text-[22px] font-bold text-[#ffffff] text-center">
+          <div className="flex-1 text-[22px] font-bold text-[#ffffff] text-center pl-5">
             마이
           </div>
-          <Search strokeWidth={1} className="m-5 w-5 h-5 text-gray-1" />
+          <Search strokeWidth={1} className="w-5 h-5 text-[#ffffff]" />
         </div>
 
         {/* 프로필 정보 */}
-        {isAuthenticated ? (
-          <div className="flex flex-row items-center p-7 mt-4 space-x-4">
-            <div className="w-20 h-20 bg-gray-3 rounded-[50px]"></div>
-            <p className="pl-2 text-[#ffffff]">
-              {isProfileRegistered ? userData.email : '프로필을 등록해주세요'}
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-row items-center p-7 mt-4 space-x-4">
-            <div className="w-20 h-20 bg-gray-3 rounded-[50px]"></div>
-            <p className="pl-2 text-[#ffffff] font-semibold">
-              로그인 후 프로필을 등록해주세요
-            </p>
-          </div>
-        )}
+        <div className="flex flex-row items-center p-7 mt-4 space-x-4">
+          <img
+            src={profileImageUrl}
+            alt="프로필"
+            className="w-20 h-20 rounded-[50px] object-cover"
+          />
+          <p className="pl-2 text-[#ffffff]">
+            {isAuthenticated
+              ? isProfileRegistered
+                ? userData?.email
+                : '프로필을 등록해주세요'
+              : '로그인 후 프로필을 등록해주세요'}
+          </p>
+        </div>
       </div>
 
       {/* 메뉴 리스트 */}

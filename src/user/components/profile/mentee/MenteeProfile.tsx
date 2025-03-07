@@ -46,48 +46,48 @@ const MenteeProfile = ({
     menteeData.education.major.trim().length > 0;
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-15vh)] overflow-hidden">
-      {/* 상단 제목 */}
-      <div className="flex-none mt-12">
-        <h3 className="text-xl sm:text-2xl font-bold text-primary-1">
-          프로필을 설정해주세요!
-        </h3>
-        <p className="text-xs text-gray-1 mt-2 mb-5">
-          멘티로서 자신을 소개하는 내용을 입력하세요.
-        </p>
-      </div>
-
-      {/* 프로필 이미지 업로드 */}
-      <div className="flex flex-col items-center mt-4">
-        <div className="relative w-24 h-24 rounded-[50px] bg-gray-3 overflow-hidden">
-          {menteeData.image?.filePath ? (
-            <img
-              src={menteeData.image.filePath}
-              alt="프로필 이미지"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="flex items-center justify-center w-full h-full text-xs text-gray-2">
-              이미지 없음
-            </div>
-          )}
+    <div className="flex flex-col w-full h-[calc(100dvh-15dvh)] overflow-hidden">
+      {/* 아래 버튼을 고정시켜서 그 크기만큼 패딩을 넣어줘야함 */}
+      <div className="flex-grow overflow-y-auto pr-5 pb-24">
+        {/* 상단부분도 마찬가지로 위에 global topNavbar 생각해줘서 mt-20 넣어줌 */}
+        <div className="flex-none pt-10">
+          <h3 className="text-xl sm:text-2xl font-bold text-primary-1">
+            프로필을 설정해주세요!
+          </h3>
+          <p className="text-xs text-gray-1 mt-2 mb-5">
+            멘티로서 자신을 소개하는 내용을 입력하세요.
+          </p>
         </div>
-        <label
-          htmlFor="profile-upload"
-          className="mt-2 mb-4 text-xs text-primary-1 cursor-pointer hover:underline"
-        >
-          프로필 사진 변경
-        </label>
-        <input
-          id="profile-upload"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageUpload}
-        />
-      </div>
 
-      <div className="flex-grow overflow-y-auto pr-5">
+        {/* 프로필 이미지 업로드 */}
+        <div className="flex flex-col items-center mt-4">
+          <div className="relative w-24 h-24 rounded-[50px] bg-gray-3 overflow-hidden">
+            {menteeData.image?.filePath ? (
+              <img
+                src={menteeData.image.filePath}
+                alt="프로필 이미지"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full text-xs text-gray-2">
+                이미지 없음
+              </div>
+            )}
+          </div>
+          <label
+            htmlFor="profile-upload"
+            className="mt-2 mb-4 text-xs text-primary-1 cursor-pointer hover:underline"
+          >
+            프로필 사진 변경
+          </label>
+          <input
+            id="profile-upload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageUpload}
+          />
+        </div>
         {/* 이메일 입력 */}
         <div className="mt-6">
           <AuthInputBox
@@ -164,7 +164,7 @@ const MenteeProfile = ({
       </div>
 
       {/* 완료 버튼 */}
-      <div className="flex-none py-9">
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-[600px] bg-white px-6 py-4 shadow-md">
         <GlobalButton
           onClick={onNext}
           variant={isFormValid ? 'default' : 'secondary'}
