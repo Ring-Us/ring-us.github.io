@@ -8,13 +8,10 @@ interface EditBioProps {
   setMenteeData?: React.Dispatch<React.SetStateAction<MenteeData>>;
 }
 
-const EditBio = ({
-  mentorData,
-  setMentorData,
-  menteeData,
-  setMenteeData,
-}: EditBioProps) => {
-  if (!mentorData && !menteeData) return null; // 데이터가 없으면 렌더링 X
+const EditBio = ({ mentorData, setMentorData, menteeData, setMenteeData }: EditBioProps) => {
+
+  if (!mentorData && !menteeData) return null;
+
   return (
     <div className="px-4 my-2">
       <div className="font-bold text-[16px] my-4">자기소개</div>

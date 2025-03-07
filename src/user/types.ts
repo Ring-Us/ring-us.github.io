@@ -10,7 +10,7 @@ export interface MentorData {
     role: string;
     experience: number;
   };
-  count: string;
+  count: number;
   image: {
     fileName: string;
     filePath: string;

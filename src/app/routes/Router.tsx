@@ -12,6 +12,7 @@ import SignInPage from '@/auth/pages/SignInPage';
 import SignUpPage from '@/auth/pages/SignUpPage';
 import SignupFinish from '@/auth/components/signup/SignupFinish';
 import MentorInfoView from '@/mentorship/pages/MentorInfoView';
+import Suggestion from '@/mentorship/pages/Suggestion';
 import MentorInfo from '@/user/pages/ProfileEdit/MentorInfo';
 import MentorProfileEdit from '@/user/pages/ProfileEdit/MentorProfileEdit';
 import MenteeInfo from '@/user/pages/ProfileEdit/MenteeInfo';
@@ -54,6 +55,7 @@ export const Router = () => {
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
         <Route path="info" element={<MentorInfoView />} />
+        <Route path="suggestion" element={<Suggestion />} />
       </Route>
     </Routes>
   );
