@@ -1,91 +1,85 @@
 import { useState } from 'react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import FileUpload from '@/user/components/FileUpload';
-import MentorProfile from '@/user/components/profile/mentor/MentorProfile1'; // 프로필 설정 컴포넌트 추가
 
-const MentorCertification = ({
-  onNext,
-}: {
-  onNext: (uploadedFiles: (File | null)[]) => void;
-}) => {
+interface MentorCertificationProps {
+  onSubmit: (files: {
+    enrollment: File | null;
+    certification: File | null;
+  }) => void;
+}
+
+const MentorCertification = ({ onSubmit }: MentorCertificationProps) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [uploadedFiles, setUploadedFiles] = useState<(File | null)[]>([
-    null,
-    null,
-  ]);
+  const [certificateFiles, setCertificateFiles] = useState<{
+    enrollment: File | null;
+    certification: File | null;
+  }>({
+    enrollment: null,
+    certification: null,
+  });
 
+  // 파일 업로드 핸들러
+  const handleFileUpload = (
+    file: File | null,
+    type: 'ENROLLMENT' | 'GRADUATION' | 'EMPLOYMENT',
+  ) => {
+    setCertificateFiles((prev) => ({
+      ...prev,
+      [type]: file,
+    }));
+  };
+
+  // 단계 변경
+  const handleNext = () => {
+    if (currentStep === 1) {
+      onSubmit(certificateFiles); // 🔹 최종적으로 상위 컴포넌트로 전달
+    } else {
+      setCurrentStep((prev) => prev + 1); // 다음 단계로 이동
+    }
+  };
+
+  // 현재 단계 UI 정의
   const sections = [
     {
-      content: (
-        <FileUpload
-          title="학력 인증을 완료해주세요!"
-          description="* 재학 증명서, 졸업 증명서가 해당됩니다."
-          onFileSelect={(file) => {
-            const newFiles = [...uploadedFiles];
-            newFiles[0] = file; // 첫 번째 섹션의 파일 저장
-            setUploadedFiles(newFiles);
-          }}
-          selectedFile={uploadedFiles[0]} // 기존 파일 상태 유지
-        />
-      ),
+      title: '학력 인증을 완료해주세요!',
+      description: '* 재학 증명서, 졸업 증명서가 해당됩니다.',
+      fileType: 'enrollment',
+      selectedFile: certificateFiles.enrollment,
     },
     {
-      content: (
-        <FileUpload
-          title="재직 인증을 완료해주세요!"
-          description="* 재직 증명서, 경력 증명서가 해당됩니다."
-          onFileSelect={(file) => {
-            const newFiles = [...uploadedFiles];
-            newFiles[1] = file; // 두 번째 섹션의 파일 저장
-            setUploadedFiles(newFiles);
-          }}
-          selectedFile={uploadedFiles[1]} // 기존 파일 상태 유지
-        />
-      ),
-    },
-    {
-      content: (
-        <MentorProfile
-          onNext={() => onNext(uploadedFiles)} // 프로필 설정 완료 시 업로드한 파일 정보 전달
-        />
-      ),
+      title: '재직 인증을 완료해주세요!',
+      description: '* 재직 증명서, 경력 증명서가 해당됩니다.',
+      fileType: 'certification',
+      selectedFile: certificateFiles.certification,
     },
   ];
 
-  const handleNext = () => {
-    if (currentStep < sections.length - 1) {
-      setCurrentStep(currentStep + 1); // 다음 섹션으로 이동
-    } else {
-      onNext(uploadedFiles); // 모든 섹션 완료 후 파일 정보 전달
-    }
-  };
-
-  const isNextEnabled = () => {
-    if (currentStep === 0) {
-      return uploadedFiles[0] !== null;
-    }
-    if (currentStep === 1) {
-      return uploadedFiles[1] !== null;
-    }
-    return true; // 마지막 섹션은 항상 활성화
-  };
-
   return (
-    <div className="relative h-full flex flex-col w-full">
-      {/* 현재 섹션 내용 */}
-      {sections[currentStep].content}
+    <div className="h-[calc(100dvh-10dvh)] flex flex-col relative">
+      <FileUpload
+        title={sections[currentStep].title}
+        description={sections[currentStep].description}
+        onFileSelect={(file) =>
+          handleFileUpload(
+            file,
+            sections[currentStep].fileType as
+              | 'ENROLLMENT'
+              | 'GRADUATION'
+              | 'EMPLOYMENT',
+          )
+        }
+        selectedFile={sections[currentStep].selectedFile}
+      />
 
-      {/* 버튼 영역 */}
-      <div className="absolute bottom-16 w-full flex justify-between">
-        {currentStep < sections.length - 1 && (
-          <GlobalButton
-            variant={isNextEnabled() ? 'default' : 'secondary'}
-            onClick={handleNext}
-            disabled={!isNextEnabled()} // 버튼 비활성화
-          >
-            다음으로
-          </GlobalButton>
-        )}
+      <div className="absolute bottom-[34px] w-full">
+        <GlobalButton
+          variant={sections[currentStep].selectedFile ? 'default' : 'secondary'}
+          onClick={handleNext}
+          disabled={!sections[currentStep].selectedFile}
+        >
+          {currentStep === 0 ? '다음으로' : '완료'}
+        </GlobalButton>
       </div>
     </div>
   );
