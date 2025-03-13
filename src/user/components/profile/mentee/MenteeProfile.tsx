@@ -24,12 +24,11 @@ const MenteeProfile = ({
 
     setIsUploading(true);
     try {
-      const imageUrl = await uploadProfileImage(file);
+      const imageUrl = await uploadProfileImage(file, 'MENTEE'); // memberType 추가
       setMenteeData({
         ...menteeData,
-        image: { fileName: file.name, filePath: imageUrl }, // 백엔드 요구사항에 맞춘 image 필드 저장
+        image: { fileName: file.name, filePath: imageUrl },
       });
-      console.log(imageUrl);
     } catch (error) {
       alert('이미지 업로드에 실패했습니다.');
     } finally {
@@ -39,7 +38,6 @@ const MenteeProfile = ({
 
   // 전체 입력 필드 유효성 체크
   const isFormValid =
-    menteeData.email.trim().length > 0 &&
     menteeData.nickname.trim().length > 0 &&
     menteeData.introduction.trim().length > 0 &&
     menteeData.education.schoolName.trim().length > 0 &&
@@ -47,9 +45,9 @@ const MenteeProfile = ({
 
   return (
     <div className="flex flex-col w-full h-[calc(100dvh-15dvh)] overflow-hidden">
-      {/* 아래 버튼을 고정시켜서 그 크기만큼 패딩을 넣어줘야함 */}
+      {/* 아래 버튼을 고정시켜서 여백 조정 */}
       <div className="flex-grow overflow-y-auto pr-5 pb-24">
-        {/* 상단부분도 마찬가지로 위에 global topNavbar 생각해줘서 mt-20 넣어줌 */}
+        {/* 상단부분도 global topNavbar 고려하여 여백 추가 */}
         <div className="flex-none pt-10">
           <h3 className="text-xl sm:text-2xl font-bold text-primary-1">
             프로필을 설정해주세요!
@@ -88,20 +86,8 @@ const MenteeProfile = ({
             onChange={handleImageUpload}
           />
         </div>
-        {/* 이메일 입력 */}
-        <div className="mt-6">
-          <AuthInputBox
-            label="이메일"
-            type="email"
-            placeholder="이메일을 입력해주세요."
-            value={menteeData.email}
-            onChange={(e) =>
-              setMenteeData({ ...menteeData, email: e.target.value })
-            }
-          />
-        </div>
 
-        {/* 닉네임 입력 */}
+        {/* 입력 필드들 */}
         <div className="mt-6">
           <AuthInputBox
             label="닉네임"
@@ -114,7 +100,6 @@ const MenteeProfile = ({
           />
         </div>
 
-        {/* 자기소개 입력 */}
         <div className="mt-6">
           <AuthInputBox
             label="자기소개"
@@ -127,7 +112,6 @@ const MenteeProfile = ({
           />
         </div>
 
-        {/* 교육 정보 - 학교명 */}
         <div className="mt-6">
           <AuthInputBox
             label="학교명"
@@ -146,7 +130,6 @@ const MenteeProfile = ({
           />
         </div>
 
-        {/* 교육 정보 - 전공 */}
         <div className="mt-6">
           <AuthInputBox
             label="전공"

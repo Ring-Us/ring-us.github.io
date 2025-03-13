@@ -29,7 +29,7 @@ const ModalInput: React.FC<ModalInputProps> = ({
         className="w-full h-[45px] border-b-[2px] flex items-center justify-between cursor-pointer pl-2"
       >
         <span
-          className={`text-sm ${value ? 'text-base' : 'text-gray-2'} truncate`}
+          className={`text-[16px] ${value ? 'text-base' : 'text-gray-2'} truncate`}
         >
           {value || placeholder}
         </span>
