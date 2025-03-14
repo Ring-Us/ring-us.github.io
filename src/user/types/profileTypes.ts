@@ -1,7 +1,9 @@
 export interface MentorProfileData {
-  email: string;
   nickname: string;
-  introduction: string;
+  introduction: {
+    title: string;
+    content: string;
+  };
   mentoringField: string[];
   education: {
     schoolName: string;
@@ -9,17 +11,19 @@ export interface MentorProfileData {
   };
   organization: {
     name: string;
-    role: string;
+    jobCategory: string;
+    detailedJob: string;
     experience: number;
   };
   timezone: {
-    startTime: { hour: number; minute: number; second: number; nano: number };
-    endTime: { hour: number; minute: number; second: number; nano: number };
+    days: string[];
+    startTime: string;
+    endTime: string;
   };
   hashtags: string[];
   message: string;
-  portfolio: { url: string; description: string };
-  image: { file: File; filePath: string };
+  portfolio: { url: string; description: string } | null;
+  image: { fileName: string; filePath: string };
 }
 export interface MentorCertificateData {
   file: string; // 업로드할 파일
@@ -27,7 +31,6 @@ export interface MentorCertificateData {
 }
 
 export interface MenteeProfileData {
-  email: string;
   nickname: string;
   introduction: string;
   education: {

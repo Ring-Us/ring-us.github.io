@@ -2,7 +2,6 @@
 import { MenteeProfileData, MenteeCertificateData } from './profileTypes';
 
 export const defaultMenteeProfile: MenteeProfileData = {
-  email: '',
   nickname: '',
   introduction: '',
   education: { schoolName: '', major: '' },

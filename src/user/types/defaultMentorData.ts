@@ -2,20 +2,25 @@
 import { MentorProfileData, MentorCertificateData } from './profileTypes';
 
 export const defaultMentorProfile: MentorProfileData = {
-  email: '',
   nickname: '',
-  introduction: '',
+  introduction: { title: '', content: '' },
   mentoringField: [],
   education: { schoolName: '', major: '' },
-  organization: { name: '', role: '', experience: 0 },
+  organization: {
+    name: '',
+    jobCategory: '',
+    detailedJob: '',
+    experience: 0,
+  },
   timezone: {
-    startTime: { hour: 0, minute: 0, second: 0, nano: 0 },
-    endTime: { hour: 0, minute: 0, second: 0, nano: 0 },
+    days: [], // 'MON','TUE'
+    startTime: '', // '09:30:00:00
+    endTime: '',
   },
   hashtags: [],
   message: '',
   portfolio: { url: '', description: '' },
-  image: { file: new File([], ''), filePath: '' },
+  image: { fileName: '', filePath: '' },
 };
 
 export const defaultMentorSetup: MentorCertificateData = {
