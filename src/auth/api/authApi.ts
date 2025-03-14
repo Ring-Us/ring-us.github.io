@@ -6,7 +6,7 @@ export const authApi = async (requestData: {
   password: string;
   serviceTerms: any[];
 }) => {
-  //console.log('백엔드로 전송할 최종 데이터:', requestData);
+  console.log('백엔드로 전송할 최종 데이터:', requestData);
 
   try {
     const response = await axiosInstance.post(

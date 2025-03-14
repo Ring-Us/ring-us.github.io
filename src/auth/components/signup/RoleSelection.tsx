@@ -14,7 +14,7 @@ const RoleSelection = ({
 
   const roles = [
     {
-      key: 'mentor',
+      key: 'ROLE_MENTOR',
       label: (
         <>
           준비된 <br /> 멋진 멘토님
@@ -23,7 +23,7 @@ const RoleSelection = ({
       image: '/assets/mentor.png',
     },
     {
-      key: 'mentee',
+      key: 'ROLE_MENTEE',
       label: (
         <>
           성실한 <br /> 멘티님
