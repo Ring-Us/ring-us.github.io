@@ -1,20 +1,14 @@
 import { useState } from 'react';
 import { Progress } from '@/global/ui';
-import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
   createMentorProfile,
-  createMentorCertification,
+  uploadMentorCertificate,
 } from '@/user/api/profileApi';
-import {
-  MentorProfileData,
-  MentorCertificateData,
-} from '@/user/types/profileTypes';
-import {
-  defaultMentorProfile,
-  defaultMentorSetup,
-} from '@/user/types/defaultMentorData';
+import { MentorProfileData } from '@/user/types/profileTypes';
+import { defaultMentorProfile } from '@/user/types/defaultMentorData';
 
+import TopNavbar from '@/global/components/TopNavbar';
 import MentorProfile1 from '@/user/components/profile/mentor/MentorProfile1';
 import MentorProfile2 from '@/user/components/profile/mentor/MentorProfile2';
 import MentorProfile3 from '@/user/components/profile/mentor/MentorProfile3';
@@ -25,14 +19,21 @@ export default function MentorProfileRegistration() {
   const [step, setStep] = useState(1);
   const [mentorData, setMentorData] =
     useState<MentorProfileData>(defaultMentorProfile);
-  const [mentorSetupData, setMentorSetupData] =
-    useState<MentorCertificateData>(defaultMentorSetup);
 
-  // 다음 단계로 이동 (멘토 프로필 저장 시 API 호출)
+  // 인증서 파일 상태 저장
+  const [mentorCertificates, setMentorCertificates] = useState<{
+    enrollment: File | null;
+    certification: File | null;
+  }>({
+    enrollment: null,
+    certification: null,
+  });
+
+  // 다음 단계로 이동
   const handleNext = async () => {
     if (step === 3) {
       try {
-        console.log('🔹 멘토 프로필 데이터 전송:', mentorData);
+        console.log('mentorData 전송:', JSON.stringify(mentorData, null, 2));
         await createMentorProfile(mentorData);
       } catch (error) {
         console.error('❌ 멘토 프로필 전송 실패:', error);
@@ -43,21 +44,29 @@ export default function MentorProfileRegistration() {
     setStep((prev) => prev + 1);
   };
 
-  // 이전 단계로 이동
-  const handlePrev = () => {
-    step === 1 ? navigate('/user') : setStep((prev) => prev - 1);
-  };
-
-  // 멘토 인증서 등록 (MentorSetup 완료 시 API 호출)
-  const handleSubmitSetup = async () => {
+  // 멘토 인증서 등록 (파일 업로드)
+  const handleSubmitSetup = async (files: {
+    enrollment: File | null;
+    certification: File | null;
+  }) => {
     try {
-      console.log('🔹 멘토 설정 데이터 전송:', mentorSetupData);
-      await createMentorCertification(mentorSetupData);
-      alert('멘토 설정이 완료되었습니다!');
-      navigate('/user'); // 완료 후 마이페이지로 이동
+      //console.log('멘토 인증서 파일 전송:', files);
+
+      // 학력 인증 업로드
+      if (files.enrollment) {
+        await uploadMentorCertificate(files.enrollment, 'ENROLLMENT');
+      }
+
+      // 재직 인증 업로드
+      if (files.certification) {
+        await uploadMentorCertificate(files.certification, 'EMPLOYMENT');
+      }
+
+      alert('멘토 등록이 완료되었습니다!');
+      navigate('/user'); // 완료 후 마이페이지 이동
     } catch (error) {
-      console.error('❌ 멘토 설정 전송 실패:', error);
-      alert('멘토 설정 저장에 실패했습니다.');
+      console.error('❌ 멘토 인증서 업로드 실패:', error);
+      alert('멘토 인증서 업로드에 실패했습니다.');
     }
   };
 
@@ -72,38 +81,36 @@ export default function MentorProfileRegistration() {
       mentorData={mentorData}
       setMentorData={setMentorData}
       onNext={handleNext}
-      onPrev={handlePrev}
       key="step2"
     />,
     <MentorProfile3
       mentorData={mentorData}
       setMentorData={setMentorData}
       onNext={handleNext}
-      onPrev={handlePrev}
       key="step3"
     />,
     <MentorCertification
-      mentorSetupData={mentorSetupData}
-      setMentorSetupData={setMentorSetupData}
-      onSubmit={handleSubmitSetup}
-      onPrev={handlePrev}
+      onSubmit={(files) => {
+        setMentorCertificates(files);
+        handleSubmitSetup(files);
+      }}
       key="step4"
     />,
   ];
 
-  //  진행률 계산 (현재 단계 / 전체 단계 * 100)
+  // 진행률 계산
   const progressValue = (step / steps.length) * 100;
 
   return (
-    <div className="relative w-full px-6 mx-auto h-screen flex flex-col">
-      <button
-        className="absolute top-8 left-3 rounded-full"
-        onClick={handlePrev}
-      >
-        <ArrowLeft className="w-6 h-6 text-gray-1" />
-      </button>
-      <div className="flex justify-center mt-24">
-        <Progress value={progressValue} className="w-full rounded-md" />
+    <div className="relative w-full px-6 mx-auto flex flex-col">
+      <TopNavbar
+        title="프로필 등록"
+        onBack={() =>
+          step === 1 ? navigate('/user') : setStep((prev) => prev - 1)
+        }
+      />
+      <div className="pt-[70px] flex flex-col justify-center items-center">
+        <Progress value={progressValue} className="w-full rounded-md pb-3" />
       </div>
       <div className="flex-grow">{steps[step - 1]}</div>
     </div>

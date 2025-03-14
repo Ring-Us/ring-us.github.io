@@ -18,7 +18,7 @@ export default function MyPage() {
   const fetchUserData = async () => {
     try {
       const response = await axiosInstance.get('/v1/members/me');
-      //console.log('📌 응답 데이터:', response.data.data);
+      console.log('📌 응답 데이터:', response.data.data);
 
       if (response.data.data) {
         setUserData(response.data.data);

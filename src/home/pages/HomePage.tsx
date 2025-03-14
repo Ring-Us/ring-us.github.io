@@ -1,4 +1,4 @@
-import { Search, Bookmark } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion'; // 애니메이션 추가
@@ -84,7 +84,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="h-fullflex flex-col relative">
+    <div className="h-[100dvh] flex flex-col relative overflow-y-auto">
       {/* 로그인 성공 메시지 */}
       {showLoginMessage && (
         <motion.div
