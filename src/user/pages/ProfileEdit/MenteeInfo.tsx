@@ -24,8 +24,8 @@ const MenteeInfo = () => {
         filePath: "",
       },
       introduction: {
-        summary: "광고 기획자를 꿈꾸는 열정넘치는 학생입니다!",
-        bio: "광고 기획자라는 점을 가지고 있는 상황에서 선배님들의 조언을 듣고 싶습니다",
+        title: "광고 기획자를 꿈꾸는 열정넘치는 학생입니다!",
+        content: "광고 기획자라는 점을 가지고 있는 상황에서 선배님들의 조언을 듣고 싶습니다",
       }
     };
   });
@@ -62,8 +62,8 @@ const MenteeInfo = () => {
 
         {/* 자기소개 */}
         <MenteeInfoBio 
-          summary={menteeData.introduction.summary}
-          bio={menteeData.introduction.bio}
+          title={menteeData.introduction.title}
+          content={menteeData.introduction.content}
         />
       </div>
 

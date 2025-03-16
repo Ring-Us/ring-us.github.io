@@ -27,7 +27,8 @@ const MentorProfileEdit = () => {
       },
       organization: {
         name: "OO주식회사",
-        role: "브랜드 마케팅/카피라이팅",
+        jobCategory: "브랜드 마케팅",
+        detailedJob: "카피라이팅",
         experience: 6,
       },
       count: 716,
@@ -36,13 +37,13 @@ const MentorProfileEdit = () => {
         filePath: "",
       },
       introduction: {
-        summary: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
-        bio: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
+        title: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
+        content: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
       },
-      availableDays: ["월", "목"],
       timezone: {
-        startTime: { period: "오전", hour: "10", minute: "00"},
-        endTime: { period: "오후", hour: "18", minute: "00"},
+        days: ["월", "목"],
+        startTime: "09:00:00",
+        endTime: "17:00:00",
       },
       mentoringField: ['취업 준비', '커리어 고민'],
       hashtags: ['마케팅', '브랜드마케팅'],
@@ -66,9 +67,9 @@ const MentorProfileEdit = () => {
 
   // 작성 완료 버튼 활성화 여부 확인
   const isFormComplete =
-    mentorData.introduction.summary.trim() !== '' &&
-    mentorData.introduction.bio.trim() !== '' &&
-    mentorData.availableDays.length > 0;
+    mentorData.introduction.title.trim() !== '' &&
+    mentorData.introduction.content.trim() !== '' &&
+    mentorData.timezone.days.length > 0;
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">

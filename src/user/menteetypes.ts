@@ -10,7 +10,7 @@ export interface MenteeData {
     filePath: string;
   };
   introduction: {
-    summary: string;
-    bio: string;
+    title: string;
+    content: string;
   };
 }

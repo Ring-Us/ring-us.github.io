@@ -1,13 +1,14 @@
 interface MentorInfoProfileProps {
   nickname: string;
   name: string;
-  role: string;
+  jobCategory: string;
+  detailedJob: string;
   experience: number;
   count: number;
   image: string;
 }
 
-const MentorInfoProfile = ({ nickname, name, role, experience, count, image }: MentorInfoProfileProps) => {
+const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experience, count, image }: MentorInfoProfileProps) => {
     return (
         <div className="text-white px-14 pb-10 pt-6">
             <div className="flex items-center">
@@ -18,7 +19,7 @@ const MentorInfoProfile = ({ nickname, name, role, experience, count, image }: M
                 />
                 <div className="ml-[20px]">
                     <p className="text-[16px] font-bold mb-[6px]">{nickname}</p>
-                    <p className="text-[12px]">{role}</p>
+                    <p className="text-[12px]">{jobCategory} | {detailedJob}</p>
                     <p className="text-[12px]">{experience}년차</p>
                 </div>
             </div>
