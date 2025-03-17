@@ -52,7 +52,7 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
 
   return (
     <div className="relative flex flex-col w-full mt-10">
-      <h3 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mt-2">
+      <h3 className="text-xl sm:text-2xl font-bold mt-2">
         <span className="text-primary-1">안전한 비밀번호</span>를 <br /> 만들어
         주세요!
       </h3>
@@ -106,7 +106,7 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
               {showConfirmPassword ? (
                 <Eye strokeWidth={1} className="w-6 h-6 text-gray-2" />
               ) : (
-                <EyeOff strokeWidth={1} className="w-6 h-6 text-gray-2" />
+                <EyeOff strokeWidth={1} className="w-6 h-6 text-gray-400" />
               )}
             </div>
           }

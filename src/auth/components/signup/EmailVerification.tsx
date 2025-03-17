@@ -95,7 +95,7 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
       </span>
 
       {/* 제목 */}
-      <h3 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mt-2">
+      <h3 className="text-xl sm:text-2xl font-bold mt-2">
         {!isCodeSent ? (
           <>
             이메일 인증을 완료하면 <br /> 가입을 시작할 수 있어요!

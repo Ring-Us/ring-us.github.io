@@ -63,7 +63,7 @@ const UsagePolicy = ({
 
   return (
     <div className="relative flex flex-col w-full">
-      <h3 className="text-xl font-bold mt-10">
+      <h3 className="text-xl sm:text-2xl font-bold mt-10">
         서비스 이용 약관에 동의해 주세요.
       </h3>
 

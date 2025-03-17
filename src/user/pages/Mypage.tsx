@@ -12,7 +12,7 @@ export default function MyPage() {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
-  const [isProfileRegistered, setIsProfileRegistered] = useState(false); // 추가: 상태 분리
+  const [isProfileRegistered, setIsProfileRegistered] = useState(false);
 
   // 백엔드에서 유저 정보 가져오기
   const fetchUserData = async () => {
@@ -42,7 +42,7 @@ export default function MyPage() {
   // userData가 업데이트될 때 isProfileRegistered 값 업데이트
   useEffect(() => {
     if (userData) {
-      setIsProfileRegistered(userData.isProfileRegisterd); // 프로필 등록 여부 반영
+      setIsProfileRegistered(userData.isProfileRegisterd);
     }
   }, [userData]);
 
@@ -68,11 +68,24 @@ export default function MyPage() {
     isProfileRegistered && userData?.imgUrl
       ? userData.imgUrl
       : '/assets/ringusprofile.png';
+
   const isMentor = userData?.memberType === 'ROLE_MENTOR';
   const profileEditPath = isMentor ? '/user/mentoredit' : '/user/menteeedit';
   const profileRegistrationPath = isMentor
     ? '/user/mentor-profile'
     : '/user/mentee-profile';
+
+  // 멘토 데이터 가공
+  // 멘토와 멘티 정보 가공
+  const mentorInfo = isProfileRegistered
+    ? isMentor
+      ? userData?.organization
+        ? `${userData.organization.name} | ${userData.organization.experience ?? 0}년차\n${userData.organization.jobCategory ?? ''} ${userData.organization.detailedJob ?? ''}`
+        : '소속 정보 없음'
+      : userData?.education
+        ? `${userData.education.schoolName ?? '학교 정보 없음'} | ${userData.education.major ?? '전공 정보 없음'}`
+        : '교육 정보 없음'
+    : '프로필 정보 없음'; // 프로필이 등록되지 않았을 경우 기본값 설정
 
   if (loading) {
     return (
@@ -110,13 +123,26 @@ export default function MyPage() {
             alt="프로필"
             className="w-20 h-20 rounded-[50px] object-cover"
           />
-          <p className="pl-2 text-[#ffffff]">
-            {isAuthenticated
-              ? isProfileRegistered
-                ? userData?.email
-                : '프로필을 등록해주세요'
-              : '로그인 후 프로필을 등록해주세요'}
-          </p>
+          <div className="pl-2 text-[#ffffff]">
+            <p>
+              {isAuthenticated
+                ? isProfileRegistered
+                  ? userData?.email
+                  : '프로필을 등록해주세요'
+                : '로그인 후 프로필을 등록해주세요'}
+            </p>
+
+            {isProfileRegistered && (
+              <p className="text-sm text-gray-4">
+                {mentorInfo.split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 

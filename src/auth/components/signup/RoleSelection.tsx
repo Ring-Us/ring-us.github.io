@@ -36,7 +36,7 @@ const RoleSelection = ({
   return (
     <div className="relative flex flex-col w-full">
       {/* 제목 */}
-      <h3 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mt-10">
+      <h3 className="text-xl sm:text-2xl font-bold mt-10">
         당신은 <br /> 어떤 역할인가요?
       </h3>
 
