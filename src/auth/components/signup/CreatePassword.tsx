@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
-import { Check } from 'lucide-react';
+import { Check, Eye, EyeOff } from 'lucide-react';
 
 const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
   const [password, setPassword] = useState(''); // 비밀번호 입력 값
   const [confirmPassword, setConfirmPassword] = useState(''); // 비밀번호 확인 입력 값
   const [errors, setErrors] = useState({ password: '', confirmPassword: '' }); // 에러 메시지
   const [successMessage, setSuccessMessage] = useState(''); // 성공 메시지
-  const [isFormValid, setIsFormValid] = useState(false); // ✅ 폼 유효성 상태 추가
+  const [isFormValid, setIsFormValid] = useState(false); // 폼 유효성 상태 추가
+  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보이기 (hover)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // 비밀번호 확인 보이기 (hover)
 
   // 비밀번호 조건: 8~20자, 대문자 1개 이상, 영문, 숫자, 특수문자 포함
   const passwordRegex =
@@ -59,7 +61,7 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
       <div className="mt-8">
         <AuthInputBox
           label="비밀번호"
-          type="password"
+          type={showPassword ? 'text' : 'password'} // 👀 입력 타입 변경
           placeholder="대문자, 소문자, 숫자, 특수문자를 포함해 8~20자로 입력해주세요."
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -68,6 +70,20 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
           successIcon={
             <Check className="w-4 h-4 text-authGreen mr-2" strokeWidth={4} />
           }
+          rightIcon={
+            // 아이콘 추가 (hover하면 보이기)
+            <div
+              onMouseEnter={() => setShowPassword(true)}
+              onMouseLeave={() => setShowPassword(false)}
+              className="cursor-pointer"
+            >
+              {showPassword ? (
+                <Eye strokeWidth={1} className="w-6 h-6 text-gray-2" />
+              ) : (
+                <EyeOff strokeWidth={1} className="w-6 h-6 text-gray-2" />
+              )}
+            </div>
+          }
         />
       </div>
 
@@ -75,11 +91,25 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
       <div className="mt-6">
         <AuthInputBox
           label="비밀번호 확인"
-          type="password"
+          type={showConfirmPassword ? 'text' : 'password'} // 👀 입력 타입 변경
           placeholder="비밀번호를 다시 입력해주세요."
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           error={errors.confirmPassword}
+          rightIcon={
+            // 아이콘 추가 (hover하면 보이기)
+            <div
+              onMouseEnter={() => setShowConfirmPassword(true)}
+              onMouseLeave={() => setShowConfirmPassword(false)}
+              className="cursor-pointer"
+            >
+              {showConfirmPassword ? (
+                <Eye strokeWidth={1} className="w-6 h-6 text-gray-2" />
+              ) : (
+                <EyeOff strokeWidth={1} className="w-6 h-6 text-gray-2" />
+              )}
+            </div>
+          }
         />
       </div>
 
