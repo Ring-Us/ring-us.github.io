@@ -3,6 +3,7 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { uploadProfileImage } from '@/user/api/profileApi';
 import { MenteeProfileData } from '@/user/types/profileTypes';
+import ErrorModal from '@/global/ui/ErrorModal'; // Error 모달 추가
 
 interface MenteeProfileProps {
   menteeData: MenteeProfileData;
@@ -16,11 +17,20 @@ const MenteeProfile = ({
   onNext,
 }: MenteeProfileProps) => {
   const [isUploading, setIsUploading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지 상태 추가
 
   // 프로필 이미지 선택 후 API 요청하여 업로드
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // 10MB 초과 확인 (10MB = 10 * 1024 * 1024 바이트)
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMessage(
+        '파일 크기가 너무 큽니다.<br />10MB 이하의 이미지를 업로드해주세요.',
+      );
+      return;
+    }
 
     setIsUploading(true);
     try {
@@ -30,10 +40,18 @@ const MenteeProfile = ({
         image: { fileName: file.name, filePath: imageUrl },
       });
     } catch (error) {
-      alert('이미지 업로드에 실패했습니다.');
+      setErrorMessage('이미지 업로드에 실패했습니다.');
     } finally {
       setIsUploading(false);
     }
+  };
+
+  // 닉네임 유효성 체크
+  const handleNicknameCheck = () => {
+    setMenteeData({
+      ...menteeData,
+      nickname: menteeData.nickname.trim(),
+    });
   };
 
   // 전체 입력 필드 유효성 체크
@@ -45,9 +63,16 @@ const MenteeProfile = ({
 
   return (
     <div className="flex flex-col w-full h-[calc(100dvh-15dvh)] overflow-hidden">
-      {/* 아래 버튼을 고정시켜서 여백 조정 */}
+      {/* 에러 모달 */}
+      {errorMessage && (
+        <ErrorModal
+          title="파일 업로드 오류"
+          message={errorMessage}
+          onClose={() => setErrorMessage(null)}
+        />
+      )}
+
       <div className="flex-grow overflow-y-auto pr-5 pb-24">
-        {/* 상단부분도 global topNavbar 고려하여 여백 추가 */}
         <div className="flex-none pt-10">
           <h3 className="text-xl sm:text-2xl font-bold text-primary-1">
             프로필을 설정해주세요!
@@ -97,6 +122,8 @@ const MenteeProfile = ({
             onChange={(e) =>
               setMenteeData({ ...menteeData, nickname: e.target.value })
             }
+            buttonLabel="확인"
+            onButtonClick={handleNicknameCheck}
           />
         </div>
 

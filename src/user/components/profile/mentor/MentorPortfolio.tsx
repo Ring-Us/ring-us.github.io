@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { MentorProfileData } from '@/user/types/profileTypes';
 import { X } from 'lucide-react';
+import ErrorModal from '@/global/ui/ErrorModal'; // 모달 import
 
 interface MentorPortfolioProps {
   mentorData: MentorProfileData;
@@ -10,13 +12,17 @@ const MentorPortfolio = ({
   mentorData,
   setMentorData,
 }: MentorPortfolioProps) => {
-  // 파일 업로드 (30MB 이하 파일만 허용, 1개만 업로드 가능)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // 파일 업로드 (10MB 이하 파일만 허용, 1개만 업로드 가능)
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0]; // 첫 번째 파일만 선택
 
       if (file.size > 10 * 1024 * 1024) {
-        alert('10MB 이하의 파일만 업로드할 수 있습니다.');
+        setErrorMessage(
+          '파일 크기가 너무 큽니다.<br />10MB 이하의 파일만 업로드해주세요.',
+        );
         return;
       }
 
@@ -48,6 +54,15 @@ const MentorPortfolio = ({
 
   return (
     <div className="px-4 my-2">
+      {/* 에러 모달 */}
+      {errorMessage && (
+        <ErrorModal
+          title="파일 업로드 오류"
+          message={errorMessage}
+          onClose={() => setErrorMessage(null)}
+        />
+      )}
+
       <div className="text-[14px] my-4">포트폴리오</div>
 
       {/* 업로드된 파일 표시 */}
@@ -76,7 +91,7 @@ const MentorPortfolio = ({
             <input type="file" className="hidden" onChange={handleFileUpload} />
           </label>
           <div className="text-[12px] text-[#A0A0A0] mt-2">
-            첨부 파일은 최대 30MB까지 등록 가능합니다.
+            첨부 파일은 최대 10MB까지 등록 가능합니다.
           </div>
         </div>
       )}

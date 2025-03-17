@@ -10,6 +10,7 @@ import {
   detailedJobMapping,
 } from '@/global/components/JobCategories';
 
+import ErrorModal from '@/global/ui/ErrorModal';
 import ModalMentorFields from '@/user/components/ModalMentorFields';
 import ExperienceSelectModal from './ExperienceSelectModal';
 
@@ -25,12 +26,20 @@ const MentorProfile1 = ({
   onNext,
 }: MentorProfile1Props) => {
   const [isUploading, setIsUploading] = useState(false); // 이미지 업로드 상태
-  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // 프로필 이미지 선택 후 API 요청하여 업로드
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // 10MB 초과 확인 (10MB = 10 * 1024 * 1024 바이트)
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMessage(
+        '파일 크기가 너무 큽니다.<br />10MB 이하의 이미지를 업로드해주세요.',
+      );
+      return;
+    }
 
     setIsUploading(true);
     try {
@@ -40,7 +49,7 @@ const MentorProfile1 = ({
         image: { fileName: file.name, filePath: imageUrl },
       });
     } catch (error) {
-      alert('이미지 업로드에 실패했습니다.');
+      setErrorMessage('이미지 업로드에 실패했습니다.');
     } finally {
       setIsUploading(false);
     }
@@ -67,6 +76,14 @@ const MentorProfile1 = ({
   return (
     <div className="flex flex-col w-full h-[calc(100vh-15vh)] overflow-hidden">
       {/* 상단 제목과 설명 */}
+      {errorMessage && (
+        <ErrorModal
+          title="파일 업로드 오류"
+          message={errorMessage}
+          onClose={() => setErrorMessage(null)}
+        />
+      )}
+
       <div className="flex-grow overflow-y-auto pr-5 pb-24">
         <div className="flex-none mt-12">
           <h3 className="text-xl sm:text-2xl 2xl:text-3xl font-bold text-primary-1">
