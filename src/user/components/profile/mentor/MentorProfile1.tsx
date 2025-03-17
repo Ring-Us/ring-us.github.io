@@ -34,7 +34,7 @@ const MentorProfile1 = ({
 
     setIsUploading(true);
     try {
-      const imageUrl = await uploadProfileImage(file, 'MENTOR'); // memberType 추가
+      const imageUrl = await uploadProfileImage(file, 'ROLE_MENTOR'); // memberType 추가
       setMentorData({
         ...mentorData,
         image: { fileName: file.name, filePath: imageUrl },

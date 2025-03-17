@@ -68,7 +68,7 @@ export default function MyPage() {
     isProfileRegistered && userData?.imgUrl
       ? userData.imgUrl
       : '/assets/ringusprofile.png';
-  const isMentor = userData?.memberType === 'MENTOR';
+  const isMentor = userData?.memberType === 'ROLE_MENTOR';
   const profileEditPath = isMentor ? '/user/mentoredit' : '/user/menteeedit';
   const profileRegistrationPath = isMentor
     ? '/user/mentor-profile'

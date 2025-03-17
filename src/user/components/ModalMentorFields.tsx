@@ -43,13 +43,13 @@ const ModalMentorFields: React.FC<ModalMentorFieldsProps> = ({
         className="w-full h-[45px] border-b-[2px] flex items-center justify-between cursor-pointer pl-2"
       >
         <span
-          className={`text-[16px] ${value.jobCategory && value.detailedJob ? 'text-black' : 'text-gray-400'} truncate`}
+          className={`text-[16px] ${value.jobCategory && value.detailedJob ? 'text-black' : 'text-gray-2'} truncate`}
         >
           {selectedMainOption && selectedSubOption
             ? `${selectedMainOption} / ${selectedSubOption}`
             : placeholder}
         </span>
-        <ChevronDown className="text-gray-400 mr-3" size={18} />
+        <ChevronDown className="text-gray-2 mr-3" size={18} />
       </div>
 
       {/* 모달 */}
@@ -70,7 +70,7 @@ const ModalMentorFields: React.FC<ModalMentorFieldsProps> = ({
               </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-3 hover:text-gray-2"
               >
                 <X size={20} />
               </button>
@@ -87,7 +87,7 @@ const ModalMentorFields: React.FC<ModalMentorFieldsProps> = ({
                       className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${
                         selectedMainOption === option
                           ? 'border-primary-1 text-primary-1'
-                          : 'text-gray-500'
+                          : 'text-gray-2'
                       }`}
                     >
                       {option}
@@ -107,7 +107,7 @@ const ModalMentorFields: React.FC<ModalMentorFieldsProps> = ({
                     className={`rounded-[8px] text-[12px] text-start ${
                       selectedSubOption === subOption
                         ? 'text-primary-1 font-bold'
-                        : 'text-gray-500'
+                        : 'text-gray-2'
                     }`}
                   >
                     {subOption}

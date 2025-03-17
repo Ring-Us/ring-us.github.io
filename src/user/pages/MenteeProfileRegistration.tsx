@@ -8,7 +8,7 @@ import {
 import { MenteeProfileData } from '@/user/types/profileTypes';
 import { defaultMenteeProfile } from '@/user/types/defaultMenteeData';
 
-import TopNavbar from '@/global/components/TopNavbar';
+import TopNavbar from '@/global/ui/TopNavbar';
 import MenteeProfile from '@/user/components/profile/mentee/MenteeProfile';
 import MenteeCertification from '@/user/components/profile/mentee/MenteeCertification';
 

@@ -24,7 +24,7 @@ const MenteeProfile = ({
 
     setIsUploading(true);
     try {
-      const imageUrl = await uploadProfileImage(file, 'MENTEE'); // memberType 추가
+      const imageUrl = await uploadProfileImage(file, 'ROLE_MENTEE'); // memberType 추가
       setMenteeData({
         ...menteeData,
         image: { fileName: file.name, filePath: imageUrl },
