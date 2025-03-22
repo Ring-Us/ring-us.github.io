@@ -106,7 +106,7 @@ const CreatePassword = ({ onNext }: { onNext: (password: string) => void }) => {
               {showConfirmPassword ? (
                 <Eye strokeWidth={1} className="w-6 h-6 text-gray-2" />
               ) : (
-                <EyeOff strokeWidth={1} className="w-6 h-6 text-gray-400" />
+                <EyeOff strokeWidth={1} className="w-6 h-6 text-gray-2" />
               )}
             </div>
           }

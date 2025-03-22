@@ -44,7 +44,7 @@ export function AuthInputBox({
         <input
           id={label}
           type={type}
-          className={`flex-1 h-[45px] pl-2 pr-10 text-[16px] focus:outline-none ${className}`} // pr-10 추가 (아이콘 공간 확보)
+          className={`flex-1 h-[45px] pl-2 pr-3 text-[16px] focus:outline-none ${className}`} // pr-10 추가 (아이콘 공간 확보)
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -58,7 +58,7 @@ export function AuthInputBox({
         {buttonLabel && onButtonClick && (
           <button
             onClick={onButtonClick}
-            className="ml-2 px-4 py-2 text-primary-1 border rounded-lg text-sm font-medium hover:underline"
+            className="ml-2 px-3 py-2 text-primary-1 border rounded-lg sm:text-[14px] text-[12px] hover:underline"
           >
             {buttonLabel}
           </button>

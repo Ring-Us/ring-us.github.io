@@ -75,17 +75,15 @@ export default function MyPage() {
     ? '/user/mentor-profile'
     : '/user/mentee-profile';
 
-  // 멘토 데이터 가공
-  // 멘토와 멘티 정보 가공
   const mentorInfo = isProfileRegistered
     ? isMentor
-      ? userData?.organization
-        ? `${userData.organization.name} | ${userData.organization.experience ?? 0}년차\n${userData.organization.jobCategory ?? ''} ${userData.organization.detailedJob ?? ''}`
+      ? userData?.mentorProfile
+        ? `${userData.mentorProfile.nickname}\n${userData.mentorProfile.organization?.name ?? '소속 정보 없음'} | ${userData.mentorProfile.organization?.experience ?? 0}년차\n${userData.mentorProfile.organization?.jobCategory ?? ''} ${userData.mentorProfile.organization?.detailedJob ?? ''}`
         : '소속 정보 없음'
-      : userData?.education
-        ? `${userData.education.schoolName ?? '학교 정보 없음'} | ${userData.education.major ?? '전공 정보 없음'}`
+      : userData?.menteeProfile
+        ? `${userData.menteeProfile.nickname}\n${userData.menteeProfile.education.schoolName ?? '학교 정보 없음'} | ${userData.menteeProfile.education.major ?? '전공 정보 없음'}`
         : '교육 정보 없음'
-    : '프로필 정보 없음'; // 프로필이 등록되지 않았을 경우 기본값 설정
+    : '프로필 정보 없음';
 
   if (loading) {
     return (
