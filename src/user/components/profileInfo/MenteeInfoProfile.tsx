@@ -1,12 +1,11 @@
 interface MenteeInfoProfileProps {
   nickname: string;
-  email: string;
   schoolName: string;
   major: string;
   image: string;
 }
 
-const MenteeInfoProfile = ({ nickname, email, schoolName, major, image}: MenteeInfoProfileProps) => {
+const MenteeInfoProfile = ({ nickname, schoolName, major, image}: MenteeInfoProfileProps) => {
     return (
         <div className="text-white px-10 pb-10 pt-6">
             <div className="flex items-center">
@@ -17,7 +16,6 @@ const MenteeInfoProfile = ({ nickname, email, schoolName, major, image}: MenteeI
                 />
                 <div className="ml-[20px]">
                     <p className="text-[16px] font-bold mb-[6px]">{nickname}</p>
-                    <p className="text-[14px] font-[300]">{email}</p>
                 </div>
             </div>
 

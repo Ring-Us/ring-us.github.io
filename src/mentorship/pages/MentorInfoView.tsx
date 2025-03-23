@@ -20,7 +20,11 @@ const MentorInfoView = () => {
     const savedData = localStorage.getItem("mentorData");
     return savedData ? JSON.parse(savedData) : {
       nickname: "바이",
-      email: "abcd@gmail.com",
+      introduction: {
+        title: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
+        content: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
+      },        
+      mentoringField: ["취업 준비", "커리어 고민"],        
       education: {
         schoolName: "경북대학교",
         major: "컴퓨터공학",
@@ -31,30 +35,23 @@ const MentorInfoView = () => {
         detailedJob: "카피라이팅",
         experience: 6,
       },
-      count: 716,
-      image: {
-        fileName: "",
-        filePath: "",
-      },
-      introduction: {
-        title: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
-        content: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
-      },        
       timezone: {
         days: ["월", "목"],
         startTime: "09:00:00",
         endTime: "17:00:00",
       },
-      mentoringField: ["취업 준비", "커리어 고민"],        
       hashtags: ["마케팅", "브랜드마케팅", "이직", "취준", "진로고민상담", "면접노하우"],
       message: "안녕하세요, 멘티 여러분!\n브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.",
-      portfolio: [
-        {
-          url: "https://example.com/portfolio1.pdf",
-          description: "브랜드 마케팅 포트폴리오.pdf",
-          size: 25,
-        },
-      ],
+      portfolio: {
+        url: 'https://example.com/portfolio1.pdf',
+        description: '브랜드 마케팅 포트폴리오.pdf',
+        size: 8000000,
+      },
+      image: {
+        fileName: "",
+        filePath: "",
+      },
+      count: 716,
     };
   });
 

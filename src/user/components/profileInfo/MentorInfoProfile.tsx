@@ -19,8 +19,8 @@ const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experienc
                 />
                 <div className="ml-[20px]">
                     <p className="text-[16px] font-bold mb-[6px]">{nickname}</p>
-                    <p className="text-[12px]">{jobCategory} | {detailedJob}</p>
-                    <p className="text-[12px]">{experience}년차</p>
+                    <p className="text-[12px]">{name}</p>
+                    <p className="text-[12px]">{jobCategory} | {detailedJob} | {experience}년차</p>
                 </div>
             </div>
 

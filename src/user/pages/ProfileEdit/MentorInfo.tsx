@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
+import { getMentorProfile } from '@/user/api/MentorInfoApi';
+import { MentorData } from '@/user/types';
+import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/mapping';
+import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/mapping';
+
 import MentorInfoProfile from '@/user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '@/user/components/profileInfo/MentorInfoBio';
 import MentorInfoFieldsHashtags from '@/user/components/profileInfo/MentorInfoFieldsHashtags';
@@ -12,49 +17,23 @@ import MentorInfoPortfolio from '@/user/components/profileInfo/MentorInfoPortfol
 
 const MentorInfo = () => {
   const navigate = useNavigate();
+  const [mentorData, setMentorData] = useState<MentorData | null>(null);
 
-  // 테스트용 멘티 데이터 && localStorage에서 데이터 불러오기 (api 연결시 제거)
-  const [mentorData, setMentorData] = useState(() => {
-    const savedData = localStorage.getItem("mentorData");
-    return savedData ? JSON.parse(savedData) : {
-      nickname: "바이",
-      email: "abcd@gmail.com",
-      education: {
-        schoolName: "경북대학교",
-        major: "컴퓨터공학",
-      },
-      organization: {
-        name: "OO주식회사",
-        jobCategory: "브랜드 마케팅",
-        detailedJob: "카피라이팅",
-        experience: 6,
-      },
-      count: 716,
-      image: {
-        fileName: "",
-        filePath: "",
-      },
-      introduction: {
-        title: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
-        content: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
-      },        
-      timezone: {
-        days: ["월", "목"],
-        startTime: "09:00:00",
-        endTime: "17:00:00",
-      },
-      mentoringField: ["취업 준비", "커리어 고민"],        
-      hashtags: ["마케팅", "브랜드마케팅", "이직", "취준", "진로고민상담", "면접노하우"],
-      message: "안녕하세요, 멘티 여러분!\n브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.",
-      portfolio: [
-        {
-          url: "https://example.com/portfolio1.pdf",
-          description: "브랜드 마케팅 포트폴리오.pdf",
-          size: 25,
-        },
-      ],
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getMentorProfile();
+        setMentorData(data);
+      } catch (error) {
+        console.error('멘토 정보 로딩 실패:', error);
+      }
     };
-  });
+    fetchData();
+  }, []);
+
+  if (!mentorData) {
+    return <div className="p-4">Loading...</div>;
+  }
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
@@ -70,7 +49,7 @@ const MentorInfo = () => {
               size={24}
               strokeWidth={1.0}
               className="text-white cursor-pointer"
-              onClick={() => navigate("/auth")}
+              onClick={() => navigate("/user")}
             />
             <span className="text-[20px] text-[#fff] font-[500]">멘토 프로필</span>
             <div className="w-6 h-6"></div>
@@ -80,8 +59,8 @@ const MentorInfo = () => {
           <MentorInfoProfile 
             nickname={mentorData.nickname} 
             name={mentorData.organization.name}
-            jobCategory={mentorData.organization.jobCategory}
-            detailedJob={mentorData.organization.detailedJob}
+            jobCategory={reverseJobCategoryMapping[mentorData.organization.jobCategory] || mentorData.organization.jobCategory}
+            detailedJob={reverseDetailedJobMapping[mentorData.organization.detailedJob] || mentorData.organization.detailedJob}
             experience={mentorData.organization.experience} 
             count={mentorData.count}
             image={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
@@ -98,14 +77,14 @@ const MentorInfo = () => {
 
           {/* 선호 시간대 */}
           <MentorInfoTime
-            days={mentorData.timezone.days} 
+            days={mentorData.timezone.days.map((day) => reverseDayMapping[day] || day)}
             startTime={mentorData.timezone.startTime} 
             endTime={mentorData.timezone.endTime} 
           />
 
           {/* 멘토링 분야 & 해시태그 */}
           <MentorInfoFieldsHashtags 
-            mentoringField={mentorData.mentoringField} 
+            mentoringField={mentorData.mentoringField.map((field) => reverseMentoringFieldMapping[field] || field)}
             hashtags={mentorData.hashtags} 
           />
 

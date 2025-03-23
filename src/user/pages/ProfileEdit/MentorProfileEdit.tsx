@@ -4,6 +4,12 @@ import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { MentorData } from '@/user/types';
+import { getMentorProfile, updateMentorProfile } from '@/user/api/MentorInfoApi';
+import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/mapping';
+import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/mapping';
+import { jobCategoryMapping, detailedJobMapping } from '@/global/components/JobCategories';
+import { mentoringFieldMapping, dayMapping } from '@/user/components/mapping';
+
 import EditProfileSection from '@/user/components/ProfileEdit/EditProfileSection';
 import EditBio from '@/user/components/ProfileEdit/EditBio';
 import EditFields from '@/user/components/ProfileEdit/EditFields';
@@ -14,62 +20,71 @@ import EditPortfolio from '@/user/components/ProfileEdit/EditPortfolio';
 
 const MentorProfileEdit = () => {
   const navigate = useNavigate();
+  const [mentorData, setMentorData] = useState<MentorData | null>(null);
+    
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getMentorProfile();
   
-  // 테스트용 멘티 데이터 && localStorage에서 데이터 불러오기 (api 연결시 제거)
-  const [mentorData, setMentorData] = useState<MentorData>(() => {
-    const savedData = localStorage.getItem("mentorData");
-    return savedData ? JSON.parse(savedData) : {
-      nickname: "바이",
-      email: "abcd@gmail.com",
-      education: {
-        schoolName: "경북대학교",
-        major: "컴퓨터공학",
-      },
-      organization: {
-        name: "OO주식회사",
-        jobCategory: "브랜드 마케팅",
-        detailedJob: "카피라이팅",
-        experience: 6,
-      },
-      count: 716,
-      image: {
-        fileName: "",
-        filePath: "",
-      },
-      introduction: {
-        title: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
-        content: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
-      },
-      timezone: {
-        days: ["월", "목"],
-        startTime: "09:00:00",
-        endTime: "17:00:00",
-      },
-      mentoringField: ['취업 준비', '커리어 고민'],
-      hashtags: ['마케팅', '브랜드마케팅'],
-      message:
-        '안녕하세요, 멘티 여러분!\n브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.',
-      portfolio: [
-        {
-          url: 'https://example.com/portfolio1.pdf',
-          description: '브랜드 마케팅 포트폴리오.pdf',
-          size: 25000000,
-         },
-      ],
+        // 변환
+        const localizedData: MentorData = {
+          ...data,
+          mentoringField: data.mentoringField.map((f) => reverseMentoringFieldMapping[f] || f),
+          timezone: {
+            ...data.timezone,
+            days: data.timezone.days.map((d) => reverseDayMapping[d] || d),
+          },
+          organization: {
+            ...data.organization,
+            jobCategory: reverseJobCategoryMapping[data.organization.jobCategory] || data.organization.jobCategory,
+            detailedJob: reverseDetailedJobMapping[data.organization.detailedJob] || data.organization.detailedJob,
+          }
+        };
+  
+        setMentorData(localizedData);
+      } catch (error) {
+        console.error('멘토 정보 로딩 실패:', error);
+      }
     };
-  });
+    fetchData();
+  }, []);
 
-  // 수정된 내용을 localStorage에 저장하는 함수 (API 연결 시 제거)
-  const handleSave = () => {
-    localStorage.setItem("mentorData", JSON.stringify(mentorData)); // localStorage에 저장
-    navigate("/user/mentorinfo"); // 수정 완료 후 MentorInfo로 이동
+
+  if (!mentorData) {
+    return <div className="p-4">Loading...</div>;
+  }
+
+  const handleSave = async () => {
+    try {
+      const payload: MentorData = {
+        ...mentorData,
+        mentoringField: mentorData.mentoringField.map((field) => mentoringFieldMapping[field] || field),
+        timezone: {
+          ...mentorData.timezone,
+          days: mentorData.timezone.days.map((day) => dayMapping[day] || day),
+        },
+        organization: {
+          ...mentorData.organization,
+          jobCategory: jobCategoryMapping[mentorData.organization.jobCategory] || mentorData.organization.jobCategory,
+          detailedJob: detailedJobMapping[mentorData.organization.detailedJob] || mentorData.organization.detailedJob,
+        },
+      };
+  
+      await updateMentorProfile(payload);
+      navigate("/user/mentorinfo");
+    } catch (error) {
+      console.error("멘토 정보 저장 실패:", error);
+      alert("멘토 정보 저장 중 오류가 발생했습니다.");
+    }
   };
 
-  // 작성 완료 버튼 활성화 여부 확인
+  // 작성 완료 버튼 활성화 여부
   const isFormComplete =
-    mentorData.introduction.title.trim() !== '' &&
-    mentorData.introduction.content.trim() !== '' &&
-    mentorData.timezone.days.length > 0;
+    mentorData.introduction?.title?.trim() !== '' &&
+    mentorData.introduction?.content?.trim() !== '' &&
+    mentorData.timezone?.days?.length > 0;
+
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">

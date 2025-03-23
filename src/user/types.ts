@@ -20,21 +20,17 @@ export interface MentorData {
     startTime: string;
     endTime: string;
   };
-
   hashtags: string[];
   message: string;
-
   portfolio: {
     url: string;
     description: string;
     size: number;
-  }[];
-
+  } | null;
   image: {
     fileName: string;
     filePath: string;
   };
 
   count: number;
-  email: string;
 }
