@@ -30,7 +30,7 @@ const ExperienceSelectModal = ({
         >
           {experience ? `${experience}년` : '총 경력을 선택해 주세요.'}
         </span>
-        <ChevronDown className="text-gray-1 mr-3" size={18} />
+        <ChevronDown className="text-gray-2 mr-3" size={18} />
       </div>
 
       {/* 모달 */}

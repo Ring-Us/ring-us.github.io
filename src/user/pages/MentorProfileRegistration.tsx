@@ -8,7 +8,7 @@ import {
 import { MentorProfileData } from '@/user/types/profileTypes';
 import { defaultMentorProfile } from '@/user/types/defaultMentorData';
 
-import TopNavbar from '@/global/components/TopNavbar';
+import TopNavbar from '@/global/ui/TopNavbar';
 import MentorProfile1 from '@/user/components/profile/mentor/MentorProfile1';
 import MentorProfile2 from '@/user/components/profile/mentor/MentorProfile2';
 import MentorProfile3 from '@/user/components/profile/mentor/MentorProfile3';

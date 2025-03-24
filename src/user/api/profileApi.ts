@@ -7,7 +7,7 @@ import {
 // 멘티 프로필 이미지 업로드 API
 export const uploadProfileImage = async (
   file: File,
-  memberType: 'MENTOR' | 'MENTEE', // 멘토 or 멘티 선택 가능
+  memberType: 'ROLE_MENTOR' | 'ROLE_MENTEE' | 'ROLE_ADMIN', // 멘토 or 멘티 선택 가능
 ): Promise<string> => {
   const formData = new FormData();
   formData.append('file', file);

@@ -5,7 +5,7 @@ import { X } from 'lucide-react'; // X 닫기 버튼 추가
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import { SigninInput } from '@/auth/components/SigninInput';
 import { useAuthStore } from '@/auth/store/useAuthStore'; // Zustand import
-import LoginErrorModal from '@/auth/components/LoginErrorModal'; // 모달 컴포넌트 import
+import ErrorModal from '@/global/ui/ErrorModal'; // 모달 컴포넌트 import
 
 export default function SigninPage() {
   const navigate = useNavigate();
@@ -107,7 +107,7 @@ export default function SigninPage() {
 
       {/* 로그인 실패 모달 */}
       {errorMessage && (
-        <LoginErrorModal
+        <ErrorModal
           title="로그인 오류"
           message={errorMessage}
           onClose={() => setErrorMessage(null)}

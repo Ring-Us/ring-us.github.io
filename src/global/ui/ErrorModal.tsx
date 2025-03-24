@@ -1,14 +1,14 @@
-interface LoginErrorModalProps {
+interface ErrorModalProps {
   title: string;
   message: string;
   onClose: () => void;
 }
 
-export default function LoginErrorModal({
+export default function ErrorModal({
   title,
   message,
   onClose,
-}: LoginErrorModalProps) {
+}: ErrorModalProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
@@ -20,7 +20,10 @@ export default function LoginErrorModal({
           onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫힘 방지
         >
           <h2 className="mt-2 text-lg font-bold">{title}</h2>
-          <p className="mt-4 text-gray-1">{message}</p>
+          <p
+            className="mt-4 text-gray-1"
+            dangerouslySetInnerHTML={{ __html: message }}
+          ></p>
           <button
             onClick={onClose}
             className="mt-7 w-full py-3 bg-primary-1 text-[#ffffff] rounded-lg"

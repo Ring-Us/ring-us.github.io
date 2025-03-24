@@ -4,7 +4,7 @@ const FileUpload = ({
   title,
   description,
   onFileSelect,
-  maxSizeMB = 30,
+  maxSizeMB = 10,
   selectedFile,
   isUploading = false, // isUploading 속성 추가
 }: {
@@ -47,9 +47,7 @@ const FileUpload = ({
   return (
     <div className="flex flex-col w-full">
       <p className="text-xs text-primary-1 mt-8">{description}</p>
-      <h3 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mt-2">
-        {title}
-      </h3>
+      <h3 className="text-xl sm:text-2xl font-bold mt-2">{title}</h3>
 
       <div className="mt-8">
         <span className="flex mb-5 text-sm">첨부파일</span>

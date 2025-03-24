@@ -11,6 +11,7 @@ interface AuthInputBoxProps {
   successIcon?: React.ReactNode; // 성공 상태 아이콘
   buttonLabel?: string; // 버튼 텍스트 (선택적)
   onButtonClick?: () => void; // 버튼 클릭 핸들러 (선택적)
+  rightIcon?: React.ReactNode; // 추가: 입력 필드 우측 아이콘
   className?: string; // 추가적인 클래스
 }
 
@@ -25,6 +26,7 @@ export function AuthInputBox({
   successIcon,
   buttonLabel,
   onButtonClick,
+  rightIcon, // 추가
   className = '',
 }: AuthInputBoxProps) {
   return (
@@ -33,7 +35,7 @@ export function AuthInputBox({
         {label}
       </label>
       <div
-        className={`flex items-center border-b-[2px] ${
+        className={`flex items-center border-b-[2px] relative ${
           error
             ? 'focus-within:border-authRed border-authRed'
             : 'border-[#DEDEDE]'
@@ -42,15 +44,21 @@ export function AuthInputBox({
         <input
           id={label}
           type={type}
-          className={`flex-1 h-[45px] pl-2 text-[16px] focus:outline-none ${className}`}
+          className={`flex-1 h-[45px] pl-2 pr-3 text-[16px] focus:outline-none ${className}`} // pr-10 추가 (아이콘 공간 확보)
           placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
+
+        {/* 우측 아이콘 추가 */}
+        {rightIcon && (
+          <div className="absolute right-2 cursor-pointer">{rightIcon}</div>
+        )}
+
         {buttonLabel && onButtonClick && (
           <button
             onClick={onButtonClick}
-            className="ml-2 px-4 py-2 text-primary-1 border rounded-lg text-sm font-medium hover:underline"
+            className="ml-2 px-3 py-2 text-primary-1 border rounded-lg sm:text-[14px] text-[12px] hover:underline"
           >
             {buttonLabel}
           </button>

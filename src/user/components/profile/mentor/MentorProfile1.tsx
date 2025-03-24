@@ -10,8 +10,10 @@ import {
   detailedJobMapping,
 } from '@/global/components/JobCategories';
 
+import ErrorModal from '@/global/ui/ErrorModal';
 import ModalMentorFields from '@/user/components/ModalMentorFields';
 import ExperienceSelectModal from './ExperienceSelectModal';
+import axiosInstance from '@/global/api/axiosInstance';
 
 interface MentorProfile1Props {
   mentorData: MentorProfileData;
@@ -25,33 +27,86 @@ const MentorProfile1 = ({
   onNext,
 }: MentorProfile1Props) => {
   const [isUploading, setIsUploading] = useState(false); // 이미지 업로드 상태
-  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [nicknameError, setNicknameError] = useState<string | undefined>(
+    undefined,
+  ); // 닉네임 에러 메시지 상태 수정
+  const [isNicknameValid, setIsNicknameValid] = useState(false); // 닉네임 유효성 상태 추가
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(
+    undefined,
+  );
 
   // 프로필 이미지 선택 후 API 요청하여 업로드
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // 10MB 초과 확인 (10MB = 10 * 1024 * 1024 바이트)
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMessage(
+        '파일 크기가 너무 큽니다.<br />10MB 이하의 이미지를 업로드해주세요.',
+      );
+      return;
+    }
+
     setIsUploading(true);
     try {
-      const imageUrl = await uploadProfileImage(file, 'MENTOR'); // memberType 추가
+      const imageUrl = await uploadProfileImage(file, 'ROLE_MENTOR'); // memberType 추가
       setMentorData({
         ...mentorData,
         image: { fileName: file.name, filePath: imageUrl },
       });
     } catch (error) {
-      alert('이미지 업로드에 실패했습니다.');
+      setErrorMessage('이미지 업로드에 실패했습니다.');
     } finally {
       setIsUploading(false);
     }
   };
 
   // 닉네임 유효성 체크
-  const handleNicknameCheck = () => {
-    setMentorData({
-      ...mentorData,
-      nickname: mentorData.nickname.trim(),
-    });
+  const handleNicknameCheck = async () => {
+    const trimmedNickname = mentorData.nickname.trim(); // 공백 제거
+
+    console.log('검사 닉네임: ', trimmedNickname);
+
+    if (!trimmedNickname) {
+      setNicknameError('닉네임을 입력해주세요.');
+      setIsNicknameValid(false);
+      setSuccessMessage(undefined); // 닉네임 검사를 새로 시작하면 이전 성공 메시지는 초기화
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(
+        `https://api.ringus.my/v1/members/check-nickname`,
+        { params: { nickname: mentorData.nickname.trim() } },
+      );
+      //console.log('응답 데이터:', response.data);
+
+      if (response.data.data === false) {
+        // 닉네임이 이미 존재하는 경우
+        setNicknameError(
+          response.data.message || '이미 사용 중인 닉네임입니다.',
+        );
+        setIsNicknameValid(false);
+        setSuccessMessage(undefined); // 성공 메시지 초기화
+      } else {
+        // 닉네임이 사용 가능할 때
+        setNicknameError(undefined); // 에러 초기화
+        setSuccessMessage('닉네임이 유효합니다.'); // 성공 메시지 설정
+        setIsNicknameValid(true); // 유효성 체크 성공
+      }
+    } catch (error: any) {
+      if (error.response) {
+        setNicknameError(
+          error.response.data.message || '알 수 없는 오류가 발생했습니다.',
+        );
+      } else {
+        setNicknameError('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+      setIsNicknameValid(false);
+      setSuccessMessage(undefined); // 실패 시 성공 메시지 초기화
+    }
   };
 
   //  전체 입력 필드 유효성 체크
@@ -62,11 +117,20 @@ const MentorProfile1 = ({
     mentorData.organization.name.trim().length > 0 &&
     mentorData.organization.jobCategory.trim().length > 0 &&
     mentorData.organization.detailedJob.trim().length > 0 &&
-    mentorData.organization.experience !== null;
+    mentorData.organization.experience !== null &&
+    isNicknameValid;
 
   return (
     <div className="flex flex-col w-full h-[calc(100vh-15vh)] overflow-hidden">
       {/* 상단 제목과 설명 */}
+      {errorMessage && (
+        <ErrorModal
+          title="파일 업로드 오류"
+          message={errorMessage}
+          onClose={() => setErrorMessage(null)}
+        />
+      )}
+
       <div className="flex-grow overflow-y-auto pr-5 pb-24">
         <div className="flex-none mt-12">
           <h3 className="text-xl sm:text-2xl 2xl:text-3xl font-bold text-primary-1">
@@ -117,6 +181,8 @@ const MentorProfile1 = ({
             }
             buttonLabel="확인"
             onButtonClick={handleNicknameCheck}
+            error={nicknameError}
+            successMessage={successMessage}
           />
         </div>
         {/* 학교 입력 */}

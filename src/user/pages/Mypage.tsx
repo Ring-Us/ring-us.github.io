@@ -12,7 +12,7 @@ export default function MyPage() {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
-  const [isProfileRegistered, setIsProfileRegistered] = useState(false); // 추가: 상태 분리
+  const [isProfileRegistered, setIsProfileRegistered] = useState(false);
 
   // 백엔드에서 유저 정보 가져오기
   const fetchUserData = async () => {
@@ -42,7 +42,7 @@ export default function MyPage() {
   // userData가 업데이트될 때 isProfileRegistered 값 업데이트
   useEffect(() => {
     if (userData) {
-      setIsProfileRegistered(userData.isProfileRegisterd); // 프로필 등록 여부 반영
+      setIsProfileRegistered(userData.isProfileRegisterd);
     }
   }, [userData]);
 
@@ -68,11 +68,22 @@ export default function MyPage() {
     isProfileRegistered && userData?.imgUrl
       ? userData.imgUrl
       : '/assets/ringusprofile.png';
-  const isMentor = userData?.memberType === 'MENTOR';
+
+  const isMentor = userData?.memberType === 'ROLE_MENTOR';
   const profileEditPath = isMentor ? '/user/mentoredit' : '/user/menteeedit';
   const profileRegistrationPath = isMentor
     ? '/user/mentor-profile'
     : '/user/mentee-profile';
+
+  const mentorInfo = isProfileRegistered
+    ? isMentor
+      ? userData?.mentorProfile
+        ? `${userData.mentorProfile.nickname}\n${userData.mentorProfile.organization?.name ?? '소속 정보 없음'} | ${userData.mentorProfile.organization?.experience ?? 0}년차\n${userData.mentorProfile.organization?.jobCategory ?? ''} ${userData.mentorProfile.organization?.detailedJob ?? ''}`
+        : '소속 정보 없음'
+      : userData?.menteeProfile
+        ? `${userData.menteeProfile.nickname}\n${userData.menteeProfile.education.schoolName ?? '학교 정보 없음'} | ${userData.menteeProfile.education.major ?? '전공 정보 없음'}`
+        : '교육 정보 없음'
+    : '프로필 정보 없음';
 
   if (loading) {
     return (
@@ -110,13 +121,26 @@ export default function MyPage() {
             alt="프로필"
             className="w-20 h-20 rounded-[50px] object-cover"
           />
-          <p className="pl-2 text-[#ffffff]">
-            {isAuthenticated
-              ? isProfileRegistered
-                ? userData?.email
-                : '프로필을 등록해주세요'
-              : '로그인 후 프로필을 등록해주세요'}
-          </p>
+          <div className="pl-2 text-[#ffffff]">
+            <p>
+              {isAuthenticated
+                ? isProfileRegistered
+                  ? userData?.email
+                  : '프로필을 등록해주세요'
+                : '로그인 후 프로필을 등록해주세요'}
+            </p>
+
+            {isProfileRegistered && (
+              <p className="text-sm text-gray-4">
+                {mentorInfo.split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
