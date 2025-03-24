@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Bookmark } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
+
+import { getMentorById } from '../api/MentorViewApi';
+import { MentorData } from '@/user/types';
+import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/mapping';
+import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/mapping';
 
 import MentorInfoProfile from '../../user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '../../user/components/profileInfo/MentorInfoBio';
@@ -12,48 +17,40 @@ import MentorInfoMessage from '../../user/components/profileInfo/MentorInfoMessa
 import MentorInfoPortfolio from '../../user/components/profileInfo/MentorInfoPortfolio';
 
 const MentorInfoView = () => {
+  const { mentorId } = useParams<{ mentorId: string }>();
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [mentorData, setMentorData] = useState<MentorData | null>(null);
 
-  // 테스트용 멘티 데이터 && localStorage에서 데이터 불러오기 (api 연결시 제거)
-  const [mentorData, setMentorData] = useState(() => {
-    const savedData = localStorage.getItem("mentorData");
-    return savedData ? JSON.parse(savedData) : {
-      nickname: "바이",
-      introduction: {
-        title: "브랜드 마케팅에 대한 모든 것을 알려드립니다.",
-        content: "안녕하세요!\n저는 OO대학교 경영학과를 졸업하고 현재 XXXX에 다니고 있는 ‘바이’입니다.",
-      },        
-      mentoringField: ["취업 준비", "커리어 고민"],        
-      education: {
-        schoolName: "경북대학교",
-        major: "컴퓨터공학",
-      },
-      organization: {
-        name: "OO주식회사",
-        jobCategory: "브랜드 마케팅",
-        detailedJob: "카피라이팅",
-        experience: 6,
-      },
-      timezone: {
-        days: ["월", "목"],
-        startTime: "09:00:00",
-        endTime: "17:00:00",
-      },
-      hashtags: ["마케팅", "브랜드마케팅", "이직", "취준", "진로고민상담", "면접노하우"],
-      message: "안녕하세요, 멘티 여러분!\n브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.",
-      portfolio: {
-        url: 'https://example.com/portfolio1.pdf',
-        description: '브랜드 마케팅 포트폴리오.pdf',
-        size: 8000000,
-      },
-      image: {
-        fileName: "",
-        filePath: "",
-      },
-      count: 716,
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!mentorId || isNaN(Number(mentorId))) return;
+        const data = await getMentorById(Number(mentorId));
+
+        // 매핑
+        const localizedData: MentorData = {
+          ...data,
+          mentoringField: data.mentoringField.map((f) => reverseMentoringFieldMapping[f] || f),
+          timezone: {
+            ...data.timezone,
+            days: data.timezone.days.map((d) => reverseDayMapping[d] || d),
+          },
+          organization: {
+            ...data.organization,
+            jobCategory: reverseJobCategoryMapping[data.organization.jobCategory] || data.organization.jobCategory,
+            detailedJob: reverseDetailedJobMapping[data.organization.detailedJob] || data.organization.detailedJob,
+          },
+        };
+
+        setMentorData(localizedData);
+      } catch (err) {
+        console.error("멘토 상세 불러오기 실패:", err);
+      }
     };
-  });
+
+    fetchData();
+  }, [mentorId]);
 
   useEffect(() => {
     const storedBookmark = localStorage.getItem("isBookmarked");
@@ -65,6 +62,8 @@ const MentorInfoView = () => {
     setIsBookmarked(newBookmarkState);
     localStorage.setItem("isBookmarked", newBookmarkState.toString());
   };
+
+  if (!mentorData) return <div className="p-4">Loading...</div>;
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
@@ -114,7 +113,7 @@ const MentorInfoView = () => {
 
           {/* 선호 시간대 */}
           <MentorInfoTime
-            days={mentorData.days} 
+            days={mentorData.timezone.days} 
             startTime={mentorData.timezone.startTime} 
             endTime={mentorData.timezone.endTime} 
           />
