@@ -5,10 +5,10 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { MentorData } from '@/user/types';
 import { getMentorProfile, updateMentorProfile } from '@/user/api/MentorInfoApi';
-import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/mapping';
-import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/mapping';
+import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/Mapping';
+import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/Mapping';
 import { jobCategoryMapping, detailedJobMapping } from '@/global/components/JobCategories';
-import { mentoringFieldMapping, dayMapping } from '@/user/components/mapping';
+import { mentoringFieldMapping, dayMapping } from '@/user/components/Mapping';
 
 import EditProfileSection from '@/user/components/ProfileEdit/EditProfileSection';
 import EditBio from '@/user/components/ProfileEdit/EditBio';

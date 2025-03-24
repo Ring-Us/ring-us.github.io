@@ -5,8 +5,8 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { getMentorProfile } from '@/user/api/MentorInfoApi';
 import { MentorData } from '@/user/types';
-import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/mapping';
-import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/mapping';
+import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/Mapping';
+import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/Mapping';
 
 import MentorInfoProfile from '@/user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '@/user/components/profileInfo/MentorInfoBio';
