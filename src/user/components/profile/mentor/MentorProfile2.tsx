@@ -1,7 +1,7 @@
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import { MentorProfileData } from '@/user/types/profileTypes';
 
-import MentorFields from '@/user/components/profile/mentor/mentorFields';
+import MentorFields from '@/user/components/profile/mentor/MentorFields';
 import MentorTime from '@/user/components/profile/mentor/MentorTime';
 
 interface MentorProfile2Props {
