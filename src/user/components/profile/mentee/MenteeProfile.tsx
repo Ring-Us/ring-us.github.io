@@ -3,7 +3,9 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { uploadProfileImage } from '@/user/api/profileApi';
 import { MenteeProfileData } from '@/user/types/profileTypes';
+
 import ErrorModal from '@/global/ui/ErrorModal'; // Error 모달 추가
+import axiosInstance from '@/global/api/axiosInstance';
 
 interface MenteeProfileProps {
   menteeData: MenteeProfileData;
@@ -18,6 +20,13 @@ const MenteeProfile = ({
 }: MenteeProfileProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지 상태 추가
+  const [nicknameError, setNicknameError] = useState<string | undefined>(
+    undefined,
+  ); // 닉네임 에러 메시지 상태 수정
+  const [isNicknameValid, setIsNicknameValid] = useState(false); // 닉네임 유효성 상태 추가
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(
+    undefined,
+  );
 
   // 프로필 이미지 선택 후 API 요청하여 업로드
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +55,49 @@ const MenteeProfile = ({
     }
   };
 
-  // 닉네임 유효성 체크
-  const handleNicknameCheck = () => {
-    setMenteeData({
-      ...menteeData,
-      nickname: menteeData.nickname.trim(),
-    });
+  const handleNicknameCheck = async () => {
+    const trimmedNickname = menteeData.nickname.trim(); // 공백 제거
+
+    console.log('검사 닉네임: ', trimmedNickname);
+
+    if (!trimmedNickname) {
+      setNicknameError('닉네임을 입력해주세요.');
+      setIsNicknameValid(false);
+      setSuccessMessage(undefined); // 닉네임 검사를 새로 시작하면 이전 성공 메시지는 초기화
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(
+        `https://api.ringus.my/v1/members/check-nickname`,
+        { params: { nickname: menteeData.nickname.trim() } },
+      );
+      //console.log('응답 데이터:', response.data);
+
+      if (response.data.data === false) {
+        // 닉네임이 이미 존재하는 경우
+        setNicknameError(
+          response.data.message || '이미 사용 중인 닉네임입니다.',
+        );
+        setIsNicknameValid(false);
+        setSuccessMessage(undefined); // 성공 메시지 초기화
+      } else {
+        // 닉네임이 사용 가능할 때
+        setNicknameError(undefined); // 에러 초기화
+        setSuccessMessage('닉네임이 유효합니다.'); // 성공 메시지 설정
+        setIsNicknameValid(true); // 유효성 체크 성공
+      }
+    } catch (error: any) {
+      if (error.response) {
+        setNicknameError(
+          error.response.data.message || '알 수 없는 오류가 발생했습니다.',
+        );
+      } else {
+        setNicknameError('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+      setIsNicknameValid(false);
+      setSuccessMessage(undefined); // 실패 시 성공 메시지 초기화
+    }
   };
 
   // 전체 입력 필드 유효성 체크
@@ -59,7 +105,8 @@ const MenteeProfile = ({
     menteeData.nickname.trim().length > 0 &&
     menteeData.introduction.trim().length > 0 &&
     menteeData.education.schoolName.trim().length > 0 &&
-    menteeData.education.major.trim().length > 0;
+    menteeData.education.major.trim().length > 0 &&
+    isNicknameValid;
 
   return (
     <div className="flex flex-col w-full h-[calc(100dvh-15dvh)] overflow-hidden">
@@ -124,6 +171,8 @@ const MenteeProfile = ({
             }
             buttonLabel="확인"
             onButtonClick={handleNicknameCheck}
+            error={nicknameError}
+            successMessage={successMessage}
           />
         </div>
 
