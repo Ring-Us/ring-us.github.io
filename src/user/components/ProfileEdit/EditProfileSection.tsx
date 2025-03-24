@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { User } from 'lucide-react';
 import { Mail } from 'lucide-react';
@@ -9,14 +9,14 @@ import EditImageModal from "./EditImageModal";
 interface EditProfileSectionProps {
   mentorData: {
     nickname: string;
-    email: string;
     education: {
       schoolName: string;
       major: string;
     };
     organization: {
       name: string;
-      role: string;
+      jobCategory: string;
+      detailedJob: string;
       experience: number;
     };
     image: {
@@ -102,7 +102,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]">{mentorData.email}</span>
+              <span className="text-[#94939B] text-[14px]"></span>
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
               color="#94939b"
               className="mr-3 ml-0.5"
             />
-            <span className="text-[#94939B] text-[14px]">{mentorData.organization.role} {mentorData.organization.experience}</span>
+            <span className="text-[#94939B] text-[14px]">{mentorData.organization.jobCategory} / {mentorData.organization.detailedJob} {mentorData.organization.experience}년차</span>
           </div>
           <div className="flex items-center bg-[#F2F2F6] rounded-[10px] px-3 py-1 my-2 h-8">
             <BriefcaseBusiness

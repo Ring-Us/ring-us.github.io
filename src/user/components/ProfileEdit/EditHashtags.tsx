@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 
 interface EditHashtagsProps {
   mentorData: MentorData;
-  setMentorData: React.Dispatch<React.SetStateAction<MentorData>>;
+  setMentorData: React.Dispatch<React.SetStateAction<MentorData | null>>;
 }
 
 const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
@@ -25,20 +25,26 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
       return;
     }
     if (!mentorData.hashtags.includes(trimmedTag)) {
-      setMentorData((prev) => ({
-        ...prev,
-        hashtags: [...prev.hashtags, trimmedTag],
-      }));
+      setMentorData((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          hashtags: [...prev.hashtags, trimmedTag],
+        };
+      });
       setNewTag('');
     }
   };
 
   // 해시태그 삭제
   const removeHashtag = (tag: string) => {
-    setMentorData((prev) => ({
-      ...prev,
-      hashtags: prev.hashtags.filter((t) => t !== tag),
-    }));
+    setMentorData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        hashtags: prev.hashtags.filter((t) => t !== tag),
+      };
+    });
   };
 
   return (

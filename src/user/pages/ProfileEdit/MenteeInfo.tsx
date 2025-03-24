@@ -1,34 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
+
+import { getMenteeProfile } from '@/user/api/MenteeInfoApi';
+import { MenteeData } from '@/user/menteetypes';
 
 import MenteeInfoProfile from '@/user/components/profileInfo/MenteeInfoProfile';
 import MenteeInfoBio from '@/user/components/profileInfo/MenteeInfoBio';
 
 const MenteeInfo = () => {
   const navigate = useNavigate();
+  const [menteeData, setMenteeData] = useState<MenteeData | null>(null);
 
-  // 테스트용 멘티 데이터 && localStorage에서 데이터 불러오기 (api 연결시 제거)
-  const [menteeData, setMenteeData] = useState(() => {
-    const savedData = localStorage.getItem("menteeData");
-    return savedData ? JSON.parse(savedData) : {
-      nickname: "김멘티",
-      email: "kimtee@gmail.com",
-      education: {
-        schoolName: "경북대학교 · 석사",
-        major: "심리학과 · 경영학과",
-      },
-      image: {
-        fileName: "",
-        filePath: "",
-      },
-      introduction: {
-        summary: "광고 기획자를 꿈꾸는 열정넘치는 학생입니다!",
-        bio: "광고 기획자라는 점을 가지고 있는 상황에서 선배님들의 조언을 듣고 싶습니다",
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getMenteeProfile();
+        setMenteeData(data);
+      } catch (error) {
+        console.error('멘티 정보 로딩 실패:', error);
       }
     };
-  });
+    fetchData();
+  }, []);
+
+  if (!menteeData) {
+    return <div className="p-4">Loading...</div>;
+  }
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
@@ -53,7 +52,6 @@ const MenteeInfo = () => {
           {/* 프로필 섹션 */}
           <MenteeInfoProfile 
             nickname={menteeData.nickname}
-            email={menteeData.email}
             schoolName={menteeData.education.schoolName}
             major={menteeData.education.major}
             image={menteeData.image.filePath}
@@ -62,8 +60,7 @@ const MenteeInfo = () => {
 
         {/* 자기소개 */}
         <MenteeInfoBio 
-          summary={menteeData.introduction.summary}
-          bio={menteeData.introduction.bio}
+          introduction={menteeData.introduction}
         />
       </div>
 
