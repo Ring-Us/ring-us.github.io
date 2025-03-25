@@ -20,16 +20,7 @@ export default function MenteeProfileRegistration() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleNext = async () => {
-    if (step === 1) {
-      try {
-        await createMenteeProfile(menteeData);
-      } catch (error) {
-        console.error('❌ 멘티 프로필 전송 실패:', error);
-        alert('멘티 프로필 저장에 실패했습니다.');
-        return;
-      }
-    }
+  const handleNext = () => {
     setStep((prev) => prev + 1);
   };
 
@@ -43,12 +34,17 @@ export default function MenteeProfileRegistration() {
 
     setIsUploading(true);
     try {
+      // 멘티 프로필 저장
+      await createMenteeProfile(menteeData);
+
+      // 인증서 업로드
       await uploadMenteeCertificate(selectedFile, 'ENROLLMENT');
-      alert('멘티 인증서 업로드가 완료되었습니다! 프로필 등록이 끝났습니다!');
+
+      alert('멘티 프로필과 인증서 등록이 완료되었습니다!');
       navigate('/user');
     } catch (error) {
-      console.error('❌ 멘티 인증서 업로드 실패:', error);
-      alert('멘티 인증서 업로드에 실패했습니다.');
+      console.error('❌ 프로필 또는 인증서 업로드 실패:', error);
+      alert('프로필 또는 인증서 업로드에 실패했습니다.');
     } finally {
       setIsUploading(false);
     }

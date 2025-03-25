@@ -50,14 +50,23 @@ const MentorTime = ({ mentorData, setMentorData }: MentorTimeProps) => {
 
   // 시간 선택 완료 후 mentorData 업데이트
   const handleTimeSave = () => {
+    const start = `${String(startHour).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}:00`;
+    const end = `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}:00`;
+
+    if (start >= end) {
+      alert('시작 시간은 종료 시간보다 빨라야 합니다.');
+      return;
+    }
+
     setMentorData((prev) => ({
       ...prev,
       timezone: {
         ...prev.timezone,
-        startTime: `${String(startHour).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}:00`,
-        endTime: `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}:00`,
+        startTime: start,
+        endTime: end,
       },
     }));
+
     setIsModalOpen(false);
   };
 

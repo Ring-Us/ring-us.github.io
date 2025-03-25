@@ -16,10 +16,14 @@ const MentorProfile2 = ({
   onNext,
 }: MentorProfile2Props) => {
   // 전체 입력 필드 유효성 체크 (자기소개 + 멘토링 분야)
+  const isTimezoneValid =
+    mentorData.timezone.days.length > 0 && // 최소 한 개의 요일 선택
+    mentorData.timezone.startTime < mentorData.timezone.endTime;
   const isFormValid =
     mentorData.introduction.title.trim().length > 0 &&
     mentorData.introduction.content.trim().length > 0 &&
-    mentorData.mentoringField.length > 0; // 멘토링 분야 선택 필수
+    mentorData.mentoringField.length > 0 && // 멘토링 분야 선택 필수
+    isTimezoneValid;
 
   return (
     <div className="flex flex-col w-full h-[calc(100vh-15vh)] overflow-hidden">
