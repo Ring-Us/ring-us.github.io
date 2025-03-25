@@ -1,47 +1,51 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
+type SortOption = 'respond'; 
+
 interface MentorshipSortDropdownProps {
-  sortOption?: string; // optional prop
-  onSortChange: (value: string) => void;
+  sortOption?: SortOption;
+  onSortChange: (value: SortOption) => void;
 }
 
 const MentorshipSortDropdown: React.FC<MentorshipSortDropdownProps> = ({
-  sortOption,
+  sortOption = 'respond', // ✅ 기본값 설정
   onSortChange,
 }) => {
-  // sortOption이 없으면 'respond'를 기본값으로 사용
-  const effectiveSortOption = sortOption || 'respond';
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const options = [
-    { value: 'respond', label: '멘토링 횟수 순' },
-    { value: 'mYear', label: '경력 낮은 순' }, // 임시로 해둔 정렬 기준
+  const options: { value: SortOption; label: string }[] = [
+    { value: 'respond', label: '멘토링 횟수 순' }, 
   ];
 
-  // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
   return (
     <div className="relative inline-block px-4 w-full justify-end" ref={dropdownRef}>
       <div
-        className="w-full text-[12px] text-gray-2 cursor-pointer focus:outline-none text-right p-0"
+        className="w-full text-[12px] text-gray-2 cursor-pointer focus:outline-none text-right p-0 flex items-center justify-end"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        {options.find(option => option.value === effectiveSortOption)?.label}
-        <ChevronDown strokeWidth={1} height="24px" width="24px" color="#94939B" className="inline ml-2" />
+        {options.find((option) => option.value === sortOption)?.label}
+        <ChevronDown strokeWidth={1} height="24px" width="24px" color="#94939B" className="ml-2" />
       </div>
       {isOpen && (
-        <div className="absolute right-4 w-1/2 bg-white border z-10 rounded-[10px] px-4 py-1">
+        <div className="absolute right-4 w-1/2 bg-white border z-10 rounded-[10px] px-4 py-1 shadow-md">
           {options.map((option) => (
             <div
               key={option.value}

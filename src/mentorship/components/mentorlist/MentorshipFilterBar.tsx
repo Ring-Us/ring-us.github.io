@@ -4,8 +4,7 @@ import { ChevronDown } from 'lucide-react';
 interface MentorshipFilterBarProps {
   selectedField: string | null;
   selectedSubField: string | null;
-  selectedYear: string | null;
-  onFilterClick: (filterType: string) => void;
+  onFilterClick: (filterType: '직무' | '세부직무') => void; // ✅ 타입 명확화
 }
 
 const MentorshipFilterBar: React.FC<MentorshipFilterBarProps> = ({

@@ -1,197 +1,111 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { MentorType } from '@/mentorship/pages/mentorlist/MentorshipList.types';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import MentorshipHeader from '@/mentorship/components/mentorlist/MentorshipHeader';
 import MentorshipFilterBar from '@/mentorship/components/mentorlist/MentorshipFilterBar';
 import MentorshipSortDropdown from '@/mentorship/components/mentorlist/MentorshipSortDropdown';
 import MentorList from '@/mentorship/components/mentorlist/MentorList';
 import Footer from '@/global/components/Footer';
 import MentorshipListFilter from '@/mentorship/components/mentorlist/MentorshipListFilter';
-
-const mentorshipData: MentorType[] = [
-  {
-    mName: '트레블',
-    mJob: '마케팅',
-    mcompany: '제일기획',
-    mJobDetail: '퍼포먼스 마케팅',
-    mYear: '5년차',
-    respond: 29,
-    intro: '“퍼포먼스 마케팅에 대해 알려드립니다.”',
-  },
-  {
-    mName: '트레블2',
-    mJob: '마케팅',
-    mcompany: '하나기획',
-    mJobDetail: '디지털/소셜 마케팅',
-    mYear: '7년차',
-    respond: 54,
-    intro: '“소셜 미디어 최적화와 브랜딩 노하우를 알려드립니다.”',
-  },
-  {
-    mName: '트레블3',
-    mJob: '서비스 기획',
-    mcompany: '삼송회사',
-    mJobDetail: '전략 기획',
-    mYear: '3년차',
-    respond: 123,
-    intro: '“시장 조사 및 제품 기획에 관한 경험을 공유합니다.”',
-  },
-  {
-    mName: '트레블4',
-    mJob: '디자인',
-    mcompany: '엘지물산',
-    mJobDetail: 'UX/UI디자인',
-    mYear: '5년차',
-    respond: 85,
-    intro: '“UI/UX 디자인의 최신 트렌드를 안내합니다.”',
-  },
-  {
-    mName: '트레블5',
-    mJob: '개발',
-    mcompany: '아플',
-    mJobDetail: '풀스택 개발자',
-    mYear: '7년차',
-    respond: 190,
-    intro: '“웹 개발에 필요한 기술들을 알려드립니다.”',
-  },
-  {
-    mName: '트레블6',
-    mJob: '개발',
-    mcompany: 'HSAD',
-    mJobDetail: 'iOS/Android 개발자',
-    mYear: '3년차',
-    respond: 165,
-    intro: '“모바일 앱 및 AI/ML 개발에 대해 경험을 공유합니다.”',
-  },
-  {
-    mName: '트레블7',
-    mJob: '마케팅',
-    mcompany: '최고기업',
-    mJobDetail: '디지털/소셜 마케팅',
-    mYear: '5년차',
-    respond: 80,
-    intro: '“브랜딩 전략과 소셜 미디어 마케팅에 관해 설명합니다.”',
-  },
-  {
-    mName: '트레블8',
-    mJob: '데이터',
-    mcompany: '두리티비',
-    mJobDetail: '데이터 애널리스트',
-    mYear: '7년차',
-    respond: 88,
-    intro: '“데이터 분석과 엔지니어링의 노하우를 공유합니다.”',
-  },
-  {
-    mName: '트레블9',
-    mJob: '의료',
-    mcompany: '삼송기획',
-    mJobDetail: '의료 데이터 분석',
-    mYear: '5년차',
-    respond: 75,
-    intro: '“의료 분야의 데이터 분석과 임상 연구를 소개합니다.”',
-  },
-  {
-    mName: '트레블10',
-    mJob: '법률',
-    mcompany: '제일기획',
-    mJobDetail: '법률자문',
-    mYear: '7년차',
-    respond: 95,
-    intro: '“법률 자문과 계약 검토에 대해 전문적인 조언을 드립니다.”',
-  },
-];
+import { fetchMentors } from '../../api/fetchMentors';
+import { Mentor } from '../../api/fetchMentors';
 
 const MentorshipList = () => {
-  const [isFooterVisible, setIsFooterVisible] = useState(true);
-  // filteredMentors를 직접 정렬 결과로 관리하거나 useMemo로 파생 데이터로 관리
-  const [sortOption, setSortOption] = useState('respond'); // 기본값을 'respond'로 변경!
-  const [filterType, setFilterType] = useState<string | null>(null);
+  const [mentors, setMentors] = useState<Mentor[]>([]);
+  const [sortOption, setSortOption] = useState<string>('respond');
   const [selectedField, setSelectedField] = useState<string | null>(null);
   const [selectedSubField, setSelectedSubField] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [bookmarked, setBookmarked] = useState<{ [key: string]: boolean }>({});
+  const [cursor, setCursor] = useState<number | null>(null);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const size = 5;
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const lastScrollYRef = useRef(0);
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const currentScrollY = container.scrollTop;
-      if (currentScrollY > lastScrollYRef.current) {
-        setIsFooterVisible(false);
-      } else {
-        setIsFooterVisible(true);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastMentorElementRef = useCallback((node: Element | null) => {
+    if (loading) return;
+  
+    if (observer.current) observer.current.disconnect();
+  
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore && !loading) {
+        loadMoreMentors();
       }
-      lastScrollYRef.current = currentScrollY;
-    };
+    });
+  
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore, cursor]); 
 
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // sortOption 변경 시, mentorshipData를 정렬해서 filteredMentors에 업데이트!
-  const sortedMentors = useMemo(() => {
-    const dataCopy = [...mentorshipData];
-    if (sortOption === 'respond') {
-      // 멘토링 횟수가 많은 순으로 내림차순 정렬
-      dataCopy.sort((a, b) => b.respond - a.respond);
-    } else if (sortOption === 'mYear') {
-      // mYear가 '5년차' 같은 문자열이므로 숫자만 추출해서 오름차순 정렬
-      dataCopy.sort((a, b) => {
-        const yearA = parseInt(a.mYear);
-        const yearB = parseInt(b.mYear);
-        return yearA - yearB;
+  const loadMoreMentors = async () => {
+    if (loading || !hasMore) return;
+  
+    setLoading(true);
+  
+    // ✅ 현재 커서 값을 따로 저장
+    const currentCursor = cursor ?? undefined;
+  
+    try {
+      const res = await fetchMentors(currentCursor, size);
+      const { content, sliceInfo } = res.data;
+  
+      // ✅ 받은 mentorId 배열
+      const newMentors = content;
+  
+      // ✅ 중복 방지를 위해 mentorId 기준 필터링
+      setMentors((prev) => {
+        const existingIds = new Set(prev.map((m) => m.mentorId));
+        const filteredNew = newMentors.filter((m) => !existingIds.has(m.mentorId));
+        return [...prev, ...filteredNew];
       });
+  
+      // ✅ 다음 요청을 위한 커서 업데이트
+      if (newMentors.length > 0) {
+        const nextCursor = newMentors[newMentors.length - 1].mentorId;
+        setCursor(nextCursor);
+      }
+  
+      setHasMore(!sliceInfo.last);
+    } catch (err) {
+      console.error('멘토 로드 실패:', err);
+    } finally {
+      setLoading(false);
     }
-    return dataCopy;
-  }, [sortOption]);
+  };
+  
+  useEffect(() => {
+    loadMoreMentors();
+  }, []);
 
   return (
     <div className="h-screen flex flex-col bg-gray-100 relative">
-      {/* 헤더 */}
       <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-gray-100 z-20">
         <MentorshipHeader />
         <MentorshipFilterBar
           selectedField={selectedField}
           selectedSubField={selectedSubField}
           selectedYear={selectedYear}
-          onFilterClick={setFilterType}
+          onFilterClick={(field: string) => setSelectedField(field)}
         />
-        <MentorshipSortDropdown
-          sortOption={sortOption}
-          onSortChange={setSortOption}
-        />
+        <MentorshipSortDropdown sortOption={sortOption} onSortChange={setSortOption} />
       </div>
-
-      {/* 스크롤 영역 */}
-      <div
-        ref={scrollContainerRef}
-        className="flex-grow overflow-y-auto pb-[60px] mt-[16px] no-scrollbar"
-      >
+      <div className="flex-grow overflow-y-auto pb-[60px] mt-[16px] no-scrollbar">
         <MentorList
-          mentors={sortedMentors}  // 정렬된 리스트를 전달
+          mentors={mentors}
           bookmarked={bookmarked}
-          onToggleBookmark={(mName) =>
-            setBookmarked((prev) => ({ ...prev, [mName]: !prev[mName] }))
-          }
+          onToggleBookmark={(nickname) => setBookmarked((prev) => ({ ...prev, [nickname]: !prev[nickname] }))}
+          lastMentorRef={lastMentorElementRef}
         />
       </div>
-
-      {/* 필터 모달 */}
-      {filterType && (
+      {loading && <p className="text-center p-4">Loading more mentors...</p>}
+      {selectedField && (
         <MentorshipListFilter
-          filterType={filterType}
-          onClose={() => setFilterType(null)}
+          filterType={selectedField}
+          onClose={() => setSelectedField(null)}
           selectedField={selectedField}
           onFieldSelect={setSelectedField}
           selectedSubField={selectedSubField}
           onSubFieldSelect={setSelectedSubField}
         />
       )}
-
-      {/* 푸터 */}
       <Footer />
     </div>
   );
