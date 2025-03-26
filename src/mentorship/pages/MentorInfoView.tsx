@@ -98,7 +98,7 @@ const MentorInfoView = () => {
             jobCategory={mentorData.organization.jobCategory}
             detailedJob={mentorData.organization.detailedJob}
             experience={mentorData.organization.experience} 
-            count={mentorData.count}
+            mentoringCount={mentorData.mentoringCount}
             image={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
           />
         </div>

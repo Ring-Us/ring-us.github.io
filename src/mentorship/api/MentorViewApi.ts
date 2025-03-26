@@ -21,6 +21,6 @@ export const getMentorById = async (mentorId: number): Promise<MentorData> => {
     message: data.message ?? '',
     portfolio: data.portfolio ?? { url: '', description: '', size: 0 },
     image: data.image ?? { fileName: '', filePath: '' },
-    count: data.count ?? 0,
+    mentoringCount: data.mentoringCount ?? 0,
   };
 };
