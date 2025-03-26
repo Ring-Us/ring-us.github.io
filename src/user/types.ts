@@ -32,5 +32,5 @@ export interface MentorData {
     filePath: string;
   };
 
-  count: number;
+  mentoringCount: number;
 }
