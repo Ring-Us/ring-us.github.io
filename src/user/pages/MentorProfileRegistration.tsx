@@ -30,17 +30,7 @@ export default function MentorProfileRegistration() {
   });
 
   // 다음 단계로 이동
-  const handleNext = async () => {
-    if (step === 3) {
-      try {
-        console.log('mentorData 전송:', JSON.stringify(mentorData, null, 2));
-        await createMentorProfile(mentorData);
-      } catch (error) {
-        console.error('❌ 멘토 프로필 전송 실패:', error);
-        alert('멘토 프로필 저장에 실패했습니다.');
-        return;
-      }
-    }
+  const handleNext = () => {
     setStep((prev) => prev + 1);
   };
 
@@ -50,7 +40,9 @@ export default function MentorProfileRegistration() {
     certification: File | null;
   }) => {
     try {
-      //console.log('멘토 인증서 파일 전송:', files);
+      // 멘토 프로필 먼저 저장
+      console.log('멘토 프로필 전송:', JSON.stringify(mentorData, null, 2));
+      await createMentorProfile(mentorData);
 
       // 학력 인증 업로드
       if (files.enrollment) {
@@ -62,11 +54,11 @@ export default function MentorProfileRegistration() {
         await uploadMentorCertificate(files.certification, 'EMPLOYMENT');
       }
 
-      alert('멘토 등록이 완료되었습니다!');
+      alert('멘토 프로필 및 인증서 등록이 완료되었습니다!');
       navigate('/user'); // 완료 후 마이페이지 이동
     } catch (error) {
-      console.error('❌ 멘토 인증서 업로드 실패:', error);
-      alert('멘토 인증서 업로드에 실패했습니다.');
+      console.error('❌ 프로필 또는 인증서 업로드 실패:', error);
+      alert('프로필 또는 인증서 업로드에 실패했습니다.');
     }
   };
 

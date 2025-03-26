@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { uploadProfileImage } from '@/user/api/profileApi';
@@ -27,6 +27,12 @@ const MenteeProfile = ({
   const [successMessage, setSuccessMessage] = useState<string | undefined>(
     undefined,
   );
+
+  useEffect(() => {
+    if (menteeData.nickname.trim().length > 0 && !nicknameError) {
+      setIsNicknameValid(true);
+    }
+  }, [menteeData.nickname, nicknameError]);
 
   // 프로필 이미지 선택 후 API 요청하여 업로드
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
