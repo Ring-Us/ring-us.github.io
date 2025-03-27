@@ -66,18 +66,12 @@ export default function MyPage() {
   // 프로필 이미지 설정 (기본값 포함)
 
   const isMentor = userData?.memberType === 'ROLE_MENTOR';
-  // const profileImageUrl = isProfileRegistered
-  //   ? isMentor
-  //     ? (userData?.mentorProfile?.image?.filePath ??
-  //       '/assets/ringusprofile.png')
-  //     : (userData?.menteeProfile?.image?.filePath ??
-  //       '/assets/ringusprofile.png')
-  //   : '/assets/ringusprofile.png';
-
   const profileImageUrl = isProfileRegistered
     ? isMentor
-      ? (userData?.mentorProfile?.imgUrl ?? '/assets/ringusprofile.png')
-      : (userData?.menteeProfile?.imgUrl ?? '/assets/ringusprofile.png')
+      ? (userData?.mentorProfile?.image?.filePath ??
+        '/assets/ringusprofile.png')
+      : (userData?.menteeProfile?.image?.filePath ??
+        '/assets/ringusprofile.png')
     : '/assets/ringusprofile.png';
   const profileEditPath = isMentor ? '/user/mentorinfo' : '/user/menteeinfo';
   const profileRegistrationPath = isMentor
