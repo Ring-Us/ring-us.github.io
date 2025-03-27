@@ -29,21 +29,26 @@ const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
     <div className="px-4 my-2">
       <div className="font-bold text-[16px] my-4">멘토링 분야</div>
       <div className="grid grid-cols-2 gap-4 px-7">
-        {fields.map((field) => (
-          <button
-            key={field.title}
-            className={`text-[14px] border-[1px] rounded-[10px] flex flex-col items-center justify-center p-2 
-              ${mentorData.mentoringField.includes(field.title) ? 'bg-[#F2EFFF] text-primary-1 border-primary-1' : 'border-[#94939B] text-[#94939B]'}`}
-            onClick={() => toggleSelection(field.title)}
-          >
-            <img
-              src={field.img}
-              alt={field.title}
-              className="w-[60px] h-[60px]"
-            />
-            <span>{field.title}</span>
-          </button>
-        ))}
+        {fields.map((field) => {
+          const isSelected = mentorData.mentoringField.includes(field.title);
+
+          return (
+            <button
+              key={field.title}
+              className={`text-[14px] border-[1px] rounded-[10px] flex flex-col items-center justify-center p-2 
+                ${isSelected ? 'bg-[#F2EFFF] text-primary-1 border-primary-1' : 'border-gray-2 text-gray-2'}`}
+              onClick={() => toggleSelection(field.title)}
+            >
+              <img
+                src={field.img}
+                alt={field.title}
+                className={`w-[60px] h-[60px] transition-all duration-300 
+                  ${isSelected ? 'filter-none' : 'filter grayscale'}`}
+              />
+              <span>{field.title}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
