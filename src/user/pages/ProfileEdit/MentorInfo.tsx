@@ -23,6 +23,7 @@ const MentorInfo = () => {
     const fetchData = async () => {
       try {
         const data = await getMentorProfile();
+        console.log('✅ 불러온 데이터:', data);
         setMentorData(data);
       } catch (error) {
         console.error('멘토 정보 로딩 실패:', error);
@@ -62,7 +63,7 @@ const MentorInfo = () => {
             jobCategory={reverseJobCategoryMapping[mentorData.organization.jobCategory] || mentorData.organization.jobCategory}
             detailedJob={reverseDetailedJobMapping[mentorData.organization.detailedJob] || mentorData.organization.detailedJob}
             experience={mentorData.organization.experience} 
-            count={mentorData.count}
+            mentoringCount={mentorData.mentoringCount}
             image={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
           />
         </div>

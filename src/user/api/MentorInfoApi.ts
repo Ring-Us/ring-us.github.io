@@ -6,6 +6,8 @@ export const getMentorProfile = async (): Promise<MentorData> => {
   const response = await axiosInstance.get('/v1/mentor/me');
   const data = response.data.data;
 
+  console.log('멘토 프로필 응답:', response.data);
+
   return {
     nickname: data.nickname ?? '',
     education: data.education ?? { schoolName: '', major: '' },
@@ -22,7 +24,7 @@ export const getMentorProfile = async (): Promise<MentorData> => {
     message: data.message ?? '',
     portfolio: data.portfolio ?? { url: '', description: '', size: 0 },
     image: data.image ?? { fileName: '', filePath: '' },
-    count: data.count ?? 0,
+    mentoringCount: data.mentoringCount ?? 0,
   };
 };
 

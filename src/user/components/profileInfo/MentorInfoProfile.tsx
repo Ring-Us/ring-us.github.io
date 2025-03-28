@@ -4,11 +4,11 @@ interface MentorInfoProfileProps {
   jobCategory: string;
   detailedJob: string;
   experience: number;
-  count: number;
+  mentoringCount: number;
   image: string;
 }
 
-const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experience, count, image }: MentorInfoProfileProps) => {
+const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experience, mentoringCount, image }: MentorInfoProfileProps) => {
     return (
         <div className="text-white px-14 pb-10 pt-6">
             <div className="flex items-center">
@@ -27,7 +27,7 @@ const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experienc
             <div className="bg-white/80 flex justify-around mt-5 p-2 rounded-[15px]">
                 <div className="flex flex-col items-center ml-7">
                     <p className="text-[12px] text-black">멘토링 횟수</p>
-                    <p className="text-[16px] font-bold text-primary-1">{count}회</p>
+                    <p className="text-[16px] font-bold text-primary-1">{mentoringCount}회</p>
                 </div>
                 <div className="border-r-[1px] border-black"></div>
                 <div className="flex flex-col items-center mr-7">

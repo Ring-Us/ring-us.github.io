@@ -4,6 +4,7 @@ import { User } from 'lucide-react';
 import { Mail } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
+import { ImagePlus } from "lucide-react";
 import EditImageModal from "./EditImageModal";
 
 interface EditProfileSectionMenteeProps {
@@ -74,7 +75,11 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
             />
             
             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-              <img src="/assets/camera.png" alt="camera" className="w-6 h-6" />
+              <ImagePlus
+                size={22}
+                strokeWidth={1.0}
+                color="white"
+              />
             </div>
           </label>
           

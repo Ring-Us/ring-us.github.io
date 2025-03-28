@@ -8,7 +8,7 @@ interface EditImageModalProps {
 
 const EditImageModal: React.FC<EditImageModalProps> = ({ onClose, onResetProfile, onUploadProfile }) => {
   return (
-    <div className="fixed inset-0 bg-black/75 flex items-end justify-center">
+    <div className="fixed inset-0 bg-black/75 flex items-end justify-center z-50">
       <div className="bg-white w-full max-w-[600px] h-[230px] rounded-t-[30px] p-8">
 
         {/* 헤더 */}
