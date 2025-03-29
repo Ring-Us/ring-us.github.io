@@ -42,22 +42,31 @@ const RoleSelection = ({
 
       {/* 역할 선택 카드 */}
       <div className="flex flex-row justify-center gap-6 mt-12">
-        {roles.map((role) => (
-          <div
-            key={role.key}
-            onClick={() => handleSelectRole(role.key)}
-            className={`flex flex-col items-center justify-center w-[calc(600px*0.37)] aspect-square text-gray-2 border rounded-[20px] cursor-pointer transition-all ${
-              selectedRole === role.key
-                ? 'border-primary-1 text-primary-1 bg-[#f0f9ff]'
-                : 'border-[#DEDEDE] text-gray-2 hover:border-gray-1'
-            }`}
-          >
-            <img className="h-[70px] mb-3" src={role.image} />
-            <div className="font-semibold text-center sm:text-xl text-sm mb-2">
-              {role.label}
+        {roles.map((role) => {
+          const isSelected = selectedRole === role.key;
+          return (
+            <div
+              key={role.key}
+              onClick={() => handleSelectRole(role.key)}
+              className={`flex flex-col items-center justify-center w-[calc(600px*0.37)] aspect-square text-gray-2 border rounded-[20px] cursor-pointer transition-all ${
+                isSelected
+                  ? 'border-primary-1 text-primary-1 bg-[#f0f9ff]'
+                  : 'border-[#DEDEDE] text-gray-2 hover:border-gray-1'
+              }`}
+            >
+              <img
+                className={`h-[80px] mb-3 transition-all duration-300 ${
+                  isSelected ? 'filter-none' : 'filter grayscale'
+                }`}
+                src={role.image}
+                alt={role.key}
+              />
+              <div className="font-semibold text-center sm:text-xl text-sm mb-2">
+                {role.label}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 다음으로 버튼 */}

@@ -3,10 +3,11 @@ import { Button } from '@/global/ui';
 const variantClasses = {
   default: 'bg-primary-1',
   secondary: 'bg-primary-2',
+  dark: 'bg-[#373737]',
 };
 
 interface ButtonProps {
-  variant?: 'default' | 'secondary';
+  variant?: 'default' | 'secondary' | 'dark';
   children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean; // disabled 추가

@@ -40,30 +40,47 @@ export default function LandingPage() {
   return (
     <div
       style={{ height: viewportHeight }}
-      className="flex flex-col h-screen justify-between"
+      className={`relative flex flex-col h-screen justify-between transition-colors duration-500 
+        ${currentSlide === 3 ? 'bg-[#765BFD]' : 'bg-white'}`}
     >
       {/* 슬라이더 영역 */}
-      <div className="flex-grow flex items-center justify-center">
-        <div className="w-full max-w-[600px]">
+      <div className="flex-grow flex items-center justify-center relative">
+        <div className="w-full max-w-[600px] relative">
           <Slider {...settings}>
             <Slide1 />
             <Slide2 />
             <Slide3 />
             <Slide4 />
           </Slider>
+
+          {/* 슬라이드 dot 위치를 고정 */}
+          <style>
+            {`
+  .slick-dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    bottom: 100px; /* 이미지 바로 아래에 위치 */
+  }
+  `}
+          </style>
         </div>
       </div>
 
       {/* 버튼 영역 */}
-      <div className="w-full flex justify-end px-7 pb-7">
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-full px-6 flex justify-center">
         {currentSlide !== 3 && (
-          <button className="text-sm hover:underline" onClick={handleSkip}>
+          <button
+            className="absolute right-6 text-sm text-gray-1 hover:underline"
+            onClick={handleSkip}
+          >
             건너뛰기
           </button>
         )}
 
         {currentSlide === 3 && (
-          <GlobalButton variant="default" onClick={handleFinish}>
+          <GlobalButton variant="dark" onClick={handleFinish}>
             지금 시작하기
           </GlobalButton>
         )}
