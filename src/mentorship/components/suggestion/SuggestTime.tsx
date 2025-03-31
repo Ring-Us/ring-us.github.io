@@ -1,11 +1,15 @@
-import { useState } from "react";
-import { Calendar } from "lucide-react";
-import { CirclePlus } from "lucide-react";
+import { useState } from 'react';
+import { Calendar } from 'lucide-react';
+import { CirclePlus } from 'lucide-react';
 
-import DateTimeSelectModal from "./DateTimeSelectModal";
+import DateTimeSelectModal from './DateTimeSelectModal';
 
 const SuggestTime = () => {
-  const [selectedTimes, setSelectedTimes] = useState<(string | null)[]>([null, null, null,]);
+  const [selectedTimes, setSelectedTimes] = useState<(string | null)[]>([
+    null,
+    null,
+    null,
+  ]);
   const [modalOpen, setModalOpen] = useState<number | null>(null);
 
   const handleDateTimeSelect = (index: number, dateTime: string) => {
@@ -33,12 +37,11 @@ const SuggestTime = () => {
           onClick={() => setModalOpen(index)}
         >
           <div className="flex items-center space-x-3">
-            <Calendar
-              className="w-5 h-5 text-[#94939B]"
-              strokeWidth={1.5}
-            />
-            <span className={`text-[16px] ${time ? "text-black" : "text-[#94939B]"}`}>
-              {time ? time : "날짜를 선택해주세요."}
+            <Calendar className="w-5 h-5 text-[#94939B]" strokeWidth={1.5} />
+            <span
+              className={`text-[16px] ${time ? 'text-black' : 'text-[#94939B]'}`}
+            >
+              {time ? time : '날짜를 선택해주세요.'}
             </span>
           </div>
         </div>
@@ -49,10 +52,7 @@ const SuggestTime = () => {
           className="w-full flex items-center justify-center px-4 py-3 my-2 border border-primary-1 text-primary-1 rounded-[10px] cursor-pointer"
           onClick={addTimeSelection}
         >
-          <CirclePlus 
-            className="w-5 h-5 mr-3"
-            strokeWidth={1.5}
-          />
+          <CirclePlus className="w-5 h-5 mr-3" strokeWidth={1.5} />
           날짜 추가하기
         </button>
       )}
@@ -61,7 +61,9 @@ const SuggestTime = () => {
         <DateTimeSelectModal
           isOpen={modalOpen !== null}
           onClose={() => setModalOpen(null)}
-          onSelect={(dateTime: string) => handleDateTimeSelect(modalOpen, dateTime)}
+          onSelect={(dateTime: string) =>
+            handleDateTimeSelect(modalOpen, dateTime)
+          }
         />
       )}
     </div>
