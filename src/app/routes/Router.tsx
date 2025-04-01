@@ -5,6 +5,7 @@ import { AuthLayout } from '@/auth/layouts/AuthLayout';
 import { UserLayout } from '@/user/layouts/UserLayout';
 import { MentorshipLayout } from '@/mentorship/layouts/MentorshipLayout';
 import { StatusLayout } from '@/user/layouts/StatusLayout';
+import { BookLayout } from '@/bookmark/layouts//BookLayout';
 
 import HomePage from '@/home/pages/HomePage';
 import LandingPage from '@/auth/pages/LandingPage';
@@ -23,6 +24,7 @@ import MentorProfile from '@/user/pages/MentorProfileRegistration';
 import MenteeProfile from '@/user/pages/MenteeProfileRegistration';
 import PaymentPage from '@/user/pages/payment/Payment';
 import MenteeStatus from '@/user/pages/status/mentee/MenteeStatus';
+import Bookmark  from '@/bookmark/pages/Bookmark';
 
 export const Router = () => {
   return (
@@ -56,6 +58,9 @@ export const Router = () => {
         <Route path="" element={<MentorList />} />
         <Route path="info/:mentorId" element={<MentorInfoView />} />
         <Route path="suggestion" element={<Suggestion />} />
+      </Route>
+      <Route path="/bookmark" element={<BookLayout />}>
+        <Route path="" element={<Bookmark />} />
       </Route>
     </Routes>
   );

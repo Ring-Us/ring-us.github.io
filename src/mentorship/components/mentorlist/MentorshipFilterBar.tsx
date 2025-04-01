@@ -2,9 +2,9 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 
 interface MentorshipFilterBarProps {
-  selectedField: string | null;
-  selectedSubField: string | null;
-  onFilterClick: (filterType: '직무' | '세부직무') => void; // ✅ 타입 명확화
+  selectedField: string | null;         // 직무
+  selectedSubField: string | null;      // 세부직무
+  onFilterClick: (filterType: '직무' | '세부직무') => void;
 }
 
 const MentorshipFilterBar: React.FC<MentorshipFilterBarProps> = ({
@@ -26,7 +26,7 @@ const MentorshipFilterBar: React.FC<MentorshipFilterBarProps> = ({
                   : 'border-gray-2 text-gray-2'
               }`}
           >
-            {selectedField ? selectedField : '직무'}
+            {selectedField ?? '직무'}
             <ChevronDown strokeWidth={1} />
           </button>
 
@@ -40,7 +40,7 @@ const MentorshipFilterBar: React.FC<MentorshipFilterBarProps> = ({
                   : 'border-gray-2 text-gray-2'
               }`}
           >
-            {selectedSubField ? selectedSubField : '세부직무'}
+            {selectedSubField ?? '세부직무'}
             <ChevronDown strokeWidth={1} />
           </button>
         </div>
