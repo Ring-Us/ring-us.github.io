@@ -76,8 +76,8 @@ const MentorshipList = () => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100 relative">
-      <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-gray-100 z-20">
+    <div className="h-screen flex flex-col bg-white relative">
+      <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-white z-20">
         <MentorshipHeader />
         <MentorshipFilterBar
           selectedField={selectedField}
