@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import StatusTabs from '@/user/components/status/mentee/StatusTabs';
-import MenteeList from '@/user/components/status/mentee/MenteeList';
+import MentorList from '@/user/components/status/mentee/MenteeList';
 import Footer from '@/global/components/Footer';
 import { Mentee } from '@/user/components/status/mentee/types';
+import { Outlet } from 'react-router-dom';
 
-const MenteeStatus: React.FC = () => {
+const MentorStatus: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<
     '미확정' | '확정' | '완료'
   >('미확정');
@@ -13,45 +14,10 @@ const MenteeStatus: React.FC = () => {
     미확정: [
       {
         profileImage: '/public/assets/ringusprofile.png',
-        name: '바이',
-        jobTitle: '브랜드 마케팅 / 카피라이팅',
+        name: '두두',
+        jobTitle: '이부분은 백엔드 연결 후 자기소개로 변경 예정',
         career: '3',
-        paymentStatus: '결제 대기',
-      },
-      {
-        profileImage: '/public/assets/ringusprofile.png',
-        name: '바이',
-        jobTitle: '디자이너',
-        career: '3',
-        paymentStatus: '결제 대기',
-      },
-      {
-        profileImage: '/public/assets/ringusprofile.png',
-        name: '바이',
-        jobTitle: '브랜드 마케팅 / 카피라이팅',
-        career: '3',
-        paymentStatus: '결제 대기',
-      },
-      {
-        profileImage: '/public/assets/ringusprofile.png',
-        name: '바이',
-        jobTitle: '브랜드 마케팅 / 카피라이팅',
-        career: '3',
-        paymentStatus: '결제 대기',
-      },
-      {
-        profileImage: '/public/assets/ringusprofile.png',
-        name: '바이',
-        jobTitle: '브랜드 마케팅 / 카피라이팅',
-        career: '3',
-        paymentStatus: '결제 대기',
-      },
-      {
-        profileImage: '/public/assets/ringusprofile.png',
-        name: '바이',
-        jobTitle: '브랜드 마케팅 / 카피라이팅',
-        career: '3',
-        paymentStatus: '결제 대기',
+        paymentStatus: '수락 대기',
       },
     ],
     확정: [
@@ -87,14 +53,15 @@ const MenteeStatus: React.FC = () => {
 
       {/* 멘토링 데이터들 */}
       <div className="">
-        <MenteeList
+        <MentorList
           mentees={menteeData[selectedStatus]}
           emptyMessage={emptyMessages[selectedStatus]}
         />
         <Footer />
       </div>
+      <Outlet />
     </div>
   );
 };
 
-export default MenteeStatus;
+export default MentorStatus;

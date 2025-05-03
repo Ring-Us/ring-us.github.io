@@ -9,7 +9,7 @@ interface MenteeListProps {
 
 const MenteeList: React.FC<MenteeListProps> = ({ mentees, emptyMessage }) => {
   return (
-    <div className="flex flex-col gap-0 mt-[19px]">
+    <div className="flex flex-col mt-4">
       {mentees.length > 0 ? (
         mentees.map((mentee, index) => (
           <MenteeCard key={index} mentee={mentee} />
