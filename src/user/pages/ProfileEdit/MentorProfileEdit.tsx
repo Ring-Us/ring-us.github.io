@@ -101,7 +101,7 @@ const MentorProfileEdit = () => {
         <div className="w-6 h-6"></div>
       </div>
           
-      <div className="overflow-y-auto pt-2 pb-4">
+      <div className="overflow-y-auto pb-4">
 
         {/* 프로필 섹션 */}
         <EditProfileSection mentorData={mentorData} setMentorData={setMentorData} />

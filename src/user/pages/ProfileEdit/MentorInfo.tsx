@@ -42,7 +42,7 @@ const MentorInfo = () => {
       <div className="overflow-y-auto pb-4">
 
         {/* 보라색 */}
-        <div className="bg-mentor-gradient rounded-b-[30px]">
+        <div className="bg-mentor-gradient rounded-b-[24px]">
 
           {/* 헤더 */}
           <div className="flex justify-between items-center px-4 py-3 h-[55px]">
