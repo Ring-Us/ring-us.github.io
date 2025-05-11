@@ -12,10 +12,10 @@ const MentorInfoPortfolio = ({ portfolio }: MentorInfoPortfolioProps) => {
     if (!portfolio) return null;
 
     return (
-        <div className="px-4 my-2">
+        <div className="px-4 py-2">
             <div className="font-bold text-[16px] my-4">포트폴리오</div>
             <div
-                className="bg-[#F2F2F6] rounded-[10px] px-5 py-3 text-[12px] flex items-center cursor-pointer"
+                className="bg-white border-[1px] border-primary-1 rounded-[10px] px-5 py-3 h-[45px] text-[12px] flex items-center cursor-pointer"
                 onClick={() => openFile(portfolio.url)}
             >
                 <span>{portfolio.description}</span>

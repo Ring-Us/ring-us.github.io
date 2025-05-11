@@ -6,6 +6,7 @@ import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
 import { ImagePlus } from "lucide-react";
 import EditImageModal from "./EditImageModal";
+import { uploadProfileImage } from "@/user/api/profileApi";
 
 interface EditProfileSectionMenteeProps {
   menteeData: {
@@ -26,20 +27,26 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 프로필 사진 업로드
-  const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const imageURL = URL.createObjectURL(file);
-      
-      setMenteeData((prevData: any) => ({
-        ...prevData,
-        image: {
-          fileName: file.name,
-          filePath: imageURL,
-        },
-      }));
-
-      setIsModalOpen(false);
+  
+      try {
+        const imageUrl = await uploadProfileImage(file, 'ROLE_MENTEE');
+        
+        setMenteeData((prevData: any) => ({
+          ...prevData,
+          image: {
+            fileName: file.name,
+            filePath: imageUrl,
+          },
+        }));
+        
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        alert('이미지 업로드에 실패했습니다.');
+      }
     }
   };
 

@@ -48,7 +48,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
   };
 
   return (
-    <div className="px-4 my-2">
+    <div className="px-4 py-2">
       <div className="font-bold text-[16px] my-4">경험 해시태그</div>
 
       {/* 해시태그 목록 */}
@@ -73,6 +73,12 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
             className="outline-none w-20"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                e.preventDefault();
+                addHashtag();
+              }
+            }}
             placeholder="추가"
           />
           <button onClick={addHashtag} className="ml-2">

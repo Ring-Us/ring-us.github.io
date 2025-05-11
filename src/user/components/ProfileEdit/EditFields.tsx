@@ -26,7 +26,7 @@ const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
   ];
 
   return (
-    <div className="px-4 my-2">
+    <div className="px-4 py-2">
       <div className="font-bold text-[16px] my-4">멘토링 분야</div>
       <div className="grid grid-cols-2 gap-4 px-7">
         {fields.map((field) => (

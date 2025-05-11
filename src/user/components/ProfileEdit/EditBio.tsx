@@ -12,7 +12,7 @@ const EditBio = ({ mentorData, setMentorData, menteeData, setMenteeData }: EditB
   if (!mentorData && !menteeData) return null;
 
   return (
-    <div className="px-4 my-2">
+    <div className="px-4 py-2">
       <div className="font-bold text-[16px] my-4">자기소개</div>
 
       {/* 한줄소개 (멘토 전용) */}
