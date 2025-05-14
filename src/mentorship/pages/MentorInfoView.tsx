@@ -6,8 +6,6 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { getMentorById } from '../api/MentorViewApi';
 import { MentorData } from '@/user/types';
-import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/Mapping';
-import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/Mapping';
 
 import MentorInfoProfile from '../../user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '../../user/components/profileInfo/MentorInfoBio';
@@ -27,23 +25,7 @@ const MentorInfoView = () => {
       try {
         if (!mentorId || isNaN(Number(mentorId))) return;
         const data = await getMentorById(Number(mentorId));
-
-        // 매핑
-        const localizedData: MentorData = {
-          ...data,
-          mentoringField: data.mentoringField.map((f) => reverseMentoringFieldMapping[f] || f),
-          timezone: {
-            ...data.timezone,
-            days: data.timezone.days.map((d) => reverseDayMapping[d] || d),
-          },
-          organization: {
-            ...data.organization,
-            jobCategory: reverseJobCategoryMapping[data.organization.jobCategory] || data.organization.jobCategory,
-            detailedJob: reverseDetailedJobMapping[data.organization.detailedJob] || data.organization.detailedJob,
-          },
-        };
-
-        setMentorData(localizedData);
+        setMentorData(data);
       } catch (err) {
         console.error("멘토 상세 불러오기 실패:", err);
       }

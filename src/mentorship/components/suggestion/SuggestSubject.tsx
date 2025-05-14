@@ -4,7 +4,7 @@ const SuggestSubject = () => {
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [text, setText] = useState("");
 
-  const subjects = ["학업 관련", "업계 동향", "면접 대비", "취업 준비"];
+  const subjects = ["취업준비", "업계 동향", "면접 대비", "커리어 고민"];
 
   const toggleSubject = (subject: string) => {
     setSelectedSubjects((prev: string[]) =>
