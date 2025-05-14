@@ -34,3 +34,20 @@ export interface MentorData {
 
   mentoringCount: number;
 }
+
+export interface ApplyTime {
+  startTime: string;
+  endTime: string;
+}
+
+export interface SuggestionData {
+  mentoringId: number;
+  status: string;
+
+  topic: string;
+  applyTimes: ApplyTime[][];
+  mentoringMessage: string;
+  
+  mentorName: string;
+  menteeName: string;
+}

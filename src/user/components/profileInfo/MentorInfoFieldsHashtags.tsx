@@ -13,7 +13,7 @@ const MentorInfoFieldsHashtags = ({ mentoringField, hashtags }: MentorInfoFields
                     <div key={index} className="text-[14px] text-black border-[1px] border-primary-1 rounded-[10px] flex flex-col items-center justify-center p-2">
                         <img 
                             src={["/assets/mentorinfo1.png", "/assets/mentorinfo2.png", "/assets/mentorinfo3.png", "/assets/mentorinfo4.png"][index]}
-                            alt={field} className="w-[60px] h-[60px]"
+                            alt={field} className="h-[60px]"
                         />
                         <div>{field}</div>
                     </div>
