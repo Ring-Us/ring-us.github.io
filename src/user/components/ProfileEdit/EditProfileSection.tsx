@@ -38,7 +38,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
       const file = e.target.files[0];
   
       try {
-        const imageUrl = await uploadProfileImage(file, 'ROLE_MENTOR'); // 서버 업로드
+        const imageUrl = await uploadProfileImage(file, 'ROLE_MENTOR');
         
         setMentorData((prevData: any) => ({
           ...prevData,
@@ -150,7 +150,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
           </div>
         </div>
 
-        {/* 🔹 모달 컴포넌트 사용 */}
+        {/* 모달 */}
         {isModalOpen && (
           <EditImageModal
             onClose={() => setIsModalOpen(false)}

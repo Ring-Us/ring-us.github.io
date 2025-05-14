@@ -5,8 +5,6 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { getMentorProfile } from '@/user/api/MentorInfoApi';
 import { MentorData } from '@/user/types';
-import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/Mapping';
-import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/Mapping';
 
 import MentorInfoProfile from '@/user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '@/user/components/profileInfo/MentorInfoBio';
@@ -60,8 +58,8 @@ const MentorInfo = () => {
           <MentorInfoProfile 
             nickname={mentorData.nickname} 
             name={mentorData.organization.name}
-            jobCategory={reverseJobCategoryMapping[mentorData.organization.jobCategory] || mentorData.organization.jobCategory}
-            detailedJob={reverseDetailedJobMapping[mentorData.organization.detailedJob] || mentorData.organization.detailedJob}
+            jobCategory={mentorData.organization.jobCategory}
+            detailedJob={mentorData.organization.detailedJob}
             experience={mentorData.organization.experience} 
             mentoringCount={mentorData.mentoringCount}
             image={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
@@ -78,14 +76,14 @@ const MentorInfo = () => {
 
           {/* 선호 시간대 */}
           <MentorInfoTime
-            days={mentorData.timezone.days.map((day) => reverseDayMapping[day] || day)}
+            days={mentorData.timezone.days}
             startTime={mentorData.timezone.startTime} 
             endTime={mentorData.timezone.endTime} 
           />
 
           {/* 멘토링 분야 & 해시태그 */}
           <MentorInfoFieldsHashtags 
-            mentoringField={mentorData.mentoringField.map((field) => reverseMentoringFieldMapping[field] || field)}
+            mentoringField={mentorData.mentoringField}
             hashtags={mentorData.hashtags} 
           />
 

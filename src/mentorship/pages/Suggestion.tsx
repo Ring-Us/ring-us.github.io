@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from "lucide-react";
 
+import { postSuggestion } from "../api/SuggestApi";
+import { SuggestionData } from "@/user/types";
+
 import SuggestInfo from "../components/suggestion/SuggestInfo";
 import SuggestTime from "../components/suggestion/SuggestTime";
 import SuggestSubject from "../components/suggestion/SuggestSubject";
 import { GlobalButton } from "@/global/ui/GlobalButton";
 
 const Suggestion = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">

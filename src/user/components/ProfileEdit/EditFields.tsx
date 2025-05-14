@@ -42,7 +42,7 @@ const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
               <img
                 src={field.img}
                 alt={field.title}
-                className={`w-[60px] h-[60px] transition-all duration-300 
+                className={`h-[60px] transition-all duration-300 
                   ${isSelected ? 'filter-none' : 'filter grayscale'}`}
               />
               <span>{field.title}</span>

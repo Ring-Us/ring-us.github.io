@@ -5,10 +5,6 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { MentorData } from '@/user/types';
 import { getMentorProfile, updateMentorProfile } from '@/user/api/MentorInfoApi';
-import { reverseJobCategoryMapping, reverseDetailedJobMapping } from '@/user/components/Mapping';
-import { reverseMentoringFieldMapping, reverseDayMapping } from '@/user/components/Mapping';
-import { jobCategoryMapping, detailedJobMapping } from '@/global/components/JobCategories';
-import { mentoringFieldMapping, dayMapping } from '@/user/components/Mapping';
 
 import EditProfileSection from '@/user/components/ProfileEdit/EditProfileSection';
 import EditBio from '@/user/components/ProfileEdit/EditBio';
@@ -26,23 +22,7 @@ const MentorProfileEdit = () => {
     const fetchData = async () => {
       try {
         const data = await getMentorProfile();
-  
-        // 변환
-        const localizedData: MentorData = {
-          ...data,
-          mentoringField: data.mentoringField.map((f) => reverseMentoringFieldMapping[f] || f),
-          timezone: {
-            ...data.timezone,
-            days: data.timezone.days.map((d) => reverseDayMapping[d] || d),
-          },
-          organization: {
-            ...data.organization,
-            jobCategory: reverseJobCategoryMapping[data.organization.jobCategory] || data.organization.jobCategory,
-            detailedJob: reverseDetailedJobMapping[data.organization.detailedJob] || data.organization.detailedJob,
-          }
-        };
-  
-        setMentorData(localizedData);
+        setMentorData(data);
       } catch (error) {
         console.error('멘토 정보 로딩 실패:', error);
       }
@@ -57,21 +37,7 @@ const MentorProfileEdit = () => {
 
   const handleSave = async () => {
     try {
-      const payload: MentorData = {
-        ...mentorData,
-        mentoringField: mentorData.mentoringField.map((field) => mentoringFieldMapping[field] || field),
-        timezone: {
-          ...mentorData.timezone,
-          days: mentorData.timezone.days.map((day) => dayMapping[day] || day),
-        },
-        organization: {
-          ...mentorData.organization,
-          jobCategory: jobCategoryMapping[mentorData.organization.jobCategory] || mentorData.organization.jobCategory,
-          detailedJob: detailedJobMapping[mentorData.organization.detailedJob] || mentorData.organization.detailedJob,
-        },
-      };
-  
-      await updateMentorProfile(payload);
+      await updateMentorProfile(mentorData);
       navigate("/user/mentorinfo");
     } catch (error) {
       console.error("멘토 정보 저장 실패:", error);
