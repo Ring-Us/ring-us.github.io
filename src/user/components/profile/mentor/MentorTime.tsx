@@ -11,16 +11,6 @@ interface MentorTimeProps {
 const MentorTime = ({ mentorData, setMentorData }: MentorTimeProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const daysMap: Record<string, string> = {
-    월: 'MON',
-    화: 'TUE',
-    수: 'WED',
-    목: 'THU',
-    금: 'FRI',
-    토: 'SAT',
-    일: 'SUN',
-  };
-
   // 시작 및 종료 시간 초기값 설정
   const [startHour, setStartHour] = useState(
     parseInt(mentorData.timezone.startTime.split(':')[0], 10) || 8,
@@ -35,15 +25,15 @@ const MentorTime = ({ mentorData, setMentorData }: MentorTimeProps) => {
     parseInt(mentorData.timezone.endTime.split(':')[1], 10) || 0,
   );
 
-  // 요일 선택
+  // 요일 선택: mentorData.timezone.days는 한국어 요일 문자열 배열
   const toggleDaySelection = (day: string) => {
     setMentorData((prev) => ({
       ...prev,
       timezone: {
         ...prev.timezone,
-        days: prev.timezone.days.includes(daysMap[day])
-          ? prev.timezone.days.filter((d) => d !== daysMap[day]) // 선택 해제
-          : [...prev.timezone.days, daysMap[day]], // 선택 추가
+        days: prev.timezone.days.includes(day)
+          ? prev.timezone.days.filter((d) => d !== day)
+          : [...prev.timezone.days, day],
       },
     }));
   };
@@ -78,20 +68,23 @@ const MentorTime = ({ mentorData, setMentorData }: MentorTimeProps) => {
       {/* 요일 선택 UI */}
       <div className="text-[14px] text-[#94939B] mb-2">요일</div>
       <div className="grid grid-cols-7 gap-2">
-        {Object.keys(daysMap).map((day) => (
-          <button
-            key={day}
-            className={`text-[16px] border-[1px] rounded-[10px] p-2 
-              ${
-                mentorData.timezone.days.includes(daysMap[day])
-                  ? 'bg-[#F2EFFF] text-primary-1 border-primary-1'
-                  : 'border-[#94939B] text-[#94939B]'
-              }`}
-            onClick={() => toggleDaySelection(day)}
-          >
-            {day}
-          </button>
-        ))}
+        {['월', '화', '수', '목', '금', '토', '일'].map((day) => {
+          const isSelected = mentorData.timezone.days.includes(day);
+          return (
+            <button
+              key={day}
+              className={`text-[16px] border-[1px] rounded-[10px] p-2 \
+                ${
+                  isSelected
+                    ? 'bg-[#F2EFFF] text-primary-1 border-primary-1'
+                    : 'border-[#94939B] text-[#94939B]'
+                }`}
+              onClick={() => toggleDaySelection(day)}
+            >
+              {day}
+            </button>
+          );
+        })}
       </div>
 
       {/* 시간대 */}
@@ -115,7 +108,7 @@ const MentorTime = ({ mentorData, setMentorData }: MentorTimeProps) => {
         setEndHour={setEndHour}
         endMinute={endMinute}
         setEndMinute={setEndMinute}
-        onSave={handleTimeSave} // mentorData에 저장하는 함수
+        onSave={handleTimeSave}
       />
 
       {/* 선택 완료 버튼 */}

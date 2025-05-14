@@ -104,7 +104,7 @@ const MentorProfile1 = ({
     mentorData.organization.name.trim().length > 0 &&
     mentorData.organization.jobCategory.trim().length > 0 &&
     mentorData.organization.detailedJob.trim().length > 0 &&
-    mentorData.organization.experience !== null &&
+    mentorData.organization.experience > 0 &&
     isNicknameValid;
 
   return (
@@ -129,7 +129,7 @@ const MentorProfile1 = ({
 
         {/* 이미지 업로드 */}
         <div className="flex flex-col items-center mt-4">
-          <div className="relative w-24 h-24 rounded-full bg-gray-3 overflow-hidden">
+          <div className="relative w-24 h-24 rounded-[50px] bg-gray-3 overflow-hidden">
             {mentorData.image?.filePath ? (
               <img
                 src={mentorData.image.filePath}
