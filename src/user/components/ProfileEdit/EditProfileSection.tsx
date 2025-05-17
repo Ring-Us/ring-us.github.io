@@ -11,6 +11,7 @@ import { uploadProfileImage } from "@/user/api/profileApi";
 interface EditProfileSectionProps {
   mentorData: {
     nickname: string;
+    email: string;
     education: {
       schoolName: string;
       major: string;
@@ -114,7 +115,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]"></span>
+              <span className="text-[#94939B] text-[14px]">{mentorData.email}</span>
             </div>
           </div>
         </div>

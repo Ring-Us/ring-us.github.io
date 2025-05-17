@@ -11,6 +11,7 @@ import { uploadProfileImage } from "@/user/api/profileApi";
 interface EditProfileSectionMenteeProps {
   menteeData: {
     nickname: string;
+    email: string;
     education: {
       schoolName: string;
       major: string;
@@ -108,7 +109,7 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]"></span>
+              <span className="text-[#94939B] text-[14px]">{menteeData.email}</span>
             </div>
           </div>
         </div>

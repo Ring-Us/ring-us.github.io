@@ -75,7 +75,7 @@ export const Router = () => {
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
         <Route path="info/:mentorId" element={<MentorInfoView />} />
-        <Route path="suggestion" element={<Suggestion />} />
+        <Route path="suggestion/:mentorId" element={<Suggestion />} />
       </Route>
       <Route path="/bookmark" element={<BookLayout />}>
         <Route path="" element={<Bookmark />} />
