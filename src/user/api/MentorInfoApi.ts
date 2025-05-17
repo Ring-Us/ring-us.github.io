@@ -10,6 +10,7 @@ export const getMentorProfile = async (): Promise<MentorData> => {
 
   return {
     nickname: data.nickname ?? '',
+    email: data.email ?? '',
     education: data.education ?? { schoolName: '', major: '' },
     organization: data.organization ?? {
       name: '',

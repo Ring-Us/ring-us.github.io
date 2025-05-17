@@ -1,7 +1,8 @@
 import axiosInstance from '@/global/api/axiosInstance';
-import { MentorData } from '@/user/types';
+// import { MentorData } from '@/user/types';
+import { MentorViewData } from '@/user/types';
 
-export const getMentorById = async (mentorId: number): Promise<MentorData> => {
+export const getMentorById = async (mentorId: number): Promise<MentorViewData> => {
   const response = await axiosInstance.get(`/v1/mentor/${mentorId}`);
   const data = response.data.data;
 

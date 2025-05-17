@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { ArrowLeft } from 'lucide-react';
 import { Bookmark } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
+// import { MentorData } from '@/user/types';
+import { MentorViewData } from '@/user/types';
 import { getMentorById } from '../api/MentorViewApi';
-import { MentorData } from '@/user/types';
 
 import MentorInfoProfile from '../../user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '../../user/components/profileInfo/MentorInfoBio';
@@ -18,7 +20,7 @@ const MentorInfoView = () => {
   const { mentorId } = useParams<{ mentorId: string }>();
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [mentorData, setMentorData] = useState<MentorData | null>(null);
+  const [mentorData, setMentorData] = useState<MentorViewData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +119,7 @@ const MentorInfoView = () => {
       {/* 멘토링 제안하기 버튼 */}
       <div className="sticky text-center px-4 py-4 border-t">
         <GlobalButton
-          onClick={() => navigate("/mentorship/suggestion")}
+          onClick={() => navigate(`/mentorship/suggestion/${mentorId}`)}
         >
           멘토링 제안하기
         </GlobalButton>
