@@ -96,19 +96,19 @@ const Bookmark = () => {
 
   //필터링된 멘토 리스트
   const filteredMentors = mentors.filter((mentor) => {
-    const matchField = selectedField
-      ? mentor.organization.jobCategory === selectedField
-      : true;
-    const matchSubField = selectedSubField
-      ? mentor.organization.detailedJob === selectedSubField
-      : true;
+    const matchField =
+      !selectedField || selectedField === '전체' || mentor.organization.jobCategory === selectedField;
+  
+    const matchSubField =
+      !selectedSubField || selectedSubField === '전체' || mentor.organization.detailedJob === selectedSubField;
+  
     return matchField && matchSubField;
   });
 
   return (
     <div className="h-screen flex flex-col bg-white relative">
       {/* 상단 헤더 + 필터바 + 정렬 */}
-      <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-white z-20">
+      <div className="sticky top-0 w-full max-w-[600px] mx-auto bg-white z-20">
         <BookmarkHeader />
         <BookmarkFilterBar
           selectedField={selectedField}
@@ -131,10 +131,14 @@ const Bookmark = () => {
       )}
 
       {/* 멘토 카드 리스트 */}
-      <div className="flex flex-col px-4 gap-4 mt-4 pb-20">
-        {filteredMentors.map((mentor) => (
-          <BookmarkMentorCard key={mentor.mentorId} mentor={mentor} />
-        ))}
+      <div className="flex flex-col px-4 gap-4 mt-4 pb-20 overflow-y-auto">
+      {filteredMentors.length > 0 ? (
+    filteredMentors.map((mentor) => (
+      <BookmarkMentorCard key={mentor.mentorId} mentor={mentor} />
+    ))
+  ) : (
+    <div className="text-center text-gray-2 mt-6">멘토 내역이 없습니다.</div>
+  )}
       </div>
         <Footer />
     </div>

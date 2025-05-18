@@ -6,8 +6,6 @@ import { uploadProfileImage } from '@/user/api/profileApi';
 import {
   fieldOptions,
   subFieldOptions,
-  jobCategoryMapping,
-  detailedJobMapping,
 } from '@/global/components/JobCategories';
 
 import ErrorModal from '@/global/ui/ErrorModal';

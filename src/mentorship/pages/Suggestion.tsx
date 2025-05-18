@@ -74,8 +74,9 @@ const Suggestion = () => {
     console.log("🛰️ 최종 전송 데이터", JSON.stringify(suggestionData, null, 2));
 
     try {
-      await postSuggestion(suggestionData);
-      navigate("/user/payment");
+      //await postSuggestion(suggestionData);
+      navigate(`/user/payment`);
+      //navigate(`/user/payment/${mentorId}`);
     } catch (error) {
       console.error("멘토링 제안 실패:", error);
       alert("제안 중 오류가 발생했습니다.");
