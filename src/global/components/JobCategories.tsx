@@ -1,5 +1,6 @@
 // 직군 (대분류)
 export const fieldOptions: string[] = [
+  '전체',
   '마케팅',
   '서비스 기획',
   '디자인',
@@ -12,6 +13,22 @@ export const fieldOptions: string[] = [
   '의료',
   '법률',
 ];
+
+// 직군별 아이콘 매핑
+export const fieldIcons: { [key: string]: string } = {
+  전체: '/assets/main/overall.png',
+  마케팅: '/assets/main/marketing.png',
+  '서비스 기획': '/assets/main/service_planning.png',
+  디자인: '/assets/main/design.png',
+  개발: '/assets/main/develop.png',
+  대학원: '/assets/main/graduate_school.png',
+  인사: '/assets/main/human_resources.png',
+  영업: '/assets/main/sales.png',
+  금융: '/assets/main/finance.png',
+  데이터: '/assets/main/data.png',
+  의료: '/assets/main/medical.png',
+  법률: '/assets/main/law.png',
+};
 
 // 직무 (세부 카테고리)
 export const subFieldOptions: Record<string, string[]> = {

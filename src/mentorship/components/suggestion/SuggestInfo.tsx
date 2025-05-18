@@ -1,9 +1,13 @@
-const SuggestInfo = () => {
+interface SuggestInfoProps {
+  nickname: string;
+}
+
+const SuggestInfo = ({ nickname }: SuggestInfoProps) => {
   return (
     <div className="px-4 py-4">
       <div className="bg-[#F2EFFF] rounded-[16px] p-4">
         <div className="mb-4">
-          <div className="text-[22px] font-semibold">바이 님께</div>
+          <div className="text-[22px] font-semibold">{nickname}님께</div>
           <div className="text-[22px] font-semibold">멘토링 제안하기</div>
         </div>
         <div className="text-[14px] text-[#7F7D85]">

@@ -10,6 +10,7 @@ export const getMenteeProfile = async (): Promise<MenteeData> => {
 
   return {
     nickname: data.nickname ?? '',
+    email: data.email ?? '',
     education: data.education ?? {
       schoolName: '',
       major: '',
