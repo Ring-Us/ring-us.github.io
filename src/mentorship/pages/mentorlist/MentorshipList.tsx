@@ -7,17 +7,22 @@ import Footer from '@/global/components/Footer';
 import MentorshipListFilter from '@/mentorship/components/mentorlist/MentorshipListFilter';
 import { fetchMentors } from '../../api/fetchMentors';
 import { Mentor } from '../../api/fetchMentors';
+import {
+  fieldOptions,
+  subFieldOptions,
+} from '@/global/components/JobCategories';
 
 const MentorshipList = () => {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [sortOption, setSortOption] = useState<string>('respond');
   const [selectedField, setSelectedField] = useState<string | null>(null);
   const [selectedSubField, setSelectedSubField] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const [filterType, setFilterType] = useState<'직무' | '세부직무' | null>(null);
   const [bookmarked, setBookmarked] = useState<{ [key: string]: boolean }>({});
   const [cursor, setCursor] = useState<number | null>(null);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const subFields = subFieldOptions[selectedField || '전체'] ?? [];
   const size = 5;
 
   const observer = useRef<IntersectionObserver | null>(null);
@@ -34,6 +39,15 @@ const MentorshipList = () => {
   
     if (node) observer.current.observe(node);
   }, [loading, hasMore, cursor]); 
+  
+  const filteredMentors = mentors.filter((mentor) => {
+    const matchField =
+  !selectedField || selectedField === '전체' ? true : mentor.field === selectedField;
+
+const matchSubField =
+  !selectedSubField || selectedSubField === '전체' ? true : mentor.subField === selectedSubField;
+    return matchField && matchSubField;
+  });
 
   const loadMoreMentors = async () => {
     if (loading || !hasMore) return;
@@ -78,30 +92,32 @@ const MentorshipList = () => {
   return (
     <div className="h-screen flex flex-col bg-white relative">
       <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-white z-20">
-        <MentorshipHeader />
+      <MentorshipHeader selectedField={selectedField} />
         <MentorshipFilterBar
           selectedField={selectedField}
           selectedSubField={selectedSubField}
-          selectedYear={selectedYear}
-          onFilterClick={(field: string) => setSelectedField(field)}
+          onFilterClick={(type: '직무' | '세부직무') => setFilterType(type)}
         />
         <MentorshipSortDropdown sortOption={sortOption} onSortChange={setSortOption} />
       </div>
       <div className="flex-grow overflow-y-auto pb-[60px] mt-[16px] no-scrollbar">
         <MentorList
-          mentors={mentors}
+          mentors={filteredMentors}
           bookmarked={bookmarked}
           onToggleBookmark={(nickname) => setBookmarked((prev) => ({ ...prev, [nickname]: !prev[nickname] }))}
           lastMentorRef={lastMentorElementRef}
         />
       </div>
       {loading && <p className="text-center p-4">Loading more mentors...</p>}
-      {selectedField && (
+      {filterType && (
         <MentorshipListFilter
-          filterType={selectedField}
-          onClose={() => setSelectedField(null)}
+          filterType={filterType}
+          onClose={() => setFilterType(null)}
           selectedField={selectedField}
-          onFieldSelect={setSelectedField}
+          onFieldSelect={(field) => {
+            setSelectedField(field);
+            setSelectedSubField(null); 
+          }}
           selectedSubField={selectedSubField}
           onSubFieldSelect={setSelectedSubField}
         />
