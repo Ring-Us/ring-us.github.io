@@ -4,7 +4,7 @@ import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { MentorProfileData } from '@/user/types/profileTypes';
 import { uploadProfileImage } from '@/user/api/profileApi';
 import {
-  fieldOptions,
+  registerfieldOptions,
   subFieldOptions,
 } from '@/global/components/JobCategories';
 
@@ -225,7 +225,7 @@ const MentorProfile1 = ({
           <ModalMentorFields
             label="직무"
             placeholder="직무/세부직무를 선택해주세요."
-            options={fieldOptions}
+            options={registerfieldOptions}
             subOptions={subFieldOptions}
             value={{
               jobCategory: mentorData.organization.jobCategory,
