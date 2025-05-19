@@ -27,24 +27,24 @@ const MentorInfoView = () => {
       try {
         if (!mentorId || isNaN(Number(mentorId))) return;
         const data = await getMentorById(Number(mentorId));
-        // 백엔드에서 이미 한국어 필드가 내려오므로 그대로 사용
         setMentorData(data);
       } catch (err) {
         console.error('멘토 상세 불러오기 실패:', err);
       }
     };
+
     fetchData();
   }, [mentorId]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('isBookmarked');
-    setIsBookmarked(stored === 'true');
+    const storedBookmark = localStorage.getItem('isBookmarked');
+    setIsBookmarked(storedBookmark === 'true');
   }, []);
 
   const toggleBookmark = () => {
-    const next = !isBookmarked;
-    setIsBookmarked(next);
-    localStorage.setItem('isBookmarked', next.toString());
+    const newBookmarkState = !isBookmarked;
+    setIsBookmarked(newBookmarkState);
+    localStorage.setItem('isBookmarked', newBookmarkState.toString());
   };
 
   if (!mentorData) return <div className="p-4">Loading...</div>;
@@ -52,7 +52,9 @@ const MentorInfoView = () => {
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
       <div className="overflow-y-auto pb-4">
+        {/* 보라색 */}
         <div className="bg-mentor-gradient rounded-b-[30px]">
+          {/* 헤더 */}
           <div className="flex justify-between items-center px-4 py-3 h-[55px]">
             <ArrowLeft
               size={24}
@@ -69,6 +71,8 @@ const MentorInfoView = () => {
               onClick={toggleBookmark}
             />
           </div>
+
+          {/* 프로필 섹션 */}
           <MentorInfoProfile
             nickname={mentorData.nickname}
             name={mentorData.organization.name}
@@ -76,25 +80,39 @@ const MentorInfoView = () => {
             detailedJob={mentorData.organization.detailedJob}
             experience={mentorData.organization.experience}
             mentoringCount={mentorData.mentoringCount}
-            image={mentorData.image?.filePath || '/assets/ringusprofile.png'}
+            image={mentorData?.image?.filePath || '/assets/ringusprofile.png'}
           />
         </div>
-        <MentorInfoBio
-          title={mentorData.introduction.title}
-          content={mentorData.introduction.content}
-        />
-        <MentorInfoTime
-          days={mentorData.timezone.days}
-          startTime={mentorData.timezone.startTime}
-          endTime={mentorData.timezone.endTime}
-        />
-        <MentorInfoFieldsHashtags
-          mentoringField={mentorData.mentoringField}
-          hashtags={mentorData.hashtags}
-        />
-        <MentorInfoMessage message={mentorData.message} />
-        <MentorInfoPortfolio portfolio={mentorData.portfolio} />
+
+        <div className="">
+          {/* 자기소개 */}
+          <MentorInfoBio
+            title={mentorData.introduction.title}
+            content={mentorData.introduction.content}
+          />
+
+          {/* 선호 시간대 */}
+          <MentorInfoTime
+            days={mentorData.timezone.days}
+            startTime={mentorData.timezone.startTime}
+            endTime={mentorData.timezone.endTime}
+          />
+
+          {/* 멘토링 분야 & 해시태그 */}
+          <MentorInfoFieldsHashtags
+            mentoringField={mentorData.mentoringField}
+            hashtags={mentorData.hashtags}
+          />
+
+          {/* 멘티에게 전하고 싶은 말 */}
+          <MentorInfoMessage message={mentorData.message} />
+
+          {/* 포트폴리오 */}
+          <MentorInfoPortfolio portfolio={mentorData.portfolio} />
+        </div>
       </div>
+
+      {/* 멘토링 제안하기 버튼 */}
       <div className="sticky text-center px-4 py-4 border-t">
         <GlobalButton
           onClick={() => navigate(`/mentorship/suggestion/${mentorId}`)}
