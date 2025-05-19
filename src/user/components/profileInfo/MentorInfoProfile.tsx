@@ -10,7 +10,7 @@ interface MentorInfoProfileProps {
 
 const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experience, mentoringCount, image }: MentorInfoProfileProps) => {
     return (
-        <div className="text-white px-14 pb-10 pt-6">
+        <div className="text-white px-10 pb-8 pt-5">
             <div className="flex items-center">
                 <img
                     src={image || "/assets/ringusprofile.png"}
@@ -24,15 +24,13 @@ const MentorInfoProfile = ({ nickname, name, jobCategory, detailedJob, experienc
                 </div>
             </div>
 
-            <div className="bg-white/80 flex justify-around mt-5 p-2 rounded-[15px]">
-                <div className="flex flex-col items-center ml-7">
-                    <p className="text-[12px] text-black">멘토링 횟수</p>
-                    <p className="text-[16px] font-bold text-primary-1">{mentoringCount}회</p>
+            <div className="flex justify-around items-center h-[60px] mt-5 p-2 rounded-[8px] border-[1px] border-white">
+                <div className="flex-1 flex flex-col items-center">
+                    <div className="text-[14px] text-white">멘토링 횟수</div>
                 </div>
-                <div className="border-r-[1px] border-black"></div>
-                <div className="flex flex-col items-center mr-7">
-                    <p className="text-[12px] text-black">응답률</p>
-                    <p className="text-[16px] font-bold text-primary-1">100%</p>
+                <div className="w-px h-[30px] bg-white mx-4" />
+                <div className="flex-1 flex flex-col items-center">
+                    <div className="text-[16px] font-bold text-white">{mentoringCount}</div>
                 </div>
             </div>
         </div>

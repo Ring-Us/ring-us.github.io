@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Mentor } from '../../api/fetchMentors'; 
+import { useNavigate } from 'react-router-dom';
 import { Bookmark } from 'lucide-react';
 
 interface MentorItemProps {
@@ -10,12 +11,14 @@ interface MentorItemProps {
 
 const MentorItem = forwardRef<HTMLDivElement, MentorItemProps>(
   ({ mentor, isBookmarked, onToggleBookmark }, ref) => {
+    const navigate = useNavigate();
     return (
-      <div ref={ref} className="bg-white p-4 border-b relative w-full">
+      <div ref={ref} className="bg-white p-4 border-b relative w-full" onClick={() => navigate(`/mentorship/info/${mentor.mentorId}`)}>
         {/* 북마크 아이콘을 우측 상단에 절대 위치로 배치 */}
         <div
           className="absolute top-4 right-4 cursor-pointer"
-          onClick={() => onToggleBookmark(mentor.nickname)}
+          onClick={(e) => {e.stopPropagation(); onToggleBookmark(mentor.nickname);}}
+          
         >
           <Bookmark
             strokeWidth={1}
@@ -52,7 +55,6 @@ const MentorItem = forwardRef<HTMLDivElement, MentorItemProps>(
   }
 );
 
-// displayName 붙이면 디버깅 편해~!
 MentorItem.displayName = 'MentorItem';
 
 export default MentorItem;

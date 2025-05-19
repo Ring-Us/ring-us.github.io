@@ -1,10 +1,22 @@
 import { useState } from "react";
 
-const SuggestSubject = () => {
-  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
-  const [text, setText] = useState("");
+interface SuggestSubjectProps {
+  selectedSubjects: string[];
+  setSelectedSubjects: React.Dispatch<React.SetStateAction<string[]>>;
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const subjects = ["학업 관련", "업계 동향", "면접 대비", "취업 준비"];
+const SuggestSubject = ({ selectedSubjects, setSelectedSubjects, text, setText }: SuggestSubjectProps) => {
+
+  const subjects = ["JOB_PREPARATION", "INDUSTRY_TRENDS", "INTERVIEW_PREPARATION", "CAREER_PATH"];
+
+  const subjectDisplayMap: Record<string, string> = {
+    JOB_PREPARATION: "취업 준비",
+    INDUSTRY_TRENDS: "업계 동향",
+    INTERVIEW_PREPARATION: "면접 대비",
+    CAREER_PATH: "커리어 고민",
+  };
 
   const toggleSubject = (subject: string) => {
     setSelectedSubjects((prev: string[]) =>
@@ -27,7 +39,7 @@ const SuggestSubject = () => {
               ${selectedSubjects.includes(subject) ? "bg-[#F2EFFF] text-primary-1 border-primary-1" : "border-[#D9D7E0] text-[#8C8B93]"}`}
             onClick={() => toggleSubject(subject)}
           >
-            {subject}
+            {subjectDisplayMap[subject] ?? subject}
           </button>
         ))}
       </div>

@@ -4,12 +4,12 @@ import { CirclePlus } from 'lucide-react';
 
 import DateTimeSelectModal from './DateTimeSelectModal';
 
-const SuggestTime = () => {
-  const [selectedTimes, setSelectedTimes] = useState<(string | null)[]>([
-    null,
-    null,
-    null,
-  ]);
+interface SuggestTimeProps {
+  selectedTimes: (string | null)[];
+  setSelectedTimes: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+}
+
+const SuggestTime = ({ selectedTimes, setSelectedTimes }: SuggestTimeProps) => {
   const [modalOpen, setModalOpen] = useState<number | null>(null);
 
   const handleDateTimeSelect = (index: number, dateTime: string) => {
@@ -23,6 +23,23 @@ const SuggestTime = () => {
     if (selectedTimes.length < 5) {
       setSelectedTimes([...selectedTimes, null]);
     }
+  };
+
+  const formatDisplayTime = (isoStart: string) => {
+    const startDate = new Date(isoStart);
+    const endDate = new Date(startDate.getTime() + 30 * 60 * 1000); // 30분 뒤
+  
+    const yyyy = startDate.getFullYear();
+    const MM = String(startDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(startDate.getDate()).padStart(2, '0');
+  
+    const startH = String(startDate.getHours()).padStart(2, '0');
+    const startM = String(startDate.getMinutes()).padStart(2, '0');
+  
+    const endH = String(endDate.getHours()).padStart(2, '0');
+    const endM = String(endDate.getMinutes()).padStart(2, '0');
+  
+    return `${yyyy}.${MM}.${dd} ${startH}:${startM}~${endH}:${endM}`;
   };
 
   return (
@@ -41,7 +58,7 @@ const SuggestTime = () => {
             <span
               className={`text-[16px] ${time ? 'text-black' : 'text-[#94939B]'}`}
             >
-              {time ? time : '날짜를 선택해주세요.'}
+              {time ? formatDisplayTime(time) : '날짜를 선택해주세요.'}
             </span>
           </div>
         </div>
@@ -64,6 +81,7 @@ const SuggestTime = () => {
           onSelect={(dateTime: string) =>
             handleDateTimeSelect(modalOpen, dateTime)
           }
+          selectedTimes={selectedTimes}
         />
       )}
     </div>

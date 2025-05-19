@@ -6,18 +6,69 @@ interface DateTimeSelectModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelect: (dateTime: string) => void;
+  selectedTimes: (string | null)[];
 }
 
-const DateTimeSelectModal: React.FC<DateTimeSelectModalProps> = ({ isOpen, onClose, onSelect }) => {
+const DateTimeSelectModal: React.FC<DateTimeSelectModalProps> = ({ isOpen, onClose, onSelect, selectedTimes }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
-  const timeSlots = ["17:00 ~ 18:30", "18:30 ~ 19:00", "19:00 ~ 19:30", "19:30 ~ 20:00","20:00 ~ 20:30", "20:30 ~ 21:00", "21:00 ~ 21:30", "21:30 ~ 22:00", "22:30 ~ 23:00", "23:00 ~ 23:30"];
+  const isSlotTaken = (slotISO: string) => {
+    return selectedTimes.some((t) => {
+      if (!t) return false;
+      const selected = new Date(t);
+      const candidate = new Date(slotISO);
+      return selected.getTime() === candidate.getTime();
+    });
+  };
+
+  const generateTimeSlots = (startHour: number, endHour: number, selectedDate?: Date): string[] => {
+    const now = new Date();
+    const slots: string[] = [];
+  
+    for (let hour = startHour; hour <= endHour; hour++) {
+      for (let minute of [0, 30]) {
+        const candidate = new Date(selectedDate || now);
+        candidate.setHours(hour, minute, 0, 0);
+  
+        if (selectedDate) {
+          const selectedYMD = selectedDate.toDateString();
+          const nowYMD = now.toDateString();
+  
+          // 오늘 날짜이고 현재보다 과거 시간이면 제외
+          if (selectedYMD === nowYMD && candidate < now) continue;
+        }
+
+        const iso = candidate.toISOString();
+        if (isSlotTaken(iso)) continue;
+  
+        const end = new Date(candidate.getTime() + 30 * 60000);
+        const format = (date: Date) =>
+          `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  
+        slots.push(`${format(candidate)} ~ ${format(end)}`);
+      }
+    }
+  
+    return slots;
+  };
+  
+  const timeSlots = generateTimeSlots(7, 23, selectedDate);
 
   const handleConfirm = () => {
     if (selectedDate && selectedTime) {
-      const formattedDate = selectedDate.toISOString().split("T")[0];
-      onSelect(`${formattedDate} ${selectedTime}`);
+      const startTime = selectedTime.split("~")[0].trim();
+      const [hour, minute] = startTime.split(":").map(Number);
+  
+      const selected = new Date(selectedDate);
+      selected.setHours(hour);
+      selected.setMinutes(minute);
+      selected.setSeconds(0);
+      selected.setMilliseconds(0);
+  
+      const isoString = selected.toISOString();
+  
+      onSelect(isoString);
       onClose();
     }
   };
@@ -34,12 +85,13 @@ const DateTimeSelectModal: React.FC<DateTimeSelectModalProps> = ({ isOpen, onClo
           </button>
         </div>
 
-        {/* 📅 캘린더 적용 */}
+        {/* 캘린더 적용 */}
         <Calendar
           mode="single"
           selected={selectedDate}
           onSelect={setSelectedDate}
           className="my-2"
+          disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
         />
 
         {/* 시간 선택 */}

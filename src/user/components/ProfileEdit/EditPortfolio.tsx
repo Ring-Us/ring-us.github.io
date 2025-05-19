@@ -56,7 +56,7 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
   };
 
   return (
-    <div className="px-4 my-2">
+    <div className="px-4 py-2">
       <div className="font-bold text-[16px] my-4">포트폴리오</div>
 
       {/* 업로드된 파일이 있을 경우 표시 */}

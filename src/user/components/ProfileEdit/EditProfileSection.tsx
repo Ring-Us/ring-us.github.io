@@ -6,10 +6,12 @@ import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
 import { ImagePlus } from 'lucide-react';
 import EditImageModal from "./EditImageModal";
+import { uploadProfileImage } from "@/user/api/profileApi";
 
 interface EditProfileSectionProps {
   mentorData: {
     nickname: string;
+    email: string;
     education: {
       schoolName: string;
       major: string;
@@ -32,20 +34,26 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 프로필 사진 업로드
-  const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const imageURL = URL.createObjectURL(file);
-
-      setMentorData((prevData: any) => ({
-        ...prevData,
-        image: {
-          fileName: file.name,
-          filePath: imageURL,
-        },
-      }));
-      
-      setIsModalOpen(false);
+  
+      try {
+        const imageUrl = await uploadProfileImage(file, 'ROLE_MENTOR');
+        
+        setMentorData((prevData: any) => ({
+          ...prevData,
+          image: {
+            fileName: file.name,
+            filePath: imageUrl,
+          },
+        }));
+        
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        alert('이미지 업로드에 실패했습니다.');
+      }
     }
   };
 
@@ -63,7 +71,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
   };
 
   return (
-    <div className="px-4 my-2">
+    <div className="px-4 py-2">
       <div className="font-bold text-[16px] my-4">프로필</div>
 
         {/* 사진 & 이름 & 메일 */}
@@ -107,7 +115,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
                 color="#94939b"
                 className="mr-3"
               />
-              <span className="text-[#94939B] text-[14px]"></span>
+              <span className="text-[#94939B] text-[14px]">{mentorData.email}</span>
             </div>
           </div>
         </div>
@@ -143,7 +151,7 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
           </div>
         </div>
 
-        {/* 🔹 모달 컴포넌트 사용 */}
+        {/* 모달 */}
         {isModalOpen && (
           <EditImageModal
             onClose={() => setIsModalOpen(false)}

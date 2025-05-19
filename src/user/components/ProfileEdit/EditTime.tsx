@@ -56,7 +56,7 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
   };
 
   return (
-    <div className="px-4 my-2">
+    <div className="px-4 py-2">
       {/* 선호 시간대 */}
       <div className="font-bold text-[16px] my-4">선호 시간대</div>
 
@@ -78,10 +78,10 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
       {/* 시간대 */}
       <div className="text-[14px] text-[#94939B] mt-4 mb-2">시간대</div>
       <button
-        className="w-full text-left border-[1px] border-[#D9D7E0] rounded-[10px] px-5 py-3 text-[16px] flex justify-between items-center"
+        className="w-[50%] text-left border-[1px] border-[#D9D7E0] rounded-[10px] px-4 py-3 text-[16px] flex justify-between items-center"
         onClick={() => setIsModalOpen(true)}
       >
-        {`${mentorData.timezone.startTime} ~ ${mentorData.timezone.endTime}`}
+        {`${mentorData.timezone.startTime.slice(0,5)} ~ ${mentorData.timezone.endTime.slice(0,5)}`}
         <ChevronDown size={26} strokeWidth={1.0} color="#94939b" />
       </button>
 

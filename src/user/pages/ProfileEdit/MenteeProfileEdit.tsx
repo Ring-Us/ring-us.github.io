@@ -13,6 +13,7 @@ const MenteeProfileEdit = () => {
   const navigate = useNavigate();
   const [menteeData, setMenteeData] = useState<MenteeData>({
     nickname: '',
+    email: '',
     education: {
       schoolName: '',
       major: '',
