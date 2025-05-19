@@ -27,7 +27,8 @@ import MenteeStatus from '@/user/pages/status/mentee/MenteeStatus';
 import MenteeRequestStatus from '@/user/pages/status/mentee/MenteeRequestStatus';
 import MentorStatus from '@/user/pages/status/mentor/MentorStatus';
 import MentorRequestStatus from '@/user/pages/status/mentor/MentorRequestStatus';
-import Bookmark  from '@/bookmark/pages/Bookmark';
+import Bookmark from '@/bookmark/pages/Bookmark';
+import FAQAccordion from '@/user/components/FAQAccordion';
 
 export const Router = () => {
   return (
@@ -45,6 +46,7 @@ export const Router = () => {
 
       <Route path="/user" element={<UserLayout />}>
         <Route path="" element={<Mypage />} />
+        <Route path="faq" element={<FAQAccordion />} />
         <Route path="mentor-profile" element={<MentorProfile />} />
         <Route path="mentee-profile" element={<MenteeProfile />} />
         <Route path="mentorinfo" element={<MentorInfo />}></Route>
