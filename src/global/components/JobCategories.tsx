@@ -14,6 +14,19 @@ export const fieldOptions: string[] = [
   '법률',
 ];
 
+export const registerfieldOptions: string[] = [
+  '마케팅',
+  '서비스 기획',
+  '디자인',
+  '개발',
+  '대학원',
+  '인사',
+  '영업',
+  '금융',
+  '데이터',
+  '의료',
+  '법률',
+];
 
 // 직군별 아이콘 매핑
 export const fieldIcons: { [key: string]: string } = {
@@ -32,7 +45,7 @@ export const fieldIcons: { [key: string]: string } = {
 };
 
 // 직무 (세부 카테고리)
-export const subFieldOptions: { [key: string]: string[] } = {
+export const subFieldOptions: Record<string, string[]> = {
   전체: [],
   마케팅: [
     '브랜드 마케팅',
@@ -138,4 +151,3 @@ export const subFieldOptions: { [key: string]: string[] } = {
     '기타',
   ],
 };
-

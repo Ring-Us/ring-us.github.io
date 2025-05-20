@@ -15,50 +15,66 @@ const UsagePolicy = ({
     marketing: false,
   });
 
-  // 모든 필수 항목이 체크되었는지 확인
-  const isAllRequiredChecked = checkedItems.terms && checkedItems.privacy;
+  // 모달 열기용 상태
+  const [modalType, setModalType] = useState<'terms' | 'privacy' | null>(null);
 
-  // 모든 항목이 체크되었는지 확인
+  const isAllRequiredChecked = checkedItems.terms && checkedItems.privacy;
   const allChecked =
     checkedItems.terms && checkedItems.privacy && checkedItems.marketing;
 
-  // 개별 체크박스 변경 핸들러
   const handleSingleCheck = (name: string) => {
-    setCheckedItems((prev: any) => {
-      const newState = { ...prev, [name]: !prev[name] };
-      return newState;
-    });
+    setCheckedItems((prev: any) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  // ✅ `useEffect`에서 상태 변경을 감지한 후 `onAgree` 호출
   useEffect(() => {
     onAgree('TERMS_OF_SERVICE', checkedItems.terms);
     onAgree('PRIVACY_POLICY', checkedItems.privacy);
     onAgree('MARKETING_CONSENT', checkedItems.marketing);
-  }, [checkedItems]); // checkedItems 변경 시 실행
+  }, [checkedItems]);
 
-  // "모두 동의" 체크박스 핸들러
   const handleAllCheck = () => {
-    const newCheckedState = !allChecked;
-    const updatedState = {
-      terms: newCheckedState,
-      privacy: newCheckedState,
-      marketing: newCheckedState,
-    };
+    const newState = !allChecked;
+    setCheckedItems({
+      terms: newState,
+      privacy: newState,
+      marketing: newState,
+    });
+    onAgree('TERMS_OF_SERVICE', newState);
+    onAgree('PRIVACY_POLICY', newState);
+    onAgree('MARKETING_CONSENT', newState);
+    console.log('모두 동의:', newState);
+  };
 
-    setCheckedItems(updatedState);
-
-    // `onAgree` 호출하여 백엔드에 전달될 데이터 업데이트
-    onAgree('TERMS_OF_SERVICE', newCheckedState);
-    onAgree('PRIVACY_POLICY', newCheckedState);
-    onAgree('MARKETING_CONSENT', newCheckedState);
-
-    // 콘솔에서 확인 (현재 상태 출력)
-    console.log('"모두 동의" 선택됨:', [
-      { tag: 'TERMS_OF_SERVICE', agreed: newCheckedState },
-      { tag: 'PRIVACY_POLICY', agreed: newCheckedState },
-      { tag: 'MARKETING_CONSENT', agreed: newCheckedState },
-    ]);
+  // 상세보기 모달 열린 경우 렌더
+  const renderModal = () => {
+    if (!modalType) return null;
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded-lg w-3/4 max-w-xl">
+          <h4 className="text-lg font-bold mb-4">
+            {modalType === 'terms'
+              ? '링어스 이용약관'
+              : '개인정보 수집 및 이용 동의'}
+          </h4>
+          <div className="h-64 overflow-auto mb-6">
+            {/* 실제 약관 텍스트를 여기 로드하세요 */}
+            <p>
+              여기에{' '}
+              {modalType === 'terms'
+                ? '서비스 이용 약관...'
+                : '개인정보 처리 방침...'}{' '}
+              내용을 표시합니다.
+            </p>
+          </div>
+          <button
+            className="px-4 py-2 bg-primary-1 rounded-lg text-white rounded"
+            onClick={() => setModalType(null)}
+          >
+            닫기
+          </button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -82,19 +98,38 @@ const UsagePolicy = ({
         </div>
         <hr />
 
-        {/* 개별 약관 동의 */}
-        <Checkbox
-          label="링어스 이용약관"
-          isChecked={checkedItems.terms}
-          type="required"
-          onChange={() => handleSingleCheck('terms')}
-        />
-        <Checkbox
-          label="개인정보 수집 및 이용 동의"
-          isChecked={checkedItems.privacy}
-          type="required"
-          onChange={() => handleSingleCheck('privacy')}
-        />
+        {/* 개별 약관 동의 + 상세보기 */}
+        <div className="flex items-center justify-between">
+          <Checkbox
+            label="링어스 이용약관"
+            isChecked={checkedItems.terms}
+            type="required"
+            onChange={() => handleSingleCheck('terms')}
+          />
+          <button
+            onClick={() => setModalType('terms')}
+            className="text-sm hover:text-gray-1 text-gray-3 underline ml-2"
+          >
+            상세보기
+          </button>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <Checkbox
+            label="개인정보 수집 및 이용 동의"
+            isChecked={checkedItems.privacy}
+            type="required"
+            onChange={() => handleSingleCheck('privacy')}
+          />
+          <button
+            onClick={() => setModalType('privacy')}
+            className="text-sm hover:text-gray-1 text-gray-3 underline ml-2"
+          >
+            상세보기
+          </button>
+        </div>
+
+        {/* 선택 약관 */}
         <Checkbox
           label="마케팅 정보 수신"
           isChecked={checkedItems.marketing}
@@ -113,6 +148,8 @@ const UsagePolicy = ({
           다음으로
         </GlobalButton>
       </div>
+
+      {renderModal()}
     </div>
   );
 };
