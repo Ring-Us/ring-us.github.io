@@ -26,7 +26,7 @@ export interface MentorData {
   portfolio: {
     url: string;
     description: string;
-    size: number;
+    fileSize: number;
   } | null;
   image: {
     fileName: string;
@@ -63,7 +63,7 @@ export interface MentorViewData {
   portfolio: {
     url: string;
     description: string;
-    size: number;
+    fileSize: number;
   } | null;
   image: {
     fileName: string;

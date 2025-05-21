@@ -1,5 +1,5 @@
 interface MentorInfoPortfolioProps {
-    portfolio: { url: string; description: string; size: number } | null;
+    portfolio: { url: string; description: string; fileSize: number } | null;
 }
 
 const MentorInfoPortfolio = ({ portfolio }: MentorInfoPortfolioProps) => {
@@ -20,7 +20,7 @@ const MentorInfoPortfolio = ({ portfolio }: MentorInfoPortfolioProps) => {
             >
                 <span>{portfolio.description}</span>
                 <span className="text-[#94939B] ml-1">
-                    ({(portfolio.size / 1000000).toFixed(1)}MB)
+                    ({(portfolio.fileSize / 1000000).toFixed(1)}MB)
                 </span>
             </div>
         </div>

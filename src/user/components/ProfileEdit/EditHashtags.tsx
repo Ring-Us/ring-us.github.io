@@ -60,7 +60,7 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
           >
             #{tag}
             <button onClick={() => removeHashtag(tag)} className="ml-2">
-              <X size={16} strokeWidth={1.0} />
+              <X size={16} strokeWidth={1.0} color='#E97B7B'/>
             </button>
           </div>
         ))}

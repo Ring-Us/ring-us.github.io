@@ -24,6 +24,22 @@ export const uploadProfileImage = async (
   }
 };
 
+// 멘토 포트폴리오 업로드 API
+export const uploadPortfolio = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await axiosInstance.post(
+      '/v1/portfolio',
+      formData,
+    );
+    return response.data.message;
+  } catch (error) {
+    throw new Error('포트폴리오 업로드 실패');
+  }
+};
+
 // 멘토 프로필 등록 API
 export const createMentorProfile = async (mentorData: MentorProfileData) => {
   try {
