@@ -1,4 +1,5 @@
 import { MentorData } from '@/user/types';
+import { uploadPortfolio } from '@/user/api/profileApi';
 import { X } from 'lucide-react';
 
 interface EditPortfolioProps {
@@ -19,32 +20,37 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
     });
   };
 
-  // 파일 업로드 (10MB 이하 파일만 허용)
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 파일 업로드
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
 
       // 10MB 초과하면 업로드 차단
       if (file.size > 10 * 1000 * 1000) {
         alert('10MB 이하의 파일만 업로드할 수 있습니다.');
-        e.target.value = ''; // 파일 선택 초기화
+        e.target.value = '';
         return;
       }
 
-      // 기존 파일이 있으면 삭제 후 새 파일 업로드
-      removeFile();
+      try {
+        const portfolioUrl = await uploadPortfolio(file);
 
-      setMentorData((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          portfolio: {
-            url: URL.createObjectURL(file),
-            description: file.name,
-            size: file.size,
-          },
-        };
-      });
+        removeFile();
+        setMentorData((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            portfolio: {
+              description: file.name,
+              url: portfolioUrl,
+              fileSize: file.size,
+            },
+          };
+        });
+      } catch (error) {
+        alert('포트폴리오 업로드 실패');
+        console.error(error);
+      }
     }
   };
 
@@ -68,7 +74,7 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
           <div>
             <span>{mentorData.portfolio.description}</span>
             <span className="text-[#94939B] ml-1">
-              ({(mentorData.portfolio.size / 1000000).toFixed(1)}MB)
+              ({(mentorData.portfolio.fileSize / 1000000).toFixed(1)}MB)
             </span>
           </div>
           <button
@@ -77,7 +83,7 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
               removeFile();
             }}
           >
-            <X size={16} strokeWidth={1.0} />
+            <X size={16} strokeWidth={1.0} color='#E97B7B' />
           </button>
         </div>
       )}

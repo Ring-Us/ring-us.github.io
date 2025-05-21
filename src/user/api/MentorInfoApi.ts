@@ -23,9 +23,9 @@ export const getMentorProfile = async (): Promise<MentorData> => {
     mentoringField: data.mentoringField ?? [],
     hashtags: data.hashtags ?? [],
     message: data.message ?? '',
-    portfolio: data.portfolio ?? { url: '', description: '', size: 0 },
+    portfolio: data.portfolio ?? { url: '', description: '', fileSize: 0 },
     image: data.image ?? { fileName: '', filePath: '' },
-    mentoringCount: data.mentoringCount ?? 0,
+    mentoringCount: data.mentoringCount ?? '',
   };
 };
 

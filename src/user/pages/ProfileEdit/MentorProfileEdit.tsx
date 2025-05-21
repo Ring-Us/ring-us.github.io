@@ -36,6 +36,7 @@ const MentorProfileEdit = () => {
   }
 
   const handleSave = async () => {
+    console.log("mentorData to be sent:", JSON.stringify(mentorData, null, 2));
     try {
       await updateMentorProfile(mentorData);
       navigate("/user/mentorinfo");
