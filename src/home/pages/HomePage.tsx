@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion'; // 애니메이션 추가
 import { Bell, Bookmark } from 'lucide-react'; // 알림 아이콘 추가
@@ -14,6 +14,7 @@ export default function HomePage() {
   );
   const [bookmarked, setBookmarked] = useState<{ [key: number]: boolean }>({});
 
+  const navigate = useNavigate(); // << 추가!
   const toggleBookmark = (index: any) => {
     setBookmarked((prev) => ({
       ...prev,
@@ -109,7 +110,11 @@ export default function HomePage() {
           alt="mainlogo"
           className="w-auto h-[25px]"
         />
-        <Bell strokeWidth={1} className="text-white w-6 h-6" />
+        <Bell
+          strokeWidth={1}
+          className="text-white w-6 h-6 cursor-pointer"
+          onClick={() => navigate('/notification')}
+        />
       </div>
 
       {/* 카테고리 아이콘 리스트 */}

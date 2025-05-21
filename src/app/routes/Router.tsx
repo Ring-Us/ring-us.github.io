@@ -29,12 +29,14 @@ import MentorStatus from '@/user/pages/status/mentor/MentorStatus';
 import MentorRequestStatus from '@/user/pages/status/mentor/MentorRequestStatus';
 import Bookmark from '@/bookmark/pages/Bookmark';
 import FAQAccordion from '@/user/components/FAQAccordion';
+import NotificationPage from '@/home/pages/NotificationPage';
 
 export const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<RootLayout />}>
         <Route path="" element={<HomePage />} />
+        <Route path="notification" element={<NotificationPage />} />
       </Route>
 
       <Route path="/auth" element={<AuthLayout />}>
