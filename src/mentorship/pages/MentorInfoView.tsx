@@ -29,7 +29,7 @@ const MentorInfoView = () => {
         const data = await getMentorById(Number(mentorId));
         setMentorData(data);
       } catch (err) {
-        console.error("멘토 상세 불러오기 실패:", err);
+        console.error('멘토 상세 불러오기 실패:', err);
       }
     };
 
@@ -37,75 +37,71 @@ const MentorInfoView = () => {
   }, [mentorId]);
 
   useEffect(() => {
-    const storedBookmark = localStorage.getItem("isBookmarked");
-    setIsBookmarked(storedBookmark === "true");
+    const storedBookmark = localStorage.getItem('isBookmarked');
+    setIsBookmarked(storedBookmark === 'true');
   }, []);
 
   const toggleBookmark = () => {
     const newBookmarkState = !isBookmarked;
     setIsBookmarked(newBookmarkState);
-    localStorage.setItem("isBookmarked", newBookmarkState.toString());
+    localStorage.setItem('isBookmarked', newBookmarkState.toString());
   };
 
   if (!mentorData) return <div className="p-4">Loading...</div>;
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
-
       <div className="overflow-y-auto pb-4">
-
         {/* 보라색 */}
         <div className="bg-mentor-gradient rounded-b-[30px]">
-
           {/* 헤더 */}
           <div className="flex justify-between items-center px-4 py-3 h-[55px]">
             <ArrowLeft
               size={24}
               strokeWidth={1.0}
               className="text-white cursor-pointer"
-              onClick={() => navigate("/mentorship")}
+              onClick={() => navigate('/mentorship')}
             />
             <Bookmark
               size={22}
               strokeWidth={1.0}
               className="cursor-pointer"
-              fill={isBookmarked ? "white" : "none"}
+              fill={isBookmarked ? 'white' : 'none'}
               stroke="white"
               onClick={toggleBookmark}
             />
           </div>
-              
+
           {/* 프로필 섹션 */}
-          <MentorInfoProfile 
-            nickname={mentorData.nickname} 
+          <MentorInfoProfile
+            nickname={mentorData.nickname}
             name={mentorData.organization.name}
             jobCategory={mentorData.organization.jobCategory}
             detailedJob={mentorData.organization.detailedJob}
-            experience={mentorData.organization.experience} 
+            experience={mentorData.organization.experience}
             mentoringCount={mentorData.mentoringCount}
-            image={mentorData?.image?.filePath || "/assets/ringusprofile.png"}
+            image={mentorData?.image?.filePath || '/assets/ringusprofile.png'}
           />
         </div>
 
         <div className="">
-
           {/* 자기소개 */}
-          <MentorInfoBio 
+          <MentorInfoBio
             title={mentorData.introduction.title}
             content={mentorData.introduction.content}
           />
 
           {/* 선호 시간대 */}
           <MentorInfoTime
-            days={mentorData.timezone.days} 
-            startTime={mentorData.timezone.startTime} 
-            endTime={mentorData.timezone.endTime} 
+            days={mentorData.timezone.days}
+            startTime={mentorData.timezone.startTime}
+            endTime={mentorData.timezone.endTime}
           />
 
           {/* 멘토링 분야 & 해시태그 */}
-          <MentorInfoFieldsHashtags 
-            mentoringField={mentorData.mentoringField} 
-            hashtags={mentorData.hashtags} 
+          <MentorInfoFieldsHashtags
+            mentoringField={mentorData.mentoringField}
+            hashtags={mentorData.hashtags}
           />
 
           {/* 멘티에게 전하고 싶은 말 */}

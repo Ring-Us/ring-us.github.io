@@ -119,7 +119,7 @@ export default function HomePage() {
 
       {/* 카테고리 아이콘 리스트 */}
       <div className="bg-[#765BFD]">
-        <div className="max-w-[600px] bg-white h-full rounded-t-[30px] relative z-15 border-[#765BFD]">
+        <div className="max-w-[600px] bg-white min-h-screen rounded-t-[30px] relative z-15 ">
           <motion.div
             className="absolute -top-4 left-0 right-0 mx-auto w-fit bg-[#130c0c] text-[#ffffff] bg-opacity-80 text-sm py-2 px-4 rounded-lg shadow-lg"
             initial={{ y: 0, opacity: 0.7 }}
@@ -147,7 +147,7 @@ export default function HomePage() {
           </div>
 
           {/* 추천 멘토 섹션 */}
-          <div className="mt-14 px-7 mb-20">
+          <div className="mt-14 px-7 pb-20">
             <h2 className="text-lg font-semibold">
               회원님이 관심있어 할 멘토 추천
             </h2>
