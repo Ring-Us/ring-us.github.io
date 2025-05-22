@@ -18,8 +18,9 @@ const MentorProfile3 = ({
   // 전체 입력 필드 유효성 체크 (자기소개 + 멘토링 분야)
   const isFormValid =
     mentorData.message.trim().length > 0 &&
-    mentorData.hashtags.length > 0 &&
-    mentorData.hashtags.length > 0; // 멘토링 분야 선택 필수
+    mentorData.message.trim().length <= 100 &&
+    mentorData.hashtags.length <= 8 &&
+    mentorData.hashtags.every((tag) => tag.length <= 15);
 
   return (
     <div className="flex flex-col w-full h-[calc(100vh-15vh)] overflow-hidden">
@@ -44,19 +45,20 @@ const MentorProfile3 = ({
             className="w-full h-[170px] border rounded-lg p-4 text-xs resize-none placeholder-gray-2"
             style={{ whiteSpace: 'pre-wrap' }}
             placeholder={`멘티에게 전하고 싶은 말을 작성해주세요.
-              
+  
 ex) 안녕하세요, 멘티 여러분들!
 브랜드 마케팅 경험을 바탕으로 여러분의 성장을 지원하고 싶습니다.`}
             value={mentorData.message}
+            maxLength={100}
             onChange={(e) =>
               setMentorData({
                 ...mentorData,
-                message: e.target.value,
+                message: e.target.value.slice(0, 100),
               })
             }
           />
           <div className="text-xs text-gray-1 mt-1 flex justify-end">
-            {mentorData.message.length}/500
+            {mentorData.message.length}/100
           </div>
         </div>
 

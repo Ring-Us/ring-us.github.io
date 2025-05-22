@@ -25,6 +25,9 @@ const MentorProfile2 = ({
     mentorData.mentoringField.length > 0 && // 멘토링 분야 선택 필수
     isTimezoneValid;
 
+  const TITLE_MAX_LENGTH = 30;
+  const CONTENT_MAX_LENGTH = 500;
+
   return (
     <div className="flex flex-col w-full h-[calc(100vh-15vh)] overflow-hidden">
       {/* 상단 제목 */}
@@ -51,16 +54,21 @@ const MentorProfile2 = ({
             style={{ whiteSpace: 'pre-wrap' }}
             placeholder={'자기소개에 제목으로 멘토님을 표현해요.'}
             value={mentorData.introduction.title}
+            maxLength={TITLE_MAX_LENGTH}
             onChange={(e) =>
               setMentorData({
                 ...mentorData,
                 introduction: {
                   ...mentorData.introduction,
-                  title: e.target.value,
+                  title: e.target.value.slice(0, TITLE_MAX_LENGTH), // 혹시라도 maxLength 우회 막기
                 },
               })
             }
           />
+          <div className="text-xs text-gray-1 mt-1 flex justify-end">
+            {mentorData.introduction.title.length}/{TITLE_MAX_LENGTH}
+          </div>
+
           <textarea
             id="bioContent"
             className="w-full mt-3 h-[120px] border rounded-lg p-4 text-xs resize-none placeholder-gray-2"
@@ -71,18 +79,19 @@ const MentorProfile2 = ({
 ex) 저는 카카오에 재직중인 UX/UI 디자이너 입니다.
 저와 함께 포트폴리오의 UT능력과 트렌드를 익혀...`}
             value={mentorData.introduction.content}
+            maxLength={CONTENT_MAX_LENGTH}
             onChange={(e) =>
               setMentorData({
                 ...mentorData,
                 introduction: {
                   ...mentorData.introduction,
-                  content: e.target.value,
+                  content: e.target.value.slice(0, CONTENT_MAX_LENGTH),
                 },
               })
             }
           />
           <div className="text-xs text-gray-1 mt-1 flex justify-end">
-            {mentorData.introduction.content.length}/500
+            {mentorData.introduction.content.length}/{CONTENT_MAX_LENGTH}
           </div>
         </div>
 

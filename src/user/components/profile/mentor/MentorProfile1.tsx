@@ -3,6 +3,7 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { MentorProfileData } from '@/user/types/profileTypes';
 import { uploadProfileImage } from '@/user/api/profileApi';
+import { Camera } from 'lucide-react';
 import {
   registerfieldOptions,
   subFieldOptions,
@@ -100,7 +101,6 @@ const MentorProfile1 = ({
   const isFormValid =
     mentorData.nickname.trim().length > 0 &&
     mentorData.education.schoolName.trim().length > 0 &&
-    mentorData.education.major.trim().length > 0 &&
     mentorData.organization.name.trim().length > 0 &&
     mentorData.organization.jobCategory.trim().length > 0 &&
     mentorData.organization.detailedJob.trim().length > 0 &&
@@ -127,18 +127,19 @@ const MentorProfile1 = ({
           </p>
         </div>
 
-        {/* 이미지 업로드 */}
         <div className="flex flex-col items-center mt-4">
           <div className="relative w-24 h-24 rounded-[50px] bg-gray-3 overflow-hidden">
-            {mentorData.image?.filePath ? (
-              <img
-                src={mentorData.image.filePath}
-                alt="프로필 이미지"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full text-xs text-gray-2">
-                이미지 없음
+            {/* 프로필 이미지 또는 기본 이미지 */}
+            <img
+              src={mentorData.image?.filePath || '/assets/ringusprofile.png'}
+              alt="프로필 이미지"
+              className="w-full h-full object-cover"
+            />
+            {/* 기본 이미지일 때만 오버레이 & 카메라 아이콘 */}
+            {(!mentorData.image?.filePath ||
+              mentorData.image.filePath === '/assets/ringusprofile.png') && (
+              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <Camera className="w-6 h-6 text-white opacity-70" />
               </div>
             )}
           </div>
@@ -192,7 +193,7 @@ const MentorProfile1 = ({
         </div>
         <div className="mt-6">
           <AuthInputBox
-            label="전공"
+            label="전공 (선택)"
             value={mentorData.education.major}
             placeholder="전공을 입력해주세요."
             onChange={(e) =>

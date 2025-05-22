@@ -3,6 +3,7 @@ import { GlobalButton } from '@/global/ui/GlobalButton';
 import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { uploadProfileImage } from '@/user/api/profileApi';
 import { MenteeProfileData } from '@/user/types/profileTypes';
+import { Camera } from 'lucide-react';
 
 import ErrorModal from '@/global/ui/ErrorModal'; // Error 모달 추가
 import axiosInstance from '@/global/api/axiosInstance';
@@ -111,9 +112,9 @@ const MenteeProfile = ({
   // 전체 입력 필드 유효성 체크
   const isFormValid =
     menteeData.nickname.trim().length > 0 &&
-    menteeData.introduction.trim().length > 0 &&
+    menteeData.introduction.trim().length > 0 && // 필수
+    menteeData.introduction.trim().length <= 200 && // 200자 제한
     menteeData.education.schoolName.trim().length > 0 &&
-    menteeData.education.major.trim().length > 0 &&
     isNicknameValid;
 
   return (
@@ -140,15 +141,17 @@ const MenteeProfile = ({
         {/* 프로필 이미지 업로드 */}
         <div className="flex flex-col items-center mt-4">
           <div className="relative w-24 h-24 rounded-[50px] bg-gray-3 overflow-hidden">
-            {menteeData.image?.filePath ? (
-              <img
-                src={menteeData.image.filePath}
-                alt="프로필 이미지"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full text-xs text-gray-2">
-                이미지 없음
+            {/* 프로필 이미지 또는 기본 이미지 */}
+            <img
+              src={menteeData.image?.filePath || '/assets/ringusprofile.png'}
+              alt="프로필 이미지"
+              className="w-full h-full object-cover"
+            />
+            {/* 기본 이미지일 때만 오버레이 & 카메라 아이콘 */}
+            {(!menteeData.image?.filePath ||
+              menteeData.image.filePath === '/assets/ringusprofile.png') && (
+              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <Camera className="w-6 h-6 text-white opacity-70" />
               </div>
             )}
           </div>
@@ -185,15 +188,27 @@ const MenteeProfile = ({
         </div>
 
         <div className="mt-6">
-          <AuthInputBox
-            label="자기소개"
-            type="text"
+          <label
+            htmlFor="menteeIntroduction"
+            className="block text-xs mb-2 font-medium"
+          >
+            자기소개 <span className="text-primary-1">*</span>
+          </label>
+          <textarea
+            id="menteeIntroduction"
             placeholder="간단한 자기소개를 입력해주세요."
             value={menteeData.introduction}
+            maxLength={200}
+            required
+            className="w-full border rounded-lg p-3 text-xs resize-none placeholder-gray-2"
+            rows={4}
             onChange={(e) =>
               setMenteeData({ ...menteeData, introduction: e.target.value })
             }
           />
+          <div className="text-xs text-gray-1 mt-1 flex justify-end">
+            {menteeData.introduction.length}/200
+          </div>
         </div>
 
         <div className="mt-6">
@@ -216,7 +231,7 @@ const MenteeProfile = ({
 
         <div className="mt-6">
           <AuthInputBox
-            label="전공"
+            label="전공 (선택)"
             type="text"
             placeholder="전공을 입력해주세요."
             value={menteeData.education.major}

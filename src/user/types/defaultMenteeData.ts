@@ -7,7 +7,7 @@ export const defaultMenteeProfile: MenteeProfileData = {
   education: { schoolName: '', major: '' },
   image: {
     fileName: '',
-    filePath: '',
+    filePath: '/assets/ringusprofile.png',
   },
 };
 

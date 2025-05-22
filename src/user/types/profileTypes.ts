@@ -22,7 +22,7 @@ export interface MentorProfileData {
   };
   hashtags: string[];
   message: string;
-  portfolio: { url: string; description: string } | null;
+  portfolio: { url: string; description: string; fileSize: number } | null;
   image: { fileName: string; filePath: string };
 }
 export interface MentorCertificateData {

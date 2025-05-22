@@ -19,8 +19,8 @@ export const defaultMentorProfile: MentorProfileData = {
   },
   hashtags: [],
   message: '',
-  portfolio: { url: '', description: '' },
-  image: { fileName: '', filePath: '' },
+  portfolio: { url: '', description: '', fileSize: 0 },
+  image: { fileName: '', filePath: '/assets/ringusprofile.png' },
 };
 
 export const defaultMentorSetup: MentorCertificateData = {

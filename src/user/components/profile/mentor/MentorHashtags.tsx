@@ -41,7 +41,7 @@ const MentorHashtags = ({ mentorData, setMentorData }: MentorHashtagsProps) => {
 
   return (
     <div className="px-4 my-2">
-      <div className="text-[14px] my-4">경험 해시태그</div>
+      <div className="text-[14px] my-4">경험 해시태그 (선택)</div>
 
       {/* 해시태그 목록 */}
       <div className="flex flex-wrap gap-1">
