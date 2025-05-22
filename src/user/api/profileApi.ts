@@ -4,7 +4,7 @@ import {
   MenteeProfileData,
 } from '@/user/types/profileTypes';
 
-// 멘티 프로필 이미지 업로드 API
+// 멘토 멘티 프로필 이미지 업로드 API
 export const uploadProfileImage = async (
   file: File,
   memberType: 'ROLE_MENTOR' | 'ROLE_MENTEE' | 'ROLE_ADMIN', // 멘토 or 멘티 선택 가능
