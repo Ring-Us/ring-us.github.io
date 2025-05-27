@@ -54,6 +54,8 @@ const MenteeProfile = ({
         ...menteeData,
         image: { fileName: file.name, filePath: imageUrl },
       });
+      console.log('업로드된 이미지 URL:', imageUrl);
+      console.log('업로드된 이미지 파일명:', file.name);
     } catch (error) {
       setErrorMessage('이미지 업로드에 실패했습니다.');
     } finally {

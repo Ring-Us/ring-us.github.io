@@ -166,7 +166,10 @@ export default function MyPage() {
           </div>
         )}
         <div className="border-b border-gray-3">
-          <button className="w-full text-left text-gray-1 text-lg p-5">
+          <button
+            className="w-full text-left text-gray-1 text-lg p-5"
+            onClick={() => navigate('faq')}
+          >
             자주 묻는 질문
           </button>
         </div>
