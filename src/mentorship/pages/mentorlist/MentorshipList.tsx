@@ -38,14 +38,15 @@ const MentorshipList = () => {
     });
   
     if (node) observer.current.observe(node);
-  }, [loading, hasMore, cursor]); 
+  }, [loading, hasMore, cursor, sortOption]); 
   
   const filteredMentors = mentors.filter((mentor) => {
     const matchField =
-  !selectedField || selectedField === '전체' ? true : mentor.field === selectedField;
+      !selectedField || selectedField === '전체' ? true : mentor.organization.jobCategory === selectedField;
 
-const matchSubField =
-  !selectedSubField || selectedSubField === '전체' ? true : mentor.subField === selectedSubField;
+    const matchSubField =
+      !selectedSubField || selectedSubField === '전체' ? true : mentor.organization.detailedJob === selectedSubField;
+    
     return matchField && matchSubField;
   });
 
@@ -53,30 +54,22 @@ const matchSubField =
     if (loading || !hasMore) return;
   
     setLoading(true);
-  
-    // ✅ 현재 커서 값을 따로 저장
     const currentCursor = cursor ?? undefined;
   
     try {
-      const res = await fetchMentors(currentCursor, size);
+      // 세 번째 인자로 sortOption 추가! 
+      const res = await fetchMentors(currentCursor, size, sortOption);
       const { content, sliceInfo } = res.data;
   
-      // ✅ 받은 mentorId 배열
-      const newMentors = content;
-  
-      // ✅ 중복 방지를 위해 mentorId 기준 필터링
       setMentors((prev) => {
         const existingIds = new Set(prev.map((m) => m.mentorId));
-        const filteredNew = newMentors.filter((m) => !existingIds.has(m.mentorId));
+        const filteredNew = content.filter((m) => !existingIds.has(m.mentorId));
         return [...prev, ...filteredNew];
       });
   
-      // ✅ 다음 요청을 위한 커서 업데이트
-      if (newMentors.length > 0) {
-        const nextCursor = newMentors[newMentors.length - 1].mentorId;
-        setCursor(nextCursor);
+      if (content.length > 0) {
+        setCursor(content[content.length - 1].mentorId);
       }
-  
       setHasMore(!sliceInfo.last);
     } catch (err) {
       console.error('멘토 로드 실패:', err);
@@ -89,10 +82,14 @@ const matchSubField =
     loadMoreMentors();
   }, []);
 
+  useEffect(() => {
+    console.log('Mentor 리스트', mentors);
+  }, [mentors]);
+
   return (
     <div className="h-screen flex flex-col bg-white relative">
       <div className="sticky top-[16px] w-full max-w-[600px] mx-auto bg-white z-20">
-      <MentorshipHeader selectedField={selectedField} />
+        <MentorshipHeader selectedField={selectedField} />
         <MentorshipFilterBar
           selectedField={selectedField}
           selectedSubField={selectedSubField}

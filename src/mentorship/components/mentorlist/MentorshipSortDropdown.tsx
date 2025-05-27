@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-type SortOption = 'respond'; 
+type SortOption = 'respond' | string; 
 
 interface MentorshipSortDropdownProps {
   sortOption?: SortOption;
@@ -9,7 +9,7 @@ interface MentorshipSortDropdownProps {
 }
 
 const MentorshipSortDropdown: React.FC<MentorshipSortDropdownProps> = ({
-  sortOption = 'respond', // ✅ 기본값 설정
+  sortOption = 'respond', //기본값 설정
   onSortChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
