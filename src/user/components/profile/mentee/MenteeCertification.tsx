@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import FileUpload from '@/user/components/FileUpload';
-import ErrorModal from '@/global/ui/ErrorModal'; // 에러 모달 import
+import ErrorModal from '@/global/ui/Modal'; // 에러 모달 import
 
 interface MenteeCertificationProps {
   onFileUpload: (file: File | null) => void;

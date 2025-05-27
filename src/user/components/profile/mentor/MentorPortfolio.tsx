@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MentorProfileData } from '@/user/types/profileTypes';
 import { X } from 'lucide-react';
-import ErrorModal from '@/global/ui/ErrorModal'; // 모달 import
+import ErrorModal from '@/global/ui/Modal'; // 모달 import
 
 interface MentorPortfolioProps {
   mentorData: MentorProfileData;

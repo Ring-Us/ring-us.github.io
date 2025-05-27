@@ -5,7 +5,7 @@ import { X } from 'lucide-react'; // X 닫기 버튼 추가
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import { SigninInput } from '@/auth/components/SigninInput';
 import { useAuthStore } from '@/auth/store/useAuthStore'; // Zustand import
-import ErrorModal from '@/global/ui/ErrorModal'; // 모달 컴포넌트 import
+import ErrorModal from '@/global/ui/Modal'; // 모달 컴포넌트 import
 
 export default function SigninPage() {
   const navigate = useNavigate();
