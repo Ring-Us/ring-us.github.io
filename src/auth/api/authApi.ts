@@ -25,3 +25,17 @@ export const authApi = async (requestData: {
     throw error.response?.data?.message || '회원가입 실패';
   }
 };
+
+//비밀번호 재설정 API
+export const resetPassword = async (email: string, newPassword: string) => {
+  try {
+    const response = await axiosInstance.patch('/v1/members/password', {
+      email,
+      newPassword,
+    });
+    return response.data; // 성공 응답 반환
+  } catch (error: any) {
+    // 에러 메시지 반환
+    throw error.response?.data?.message || '비밀번호 재설정에 실패했습니다.';
+  }
+};

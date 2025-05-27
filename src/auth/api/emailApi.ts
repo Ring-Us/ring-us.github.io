@@ -1,8 +1,15 @@
 import axiosInstance from '@/global/api/axiosInstance';
 
-// 이메일 인증번호 요청 API
-export const sendVerificationCode = async (email: string) => {
-  return await axiosInstance.post(`/v1/auth/email/code`, { email });
+// 이메일 인증번호 요청 API (용도에 따라 구분)
+export const sendVerificationCode = async (
+  email: string,
+  isPasswordReset: boolean = false,
+) => {
+  // 상황에 맞는 isPasswordReset 전달
+  return await axiosInstance.post(`/v1/auth/email/code`, {
+    email,
+    isPasswordReset,
+  });
 };
 
 // 이메일 인증번호 검증 API
