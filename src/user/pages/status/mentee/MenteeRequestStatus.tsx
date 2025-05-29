@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 import React, { useState } from 'react';
 import MentoringStepBar from '@/user/components/status/MentoringStepBar';
-import ErrorModal from '@/global/ui/ErrorModal';
+import ErrorModal from '@/global/ui/Modal';
 import DateTimeSelectModal from '@/mentorship/components/suggestion/DateTimeSelectModal';
 
 const MenteeRequestStatus: React.FC = () => {

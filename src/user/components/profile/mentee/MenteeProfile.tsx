@@ -4,7 +4,7 @@ import { AuthInputBox } from '@/auth/components/AuthInputBox';
 import { uploadProfileImage } from '@/user/api/profileApi';
 import { MenteeProfileData } from '@/user/types/profileTypes';
 
-import ErrorModal from '@/global/ui/ErrorModal'; // Error 모달 추가
+import ErrorModal from '@/global/ui/Modal'; // Error 모달 추가
 import axiosInstance from '@/global/api/axiosInstance';
 
 interface MenteeProfileProps {

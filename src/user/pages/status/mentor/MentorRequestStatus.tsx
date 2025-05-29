@@ -6,7 +6,7 @@ import MentoringStepBar from '@/user/components/status/MentoringStepBar';
 
 import SuggestTime from '@/mentorship/components/suggestion/SuggestTime';
 import SuggestSubject from '@/mentorship/components/suggestion/SuggestSubject';
-import ErrorModal from '@/global/ui/ErrorModal';
+import ErrorModal from '@/global/ui/Modal';
 
 const MentorRequestStatus: React.FC = () => {
   const navigate = useNavigate();
