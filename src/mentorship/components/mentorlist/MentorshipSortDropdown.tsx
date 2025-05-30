@@ -1,61 +1,67 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-type SortOption = 'respond' | string; 
+type SortOption = 'mentoringCount' | 'signup';
 
-interface MentorshipSortDropdownProps {
+interface Props {
   sortOption?: SortOption;
   onSortChange: (value: SortOption) => void;
 }
 
-const MentorshipSortDropdown: React.FC<MentorshipSortDropdownProps> = ({
-  sortOption = 'respond', //기본값 설정
+const options: { value: SortOption; label: string }[] = [
+  { value: 'mentoringCount', label: '멘토링 횟수 순' },
+  { value: 'signup',          label: '가입순' },
+];
+
+const MentorshipSortDropdown: React.FC<Props> = ({
+  sortOption,
   onSortChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const options: { value: SortOption; label: string }[] = [
-    { value: 'respond', label: '멘토링 횟수 순' }, 
-  ];
+  // 현재 선택된 라벨, 매칭 안 되면 '가입순' 으로 페일백
+  const currentLabel =
+    options.find((o) => o.value === sortOption)?.label || '가입순';
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   return (
-    <div className="relative inline-block px-4 w-full justify-end" ref={dropdownRef}>
+    <div className="relative inline-block w-full" ref={dropdownRef}>
       <div
-        className="w-full text-[12px] text-gray-2 cursor-pointer focus:outline-none text-right p-0 flex items-center justify-end"
+        className="flex justify-end mr-4 items-center cursor-pointer text-[12px] text-gray-2"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        {options.find((option) => option.value === sortOption)?.label}
-        <ChevronDown strokeWidth={1} height="24px" width="24px" color="#94939B" className="ml-2" />
+        {currentLabel}
+        <ChevronDown
+          strokeWidth={1}
+          height="24px"
+          width="24px"
+          color="#94939B"
+          className="ml-2"
+        />
       </div>
+
       {isOpen && (
-        <div className="absolute right-4 w-1/2 bg-white border z-10 rounded-[10px] px-4 py-1 shadow-md">
-          {options.map((option) => (
+        <div className="absolute right-0 w-36 bg-white border rounded-md shadow-md mt-1">
+          {options.map((opt) => (
             <div
-              key={option.value}
-              className="py-1.5 hover:bg-gray-100 cursor-pointer text-[14px]"
+              key={opt.value}
+              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-[14px]"
               onClick={() => {
-                onSortChange(option.value);
+                onSortChange(opt.value);
                 setIsOpen(false);
               }}
             >
-              {option.label}
+              {opt.label}
             </div>
           ))}
         </div>

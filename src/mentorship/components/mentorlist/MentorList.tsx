@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Mentor } from '../../api/fetchMentors'; 
 import MentorItem from '@/mentorship/components/mentorlist/MentorItem';
 
@@ -6,7 +6,7 @@ interface MentorListProps {
   mentors: Mentor[];
   bookmarked: { [key: string]: boolean };
   onToggleBookmark: (nickname: string) => void;
-  lastMentorRef?: (node: Element | null) => void; // ✅ ref prop 추가
+  lastMentorRef?: (node: Element | null) => void;
 }
 
 const MentorList: React.FC<MentorListProps> = ({
@@ -15,6 +15,11 @@ const MentorList: React.FC<MentorListProps> = ({
   onToggleBookmark,
   lastMentorRef,
 }) => {
+  // mentors 배열이 업데이트 될 때마다 찍어보기
+  useEffect(() => {
+    console.log('📋 mentors:', mentors);
+  }, [mentors]);
+
   return (
     <div className="w-full px-0 pt-[4px] space-y-4">
       {mentors.length > 0 ? (
@@ -23,16 +28,18 @@ const MentorList: React.FC<MentorListProps> = ({
 
           return (
             <MentorItem
-              key={mentor.nickname} // ✅ 유니크 key
+              key={mentor.nickname}
               mentor={mentor}
               isBookmarked={bookmarked[mentor.nickname]}
               onToggleBookmark={onToggleBookmark}
-              ref={isLast ? lastMentorRef : undefined} // ✅ 마지막 mentor에만 ref 연결
+              ref={isLast ? lastMentorRef : undefined}
             />
           );
         })
       ) : (
-        <div className="text-center text-gray-2 mt-6">멘토 내역이 없습니다.</div>
+        <div className="text-center text-gray-2 mt-6">
+          멘토 내역이 없습니다.
+        </div>
       )}
     </div>
   );

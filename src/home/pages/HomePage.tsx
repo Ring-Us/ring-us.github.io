@@ -129,10 +129,31 @@ export default function HomePage() {
             해당 직무 선택 후 멘토링 신청하기!
           </motion.div>
           <div className="grid grid-cols-4 gap-5 px-8 pt-10 text-center z-10">
-            {categories.map((category) => (
+            {/* {categories.map((category) => (
               <div
                 key={category.name}
                 className="flex flex-col items-center gap-2"
+              >
+                <img
+                  src={category.icon}
+                  alt={category.name}
+                  className="w-10 h-10 object-contain"
+                />
+                <span className="text-sm text-gray-1 mt-3 leading-none">
+                  {category.name}
+                </span>
+              </div>
+            ))} */}
+            {/*아래 코드 멘토 아이콘 클릭시 필터링된 멘토목록으로 넘어감*/}
+            {categories.map((category) => (
+              <div
+                key={category.name}
+                className="flex flex-col items-center gap-2 cursor-pointer"
+                onClick={() => {
+                  navigate(
+                    `/mentorship?category=${encodeURIComponent(category.name)}`
+                  )
+                }}
               >
                 <img
                   src={category.icon}
