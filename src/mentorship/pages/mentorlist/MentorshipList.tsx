@@ -1,19 +1,18 @@
 import React, { useRef, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useMentorStore }    from '@/mentorship/store/useMentorStore'
-import MentorshipHeader       from '@/mentorship/components/mentorlist/MentorshipHeader'
-import MentorshipFilterBar    from '@/mentorship/components/mentorlist/MentorshipFilterBar'
+import { useMentorStore } from '@/mentorship/store/useMentorStore'
+import MentorshipHeader from '@/mentorship/components/mentorlist/MentorshipHeader'
+import MentorshipFilterBar from '@/mentorship/components/mentorlist/MentorshipFilterBar'
 import MentorshipSortDropdown from '@/mentorship/components/mentorlist/MentorshipSortDropdown'
-import MentorList             from '@/mentorship/components/mentorlist/MentorList'
-import Footer                 from '@/global/components/Footer'
-import MentorshipListFilter   from '@/mentorship/components/mentorlist/MentorshipListFilter'
-import { subFieldOptions }    from '@/global/components/JobCategories'
+import MentorList from '@/mentorship/components/mentorlist/MentorList'
+import Footer from '@/global/components/Footer'
+import MentorshipListFilter from '@/mentorship/components/mentorlist/MentorshipListFilter'
+import { subFieldOptions } from '@/global/components/JobCategories'
 
 export default function MentorshipList() {
-  const [ searchParams, setSearchParams ] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
-    mentors,
-    sortOption,         
+    sortOption,
     selectedField,
     selectedSubField,
     filterType,
@@ -26,6 +25,7 @@ export default function MentorshipList() {
     setFilterType,
     toggleBookmark,
     loadMore,
+    getFilteredMentors,
   } = useMentorStore()
 
   const subFields = subFieldOptions[selectedField ?? '전체'] ?? []
@@ -43,18 +43,17 @@ export default function MentorshipList() {
 
   // 2) 필터 상태 변경 → URL 반영 (sortOption은 제외)
   useEffect(() => {
-    const params: Record<string,string> = {}
-    if (selectedField)    params.category = selectedField
-    if (selectedSubField) params.detail   = selectedSubField
+    const params: Record<string, string> = {}
+    if (selectedField) params.category = selectedField
+    if (selectedSubField) params.detail = selectedSubField
 
     setSearchParams(params, { replace: true })
-  }, [ selectedField, selectedSubField ])
+  }, [selectedField, selectedSubField])
 
   // 3) 필터·정렬 바뀔 때마다 데이터 다시 가져오기
   useEffect(() => {
-    // sortOption도 dep에 넣어서, 정렬 기준이 바뀌면 loadMore 초기화 + 호출
     loadMore()
-  }, [ sortOption, selectedField, selectedSubField ])
+  }, [sortOption, selectedField, selectedSubField])
 
   // infinite scroll
   const observer = useRef<IntersectionObserver | null>(null)
@@ -65,7 +64,7 @@ export default function MentorshipList() {
       if (entry.isIntersecting && hasMore) loadMore()
     })
     if (node) observer.current.observe(node)
-  }, [ loading, hasMore ])
+  }, [loading, hasMore])
 
   return (
     <div className="h-screen flex flex-col bg-white relative">
@@ -78,7 +77,6 @@ export default function MentorshipList() {
           onFilterClick={setFilterType}
         />
 
-        {/* sortOption 그대로 props로 넘기기 */}
         <MentorshipSortDropdown
           sortOption={sortOption}
           onSortChange={setSortOption}
@@ -87,15 +85,7 @@ export default function MentorshipList() {
 
       <div className="flex-grow overflow-y-auto pb-[60px] mt-[16px] no-scrollbar">
         <MentorList
-          mentors={mentors.filter(m => {
-            const okField = !selectedField || selectedField === '전체'
-              ? true
-              : m.organization.jobCategory === selectedField
-            const okSub = !selectedSubField || selectedSubField === '전체'
-              ? true
-              : m.organization.detailedJob === selectedSubField
-            return okField && okSub
-          })}
+          mentors={getFilteredMentors()}
           bookmarked={bookmarked}
           onToggleBookmark={toggleBookmark}
           lastMentorRef={lastRef}

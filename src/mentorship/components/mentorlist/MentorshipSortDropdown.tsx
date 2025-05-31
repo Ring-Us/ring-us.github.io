@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
-
-type SortOption = 'mentoringCount' | 'signup';
+import type { SortOption } from '@/mentorship/store/useMentorStore';
 
 interface Props {
   sortOption?: SortOption;
@@ -9,8 +8,8 @@ interface Props {
 }
 
 const options: { value: SortOption; label: string }[] = [
-  { value: 'mentoringCount', label: '멘토링 횟수 순' },
-  { value: 'signup',          label: '가입순' },
+  { value: 'respond', label: '응답순' },
+  { value: 'recent', label: '최신순' },
 ];
 
 const MentorshipSortDropdown: React.FC<Props> = ({
@@ -20,9 +19,9 @@ const MentorshipSortDropdown: React.FC<Props> = ({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // 현재 선택된 라벨, 매칭 안 되면 '가입순' 으로 페일백
+  // 현재 선택된 라벨, 매칭 안 되면 '응답순' 으로 페일백
   const currentLabel =
-    options.find((o) => o.value === sortOption)?.label || '가입순';
+    options.find((o) => o.value === sortOption)?.label || '응답순';
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {

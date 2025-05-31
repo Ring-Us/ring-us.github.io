@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Mentor } from '../../api/fetchMentors'; 
+import { Mentor } from '../../api/fetchMentors';
 import MentorItem from '@/mentorship/components/mentorlist/MentorItem';
 
 interface MentorListProps {
@@ -15,7 +15,7 @@ const MentorList: React.FC<MentorListProps> = ({
   onToggleBookmark,
   lastMentorRef,
 }) => {
-  // mentors 배열이 업데이트 될 때마다 찍어보기
+  // mentors 배열이 업데이트 될 때마다 콘솔찍어보기
   useEffect(() => {
     console.log('📋 mentors:', mentors);
   }, [mentors]);
@@ -28,7 +28,7 @@ const MentorList: React.FC<MentorListProps> = ({
 
           return (
             <MentorItem
-              key={mentor.nickname}
+              key={mentor.mentorId}
               mentor={mentor}
               isBookmarked={bookmarked[mentor.nickname]}
               onToggleBookmark={onToggleBookmark}
