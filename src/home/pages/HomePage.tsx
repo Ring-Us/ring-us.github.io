@@ -4,11 +4,15 @@ import { motion } from 'framer-motion'; // 애니메이션 추가
 import { Bell, Bookmark } from 'lucide-react'; // 알림 아이콘 추가
 import Footer from '@/global/components/Footer';
 import { useAuthStore } from '@/auth/store/useAuthStore';
+import { fetchMentors, Mentor } from '@/mentorship/api/fetchMentors';
 
 export default function HomePage() {
   const { isAuthenticated, checkSession } = useAuthStore();
   const [sessionChecked, setSessionChecked] = useState(false);
   const location = useLocation();
+  const [mentors, setMentors] = useState<Mentor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [showLoginMessage, setShowLoginMessage] = useState(
     location.state?.loginSuccess || false,
   );
@@ -38,32 +42,19 @@ export default function HomePage() {
     }
   }, [showLoginMessage]);
 
-  const mentors = [
-    {
-      name: '트레블',
-      field: '퍼포먼스 마케팅 / 프로모션 마케팅',
-      experience: '5년차',
-      mentoringCount: 15,
-      description: '“퍼포먼스 마케팅에 대해 알려드립니다.”',
-      image: '/assets/ringusprofile.png',
-    },
-    {
-      name: '이영희',
-      field: 'UX/UI 디자인',
-      experience: '3년차',
-      mentoringCount: 12,
-      description: '“UX/UI 실무 경험을 공유해 드립니다.”',
-      image: '/assets/ringusprofile.png',
-    },
-    {
-      name: '박지훈',
-      field: '프론트엔드 개발',
-      experience: '4년차',
-      mentoringCount: 18,
-      description: '“프론트엔드 개발의 핵심을 알려드립니다.”',
-      image: '/assets/ringusprofile.png',
-    },
-  ];
+  useEffect(() => {
+    const getMentors = async () => {
+      try {
+        const data = await fetchMentors(50, 5, 'mentorId');
+        setMentors(data.data.content.sort((a, b) => b.mentorId - a.mentorId));
+      } catch (e) {
+        setMentors([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getMentors();
+  }, []);
 
   const categories = [
     { name: '마케팅', icon: '/assets/main/marketing.png' },
@@ -148,58 +139,64 @@ export default function HomePage() {
 
           {/* 추천 멘토 섹션 */}
           <div className="mt-14 px-7 pb-20">
-            <h2 className="text-lg font-semibold">
-              회원님이 관심있어 할 멘토 추천
-            </h2>
+            <h2 className="text-lg font-semibold">최근에 가입한 멘토 목록</h2>
             <div className="flex gap-4 mt-4 overflow-x-scroll scrollbar-hide">
-              {mentors.map((mentor, index) => (
-                <div
-                  key={index}
-                  className="min-w-[250px] h-auto border border-gray-3 rounded-lg p-4 pt-0 flex flex-col justify-between shadow-md relative"
-                >
-                  {/* 북마크 아이콘 - 카드 박스 상단 우측에 고정 */}
-                  <Bookmark
-                    strokeWidth={1.5}
-                    className={`absolute right-3 top-3 w-6 h-6 cursor-pointer z-10 ${
-                      bookmarked[index]
-                        ? 'fill-[#765BFD] text-[#765BFD]'
-                        : 'text-gray-2'
-                    }`}
-                    onClick={() => toggleBookmark(index)}
-                  />
-
-                  {/* 프로필 이미지 */}
-                  <div className="flex items-center mt-2">
-                    <img
-                      src={mentor.image}
-                      alt={mentor.name}
-                      className="w-[70px] h-[70px] border border-gray-3 rounded-[50px] object-cover"
+              {isLoading ? (
+                <div>로딩중...</div>
+              ) : (
+                mentors.map((mentor, index) => (
+                  <div
+                    key={mentor.mentorId}
+                    className="min-w-[250px] h-auto border border-gray-3 rounded-lg p-4 pt-0 flex flex-col justify-between shadow-md relative"
+                  >
+                    {/* 북마크 아이콘, 프로필 이미지, 멘토 정보 등 기존 코드와 동일하게 랜더링 */}
+                    <Bookmark
+                      strokeWidth={1.5}
+                      className={`absolute right-3 top-3 w-6 h-6 cursor-pointer z-10 ${
+                        bookmarked[mentor.mentorId]
+                          ? 'fill-[#765BFD] text-[#765BFD]'
+                          : 'text-gray-2'
+                      }`}
+                      onClick={() => toggleBookmark(mentor.mentorId)}
                     />
-                    <div className="p-3">
-                      {/* 멘토 정보 */}
-                      <h3 className="mt-3 text-lg font-bold">{mentor.name}</h3>
-                      <p className="text-sm text-gray-1 line-clamp-1">
-                        {mentor.field}
-                      </p>
-                      <p className="text-sm text-gray-1 line-clamp-1">
-                        {mentor.experience}
-                      </p>
+                    <div className="flex items-center mt-2">
+                      <img
+                        src={
+                          mentor.image.filePath || '/assets/ringusprofile.png'
+                        }
+                        alt={mentor.nickname}
+                        className="w-[70px] h-[70px] border border-gray-3 rounded-[50px] object-cover"
+                      />
+                      <div className="p-3">
+                        <h3 className="mt-3 text-lg font-bold">
+                          {mentor.nickname}
+                        </h3>
+                        <p className="text-sm text-gray-1 line-clamp-1">
+                          {mentor.organization.jobCategory}
+                        </p>
+                        <p className="text-sm text-gray-1 line-clamp-1">
+                          {mentor.organization.experience}년차
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-sm italic">
+                      “
+                      {mentor.introduction?.content.length > 40
+                        ? mentor.introduction.content.slice(0, 40) + '...'
+                        : mentor.introduction?.content}
+                      ”
+                    </p>
+                    <div className="mt-3">
+                      <span className="p-1.5 text-sm bg-white border border-gray-3 text-[#765BFD] rounded-md">
+                        멘토링 횟수
+                        <span className="ml-2 text-gray-2">
+                          {mentor.mentoringCount}회
+                        </span>
+                      </span>
                     </div>
                   </div>
-                  {/* 자기소개 */}
-                  <p className="mt-2 text-sm italic">“{mentor.description}”</p>
-
-                  {/* 멘토링 횟수 */}
-                  <div className="mt-3">
-                    <span className="p-1.5 text-sm bg-white border border-gray-3 text-[#765BFD] rounded-md">
-                      멘토링 횟수{' '}
-                      <span className="ml-2 text-gray-2">
-                        {mentor.mentoringCount}회
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
