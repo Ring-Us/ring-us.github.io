@@ -30,6 +30,7 @@ import MentorRequestStatus from '@/user/pages/status/mentor/MentorRequestStatus'
 import Bookmark from '@/bookmark/pages/Bookmark';
 import FAQAccordion from '@/user/components/FAQAccordion';
 import NotificationPage from '@/home/pages/NotificationPage';
+import PasswordResetPage from '@/auth/pages/PasswordRestPage';
 
 export const Router = () => {
   return (
@@ -42,6 +43,7 @@ export const Router = () => {
       <Route path="/auth" element={<AuthLayout />}>
         <Route path="" element={<LandingPage />} />
         <Route path="signin" element={<SignInPage />} />
+        <Route path="forgot-password" element={<PasswordResetPage />} />
         <Route path="signup" element={<SignUpPage />} />
         <Route path="finish" element={<SignupFinish />} />
       </Route>

@@ -50,7 +50,7 @@ const EmailVerification = ({ onNext }: { onNext: (email: string) => void }) => {
     if (!isEmailValid) return;
 
     try {
-      await sendVerificationCode(email);
+      await sendVerificationCode(email, false);
       setIsCodeSent(true);
       setAttemptCount(0);
       setRemainingTime(300); // 유효 시간 5분 설정

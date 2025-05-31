@@ -9,7 +9,7 @@ import {
   subFieldOptions,
 } from '@/global/components/JobCategories';
 
-import ErrorModal from '@/global/ui/ErrorModal';
+import ErrorModal from '@/global/ui/Modal';
 import ModalMentorFields from '@/user/components/ModalMentorFields';
 import ExperienceSelectModal from './ExperienceSelectModal';
 import axiosInstance from '@/global/api/axiosInstance';

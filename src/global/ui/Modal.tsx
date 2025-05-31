@@ -1,4 +1,4 @@
-interface ErrorModalProps {
+interface ModalProps {
   title: string;
   message: string;
   onClose?: () => void; // "확인" 버튼이나 바깥 클릭 시
@@ -7,14 +7,14 @@ interface ErrorModalProps {
   mode?: 'confirm' | 'reject'; // 모드 설정 (확인 또는 예/아니오)
 }
 
-export default function ErrorModal({
+export default function Modal({
   title,
   message,
   onClose,
   onConfirm,
   onCancel,
   mode = 'confirm', // 기본값은 'confirm'
-}: ErrorModalProps) {
+}: ModalProps) {
   // 'reject' 모드인 경우 예/아니오 버튼이 나타나고, 'confirm' 모드인 경우 확인 버튼만 표시
   const isRejectMode = mode === 'reject';
 
