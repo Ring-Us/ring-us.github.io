@@ -9,12 +9,11 @@ interface MentorshipListFilterProps {
   filterType: '직무' | '세부직무';
   onClose: () => void;
   selectedField: string | null;
-  onFieldSelect: (field: string) => void;
+  onFieldSelect: (field: string | null) => void;
   selectedSubField: string | null;
-  onSubFieldSelect: (field: string | null) => void;
+  onSubFieldSelect: (sub: string | null) => void;
+  subFields: string[];
 }
-
-
 
 const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
   filterType,
@@ -23,16 +22,13 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
   onFieldSelect,
   selectedSubField,
   onSubFieldSelect,
+  subFields,
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 
-  useEffect(() => {
-    if (filterType !== '세부직무') {
-      onSubFieldSelect(null);
-    }
-  }, [filterType, onSubFieldSelect]);
-
-  const handleClose = () => setIsClosing(true);
+  const handleClose = () => {
+    setIsClosing(true);
+  };
 
   const handleAnimationEnd = () => {
     if (isClosing) onClose();
@@ -74,15 +70,11 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
               {fieldOptions.map((field) => (
                 <button
                   key={field}
-                  onClick={() => {
-                    onFieldSelect(field);
-                    handleClose();
-                  }}
-                  className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${
-                    selectedField === field
-                      ? 'border-primary-1 text-primary-1'
-                      : 'bg-gray-100 text-gray-800'
-                  }`}
+                  onClick={() => onFieldSelect(field)}
+                  className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${(field === '전체' && !selectedField) || selectedField === field
+                    ? 'border-primary-1 text-primary-1'
+                    : 'bg-gray-100 text-gray-800'
+                    }`}
                 >
                   {field}
                 </button>
@@ -91,28 +83,24 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
           )}
 
           {/* 세부직무 선택 필터 */}
-          {filterType === '세부직무' && (
+          {filterType === '세부직무' && selectedField && (
             <div className="flex flex-col gap-[20px] mt-[34px] mx-auto px-3 mb-[10px]">
-              {subFieldOptions[selectedField || '전체']?.length > 0 ? (
-                subFieldOptions[selectedField || '전체'].map((subField) => (
+              {subFields.length > 0 ? (
+                subFields.map((subField) => (
                   <button
                     key={subField}
-                    onClick={() => {
-                      onSubFieldSelect(subField);
-                      handleClose();
-                    }}
-                    className={`rounded-[8px] text-[12px] text-start ${
-                      selectedSubField === subField
-                        ? 'text-primary-1'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}
+                    onClick={() => onSubFieldSelect(subField)}
+                    className={`rounded-[8px] text-[12px] text-start p-2 ${(subField === '전체' && !selectedSubField) || selectedSubField === subField
+                      ? 'text-primary-1'
+                      : 'text-gray-800'
+                      }`}
                   >
                     {subField}
                   </button>
                 ))
               ) : (
                 <div className="text-center text-gray-2 mt-[20px]">
-                  먼저 직무를 선택하세요.
+                  선택 가능한 세부직무가 없습니다.
                 </div>
               )}
             </div>
