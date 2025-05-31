@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { fetchMentors, Mentor } from '@/mentorship/api/fetchMentors'
 
-export type SortOption = 'respond' | 'recent' 
+export type SortOption = 'mentoringCount' | 'recent'
 
 interface MentorState {
   mentors: Mentor[]
@@ -28,7 +28,7 @@ interface MentorState {
 
 export const useMentorStore = create<MentorState>((set, get) => ({
   mentors: [],
-  sortOption: 'respond',
+  sortOption: 'mentoringCount',
   selectedField: null,
   selectedSubField: null,
   filterType: null,
