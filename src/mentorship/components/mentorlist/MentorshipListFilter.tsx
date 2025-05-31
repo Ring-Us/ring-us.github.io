@@ -31,7 +31,19 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
   };
 
   const handleAnimationEnd = () => {
-    if (isClosing) onClose();
+    if (isClosing) {
+      onClose();
+    }
+  };
+
+  const handleFieldClick = (field: string) => {
+    onFieldSelect(field);
+    handleClose();
+  };
+
+  const handleSubFieldClick = (sub: string) => {
+    onSubFieldSelect(sub);
+    handleClose();
   };
 
   return (
@@ -70,7 +82,7 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
               {fieldOptions.map((field) => (
                 <button
                   key={field}
-                  onClick={() => onFieldSelect(field)}
+                  onClick={() => handleFieldClick(field)}
                   className={`p-[12px] border rounded-[8px] text-[14px] text-center min-w-[113px] h-[43px] flex justify-center items-center ${(field === '전체' && !selectedField) || selectedField === field
                     ? 'border-primary-1 text-primary-1'
                     : 'bg-gray-100 text-gray-800'
@@ -89,7 +101,7 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
                 subFields.map((subField) => (
                   <button
                     key={subField}
-                    onClick={() => onSubFieldSelect(subField)}
+                    onClick={() => handleSubFieldClick(subField)}
                     className={`rounded-[8px] text-[12px] text-start p-2 ${(subField === '전체' && !selectedSubField) || selectedSubField === subField
                       ? 'text-primary-1'
                       : 'text-gray-800'

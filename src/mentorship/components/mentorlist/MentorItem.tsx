@@ -34,9 +34,9 @@ const MentorItem = forwardRef<HTMLDivElement, MentorItemProps>(
         <div className="w-full items-center">
           <div className="flex w-full items-start space-x-[13px]">
             <img
-              src={'/assets/Profile.png'}
+              src={mentor.image.filePath}
               alt="프로필"
-              className="w-[86px] h-[86px] rounded-full object-cover"
+              className="w-[86px] h-[86px] rounded-[100px] object-cover"
             />
             <div>
               <div className="text-[20px] font-bold">{mentor.nickname}</div> 

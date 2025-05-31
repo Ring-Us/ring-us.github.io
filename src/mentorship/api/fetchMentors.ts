@@ -33,6 +33,7 @@ export interface Mentor {
     fileName: string;
     filePath: string;
   };
+  mentoringCount: number;
 }
 
 // 페이지 정보 타입

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { fetchMentors, Mentor } from '@/mentorship/api/fetchMentors'
 
-export type SortOption = 'respond' | 'recent' 
+export type SortOption = 'mentoringCount' | 'recent'
 
 interface MentorState {
   mentors: Mentor[]
@@ -26,13 +26,24 @@ interface MentorState {
   reset: () => void
 }
 
+// localStorage에서 북마크 상태 불러오기
+const loadBookmarkedState = (): Record<string, boolean> => {
+  try {
+    const savedState = localStorage.getItem('bookmarkedMentors')
+    return savedState ? JSON.parse(savedState) : {}
+  } catch (error) {
+    console.error('Failed to load bookmarked state:', error)
+    return {}
+  }
+}
+
 export const useMentorStore = create<MentorState>((set, get) => ({
   mentors: [],
-  sortOption: 'respond',
+  sortOption: 'mentoringCount',
   selectedField: null,
   selectedSubField: null,
   filterType: null,
-  bookmarked: {},
+  bookmarked: loadBookmarkedState(), // 초기 상태를 localStorage에서 불러옴
   cursor: null,
   hasMore: true,
   loading: false,
@@ -54,8 +65,14 @@ export const useMentorStore = create<MentorState>((set, get) => ({
 
   setFilterType: (type) => set({ filterType: type }),
 
-  toggleBookmark: (nick) =>
-    set((state) => ({ bookmarked: { ...state.bookmarked, [nick]: !state.bookmarked[nick] } })),
+  toggleBookmark: (nick) => {
+    set((state) => {
+      const newBookmarked = { ...state.bookmarked, [nick]: !state.bookmarked[nick] }
+      // localStorage에 북마크 상태 저장
+      localStorage.setItem('bookmarkedMentors', JSON.stringify(newBookmarked))
+      return { bookmarked: newBookmarked }
+    })
+  },
 
   getFilteredMentors: () => {
     const { mentors, selectedField, selectedSubField } = get()

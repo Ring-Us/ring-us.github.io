@@ -8,8 +8,8 @@ interface Props {
 }
 
 const options: { value: SortOption; label: string }[] = [
-  { value: 'respond', label: '응답순' },
-  { value: 'recent', label: '최신순' },
+  { value: 'mentoringCount', label: '멘토링 횟수순' },
+  { value: 'recent', label: '최신 가입순' },
 ];
 
 const MentorshipSortDropdown: React.FC<Props> = ({
@@ -19,7 +19,7 @@ const MentorshipSortDropdown: React.FC<Props> = ({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // 현재 선택된 라벨, 매칭 안 되면 '응답순' 으로 페일백
+  // 현재 선택된 라벨, 매칭 안 되면 '멘토링 횟수순' 으로 페일백
   const currentLabel =
     options.find((o) => o.value === sortOption)?.label || '응답순';
 
