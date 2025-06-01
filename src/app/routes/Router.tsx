@@ -31,6 +31,7 @@ import Bookmark from '@/bookmark/pages/Bookmark';
 import FAQAccordion from '@/user/components/FAQAccordion';
 import NotificationPage from '@/home/pages/NotificationPage';
 import PasswordResetPage from '@/auth/pages/PasswordRestPage';
+import MentoringProgress from '@/user/pages/status/MentoringProgress';
 
 export const Router = () => {
   return (
@@ -58,10 +59,10 @@ export const Router = () => {
         <Route path="menteeinfo" element={<MenteeInfo />}></Route>
         <Route path="menteeedit" element={<MenteeProfileEdit />}></Route>
         <Route path="payment" element={<PaymentPage />} />
-        <Route path="status" element={<StatusLayout />}>
-          {/* <Route path="mentee" element={<MenteeStatus />}>
+        {/* <Route path="status" element={<StatusLayout />}>
+          <Route path="progress" element={<MenteeStatus />}>
             <Route
-              path="mentee/progress/:mentorId"
+              path="progress/:mentorId"
               element={<MenteeRequestStatus />}
             />
           </Route>
@@ -71,13 +72,17 @@ export const Router = () => {
               path="mentor/progress/:menteeId"
               element={<MentorRequestStatus />}
             />
-          </Route> */}
+          </Route>
           <Route path="mentee" element={<MenteeStatus />} />
           <Route path="mentor" element={<MentorStatus />} />
           <Route path="progress_tee" element={<MenteeRequestStatus />} />
           <Route path="progress_tor" element={<MentorRequestStatus />} />
-        </Route>
+        </Route> */}
       </Route>
+      <Route path="/progress" element={<StatusLayout />}>
+        <Route path="" element={<MentoringProgress />} />
+      </Route>
+
       <Route path="/mentorship" element={<MentorshipLayout />}>
         <Route path="" element={<MentorList />} />
         <Route path="info/:mentorId" element={<MentorInfoView />} />

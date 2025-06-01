@@ -101,7 +101,7 @@ export default function MyPage() {
       {/* 로그인 모달 */}
       {showModal && (
         <MypageModal
-          title="로그인하기"
+          title="로그인 필요"
           message="로그인이 필요합니다.<br> 로그인 페이지로 이동하시겠습니까?"
           onConfirm={handleConfirm}
           onClose={handleCloseModal}

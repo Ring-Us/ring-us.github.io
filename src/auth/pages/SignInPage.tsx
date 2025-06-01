@@ -39,7 +39,7 @@ export default function SigninPage() {
       {/* 닫기(X) 버튼 추가 */}
       <button
         className="absolute top-3 left-2 p-2"
-        onClick={() => navigate('/user')} // 마이페이지로 이동
+        onClick={() => navigate('/')} // 마이페이지로 이동
       >
         <X strokeWidth={1} className="w-6 h-6 text-gray-1" />
       </button>

@@ -80,7 +80,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col relative overflow-y-auto">
+    <div className="h-[100dvh] flex flex-col relative overflow-y-auto scrollbar-hide">
       {/* 로그인 성공 메시지 */}
       {showLoginMessage && (
         <motion.div
@@ -142,8 +142,8 @@ export default function HomePage() {
                 className="flex flex-col items-center gap-2 cursor-pointer"
                 onClick={() => {
                   navigate(
-                    `/mentorship?category=${encodeURIComponent(category.name)}`
-                  )
+                    `/mentorship?category=${encodeURIComponent(category.name)}`,
+                  );
                 }}
               >
                 <img
