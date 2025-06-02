@@ -4,14 +4,14 @@ import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { getMenteeProfile } from '@/user/api/MenteeInfoApi';
-import { MenteeData } from '@/user/menteetypes';
+import { useMenteeInfoStore } from '@/user/store/useMenteeInfoStore';
 
 import MenteeInfoProfile from '@/user/components/profileInfo/MenteeInfoProfile';
 import MenteeInfoBio from '@/user/components/profileInfo/MenteeInfoBio';
 
 const MenteeInfo = () => {
   const navigate = useNavigate();
-  const [menteeData, setMenteeData] = useState<MenteeData | null>(null);
+  const { menteeData, setMenteeData } = useMenteeInfoStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,7 @@ const MenteeInfo = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [setMenteeData]);
 
   if (!menteeData) {
     return <div className="p-4">Loading...</div>;

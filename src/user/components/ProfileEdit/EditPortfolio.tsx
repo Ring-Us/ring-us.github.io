@@ -1,22 +1,18 @@
 import { MentorData } from '@/user/types';
+import { useMentorInfoStore } from '@/user/store/useMentorInfoStore';
 import { uploadPortfolio } from '@/user/api/profileApi';
 import { X } from 'lucide-react';
 
-interface EditPortfolioProps {
-  mentorData: MentorData;
-  setMentorData: React.Dispatch<React.SetStateAction<MentorData | null>>;
-}
+const EditPortfolio = () => {
+  const { mentorData, setMentorData } = useMentorInfoStore();
 
-const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
+  if (!mentorData) return null;
   
   // 파일 삭제
   const removeFile = () => {
-    setMentorData((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        portfolio: null,
-      };
+    setMentorData({
+      ...mentorData,
+      portfolio: null,
     });
   };
 
@@ -36,16 +32,13 @@ const EditPortfolio = ({ mentorData, setMentorData }: EditPortfolioProps) => {
         const portfolioUrl = await uploadPortfolio(file);
 
         removeFile();
-        setMentorData((prev) => {
-          if (!prev) return prev;
-          return {
-            ...prev,
-            portfolio: {
-              description: file.name,
-              url: portfolioUrl,
-              fileSize: file.size,
-            },
-          };
+        setMentorData({
+          ...mentorData,
+          portfolio: {
+            description: file.name,
+            url: portfolioUrl,
+            fileSize: file.size,
+          },
         });
       } catch (error) {
         alert('포트폴리오 업로드 실패');

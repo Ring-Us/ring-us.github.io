@@ -1,20 +1,18 @@
-import { MentorData } from '@/user/types';
+import { useMentorInfoStore } from '@/user/store/useMentorInfoStore';
 
-interface EditFieldsProps {
-  mentorData: MentorData;
-  setMentorData: React.Dispatch<React.SetStateAction<MentorData | null>>;
-}
+const EditFields = () => {
+  const { mentorData, setMentorData } = useMentorInfoStore();
 
-const EditFields = ({ mentorData, setMentorData }: EditFieldsProps) => {
+  if (!mentorData) return null;
+
   const toggleSelection = (field: string) => {
-    setMentorData((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        mentoringField: prev.mentoringField.includes(field)
-          ? prev.mentoringField.filter((f) => f !== field)
-          : [...prev.mentoringField, field],
-      };
+    const updated = mentorData.mentoringField.includes(field)
+      ? mentorData.mentoringField.filter((f) => f !== field)
+      : [...mentorData.mentoringField, field];
+
+    setMentorData({
+      ...mentorData,
+      mentoringField: updated,
     });
   };
 

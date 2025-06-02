@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { MentorData } from '@/user/types';
 import { TimeModal } from '../profile/mentor/TimeModal';
 // import { TimeSelectModal } from '@/mentorship/components/TimeSelectModal';
 import { ChevronDown } from 'lucide-react';
+import { useMentorInfoStore } from '@/user/store/useMentorInfoStore';
 
-interface EditTimeProps {
-  mentorData: MentorData;
-  setMentorData: React.Dispatch<React.SetStateAction<MentorData | null>>;
-}
-
-const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
+const EditTime = () => {
+  const { mentorData, setMentorData } = useMentorInfoStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!mentorData) return null;
 
   const availabledays = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -26,32 +24,29 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
 
   // 시간 저장
   const handleSaveTime = () => {
-    setMentorData((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        timezone: {
-          ...prev.timezone,
-          startTime: `${String(startHour).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}:00`,
-          endTime: `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}:00`,
-        },
-      };
+    setMentorData({
+      ...mentorData,
+      timezone: {
+        ...mentorData.timezone,
+        startTime: `${String(startHour).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}:00`,
+        endTime: `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}:00`,
+      },
     });
   };
+
   
   // 요일 선택
   const toggleSelection = (day: string) => {
-    setMentorData((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        timezone: {
-          ...prev.timezone,
-          days: prev.timezone.days.includes(day)
-          ? prev.timezone.days.filter((d) => d !== day)
-          : [...prev.timezone.days, day],
-        }
-      };
+    const newDays = mentorData.timezone.days.includes(day)
+      ? mentorData.timezone.days.filter((d) => d !== day)
+      : [...mentorData.timezone.days, day];
+
+    setMentorData({
+      ...mentorData,
+      timezone: {
+        ...mentorData.timezone,
+        days: newDays,
+      },
     });
   };
 
@@ -91,54 +86,42 @@ const EditTime = ({ mentorData, setMentorData }: EditTimeProps) => {
         onClose={() => setIsModalOpen(false)}
         startHour={startHour}
         setStartHour={(value) =>
-          setMentorData((prev) => {
-            if (!prev) return prev;
-            return {
-              ...prev,
-              timezone: {
-                ...prev.timezone,
-                startTime: `${String(value).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}:00`,
-              },
-            } as MentorData;
+          setMentorData({
+            ...mentorData,
+            timezone: {
+              ...mentorData.timezone,
+              startTime: `${String(value).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}:00`,
+            },
           })
         }
         startMinute={startMinute}
         setStartMinute={(value) =>
-          setMentorData((prev) => {
-            if (!prev) return prev;
-            return {
-              ...prev,
-              timezone: {
-                ...prev.timezone,
-                startTime: `${String(startHour).padStart(2, '0')}:${String(value).padStart(2, '0')}:00`,
-              },
-            } as MentorData;
+          setMentorData({
+            ...mentorData,
+            timezone: {
+              ...mentorData.timezone,
+              startTime: `${String(startHour).padStart(2, '0')}:${String(value).padStart(2, '0')}:00`,
+            },
           })
         }
         endHour={endHour}
         setEndHour={(value) =>
-          setMentorData((prev) => {
-            if (!prev) return prev;
-            return {
-              ...prev,
-              timezone: {
-                ...prev.timezone,
-                endTime: `${String(value).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}:00`,
-              },
-            } as MentorData;
+          setMentorData({
+            ...mentorData,
+            timezone: {
+              ...mentorData.timezone,
+              endTime: `${String(value).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}:00`,
+            },
           })
         }
         endMinute={endMinute}
         setEndMinute={(value) =>
-          setMentorData((prev) => {
-            if (!prev) return prev;
-            return {
-              ...prev,
-              timezone: {
-                ...prev.timezone,
-                endTime: `${String(endHour).padStart(2, '0')}:${String(value).padStart(2, '0')}:00`,
-              },
-            } as MentorData;
+          setMentorData({
+            ...mentorData,
+            timezone: {
+              ...mentorData.timezone,
+              endTime: `${String(endHour).padStart(2, '0')}:${String(value).padStart(2, '0')}:00`,
+            },
           })
         }
         onSave={handleSaveTime}

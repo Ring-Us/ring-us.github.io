@@ -14,9 +14,11 @@ import EditMessage from '@/user/components/ProfileEdit/EditMessage';
 import EditHashtags from '@/user/components/ProfileEdit/EditHashtags';
 import EditPortfolio from '@/user/components/ProfileEdit/EditPortfolio';
 
+import { useMentorInfoStore } from '@/user/store/useMentorInfoStore';
+
 const MentorProfileEdit = () => {
   const navigate = useNavigate();
-  const [mentorData, setMentorData] = useState<MentorData | null>(null);
+  const { mentorData, setMentorData } = useMentorInfoStore();
     
   useEffect(() => {
     const fetchData = async () => {
@@ -71,25 +73,25 @@ const MentorProfileEdit = () => {
       <div className="overflow-y-auto pb-4">
 
         {/* 프로필 섹션 */}
-        <EditProfileSection mentorData={mentorData} setMentorData={setMentorData} />
+        <EditProfileSection />
 
         {/* 자기소개 섹션 */}
-        <EditBio mentorData={mentorData} setMentorData={setMentorData} />
+        <EditBio />
         
         {/* 선호 시간대 */}
-        <EditTime mentorData={mentorData} setMentorData={setMentorData} />
+        <EditTime />
 
         {/* 멘토링 분야 */}
-        <EditFields mentorData={mentorData} setMentorData={setMentorData} />
+        <EditFields />
 
         {/* 멘티에게 전하고 싶은 말 */}
-        <EditMessage mentorData={mentorData} setMentorData={setMentorData} />
+        <EditMessage />
         
         {/* 경험 해시태그 */}
-        <EditHashtags mentorData={mentorData} setMentorData={setMentorData} />
+        <EditHashtags />
 
         {/* 포트폴리오*/}
-        <EditPortfolio mentorData={mentorData} setMentorData={setMentorData} />
+        <EditPortfolio />
 
       </div>
 
