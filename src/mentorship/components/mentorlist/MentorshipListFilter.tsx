@@ -84,7 +84,7 @@ const MentorshipListFilter: React.FC<MentorshipListFilterProps> = ({
 
           {/* 세부직무 선택 필터 */}
           {filterType === '세부직무' && selectedField && (
-            <div className="flex flex-col gap-[20px] mt-[34px] mx-auto px-3 mb-[10px]">
+            <div className="flex flex-col gap-[0px] mt-[34px] mx-auto px-3 mb-[10px]">
               {subFields.length > 0 ? (
                 subFields.map((subField) => (
                   <button

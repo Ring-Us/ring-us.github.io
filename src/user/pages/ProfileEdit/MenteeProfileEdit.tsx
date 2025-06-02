@@ -3,27 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from "lucide-react";
 
 import { getMenteeProfile, updateMenteeProfile } from "@/user/api/MenteeInfoApi";
+import { useMenteeInfoStore } from "@/user/store/useMenteeInfoStore";
 
-import { MenteeData } from "@/user/menteetypes";
 import EditProfileSectionMentee from "@/user/components/ProfileEdit/EditProfileSectionMentee";
-import EditBio from "@/user/components/ProfileEdit/EditBio";
+import EditBioMentee from "@/user/components/ProfileEdit/EditBioMentee";
 import { GlobalButton } from "@/global/ui/GlobalButton";
 
 const MenteeProfileEdit = () => {
   const navigate = useNavigate();
-  const [menteeData, setMenteeData] = useState<MenteeData>({
-    nickname: '',
-    email: '',
-    education: {
-      schoolName: '',
-      major: '',
-    },
-    introduction: '',
-    image: {
-      fileName: '',
-      filePath: '',
-    },
-  });
+  const { menteeData, setMenteeData } = useMenteeInfoStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +23,7 @@ const MenteeProfileEdit = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [setMenteeData]);
 
   const handleSave = async () => {
     try {
@@ -74,10 +62,10 @@ const MenteeProfileEdit = () => {
       <div className="overflow-y-auto pt-2 pb-4">
 
         {/* 프로필 섹션 */}
-        <EditProfileSectionMentee menteeData={menteeData} setMenteeData={setMenteeData} />
+        <EditProfileSectionMentee />
 
         {/* 자기소개 섹션 */}
-        <EditBio menteeData={menteeData} setMenteeData={setMenteeData} />
+        <EditBioMentee />
         
       </div>
             

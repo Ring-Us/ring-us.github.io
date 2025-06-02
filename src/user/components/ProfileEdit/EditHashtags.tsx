@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { MentorData } from '@/user/types';
+import { useMentorInfoStore } from '@/user/store/useMentorInfoStore';
 import { X } from 'lucide-react';
 import { Plus } from 'lucide-react';
 
-interface EditHashtagsProps {
-  mentorData: MentorData;
-  setMentorData: React.Dispatch<React.SetStateAction<MentorData | null>>;
-}
-
-const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
+const EditHashtags = () => {
+  const { mentorData, setMentorData } = useMentorInfoStore();
   const [newTag, setNewTag] = useState('');
+
+  if (!mentorData) return null;
 
   // 해시태그 추가 (최대 8개, 글자수 15자 제한)
   const addHashtag = () => {
     const trimmedTag = newTag.trim();
-
     if (!trimmedTag) return;
     if (mentorData.hashtags.length >= 8) {
       alert('해시태그는 최대 8개까지 추가할 수 있습니다.');
@@ -25,12 +22,9 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
       return;
     }
     if (!mentorData.hashtags.includes(trimmedTag)) {
-      setMentorData((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          hashtags: [...prev.hashtags, trimmedTag],
-        };
+      setMentorData({
+        ...mentorData,
+        hashtags: [...mentorData.hashtags, trimmedTag],
       });
       setNewTag('');
     }
@@ -38,12 +32,9 @@ const EditHashtags = ({ mentorData, setMentorData }: EditHashtagsProps) => {
 
   // 해시태그 삭제
   const removeHashtag = (tag: string) => {
-    setMentorData((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        hashtags: prev.hashtags.filter((t) => t !== tag),
-      };
+    setMentorData({
+      ...mentorData,
+      hashtags: mentorData.hashtags.filter((t) => t !== tag),
     });
   };
 

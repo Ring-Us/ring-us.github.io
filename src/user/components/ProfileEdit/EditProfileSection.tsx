@@ -1,37 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { User } from 'lucide-react';
 import { Mail } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
 import { ImagePlus } from 'lucide-react';
+
 import EditImageModal from "./EditImageModal";
 import { uploadProfileImage } from "@/user/api/profileApi";
+import { useMentorInfoStore } from "@/user/store/useMentorInfoStore";
 
-interface EditProfileSectionProps {
-  mentorData: {
-    nickname: string;
-    email: string;
-    education: {
-      schoolName: string;
-      major: string;
-    };
-    organization: {
-      name: string;
-      jobCategory: string;
-      detailedJob: string;
-      experience: number;
-    };
-    image: {
-      fileName: string;
-      filePath: string;
-    };
-  };
-  setMentorData: React.Dispatch<React.SetStateAction<any>>;
-}
-
-const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionProps) => {
+const EditProfileSection = () => {
+  const { mentorData, setMentorData } = useMentorInfoStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!mentorData) return null;
 
   // 프로필 사진 업로드
   const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,13 +24,13 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
       try {
         const imageUrl = await uploadProfileImage(file, 'ROLE_MENTOR');
         
-        setMentorData((prevData: any) => ({
-          ...prevData,
+        setMentorData({
+          ...mentorData,
           image: {
             fileName: file.name,
             filePath: imageUrl,
           },
-        }));
+        });
         
         setIsModalOpen(false);
       } catch (error) {
@@ -59,13 +42,13 @@ const EditProfileSection = ({ mentorData, setMentorData }: EditProfileSectionPro
 
   // 기본 프로필로 변경
   const resetProfileImage = () => {
-    setMentorData((prevData: any) => ({
-      ...prevData,
+    setMentorData({
+      ...mentorData,
       image: {
-        fileName: "",
-        filePath: "",
+        fileName: '',
+        filePath: '',
       },
-    }));
+    });
     
     setIsModalOpen(false);
   };

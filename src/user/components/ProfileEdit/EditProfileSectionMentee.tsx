@@ -5,27 +5,16 @@ import { Mail } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BriefcaseBusiness } from 'lucide-react';
 import { ImagePlus } from "lucide-react";
+
 import EditImageModal from "./EditImageModal";
 import { uploadProfileImage } from "@/user/api/profileApi";
+import { useMenteeInfoStore } from "@/user/store/useMenteeInfoStore";
 
-interface EditProfileSectionMenteeProps {
-  menteeData: {
-    nickname: string;
-    email: string;
-    education: {
-      schoolName: string;
-      major: string;
-    };
-    image: {
-      fileName: string;
-      filePath: string;
-    };
-  };
-  setMenteeData: React.Dispatch<React.SetStateAction<any>>;
-}
-
-const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSectionMenteeProps) => {
+const EditProfileSectionMentee = () => {
+  const { menteeData, setMenteeData, updateMenteeImage } = useMenteeInfoStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!menteeData) return null;
 
   // 프로필 사진 업로드
   const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,34 +22,19 @@ const EditProfileSectionMentee = ({ menteeData, setMenteeData }: EditProfileSect
       const file = e.target.files[0];
   
       try {
-        const imageUrl = await uploadProfileImage(file, 'ROLE_MENTEE');
-        
-        setMenteeData((prevData: any) => ({
-          ...prevData,
-          image: {
-            fileName: file.name,
-            filePath: imageUrl,
-          },
-        }));
-        
+        const imageUrl = await uploadProfileImage(file, "ROLE_MENTEE");
+        updateMenteeImage(file.name, imageUrl);
         setIsModalOpen(false);
       } catch (error) {
-        console.error('이미지 업로드 실패:', error);
-        alert('이미지 업로드에 실패했습니다.');
+        console.error("이미지 업로드 실패:", error);
+        alert("이미지 업로드에 실패했습니다.");
       }
     }
   };
 
   // 기본 프로필로 변경
   const resetProfileImage = () => {
-    setMenteeData((prevData: any) => ({
-      ...prevData,
-      image: {
-        fileName: "",
-        filePath: "",
-      },
-    }));
-
+    updateMenteeImage("", "");
     setIsModalOpen(false);
   };
 

@@ -5,7 +5,6 @@ import { ArrowLeft } from 'lucide-react';
 import { Bookmark } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
-// import { MentorData } from '@/user/types';
 import { MentorViewData } from '@/user/types';
 import { getMentorById } from '../api/MentorViewApi';
 

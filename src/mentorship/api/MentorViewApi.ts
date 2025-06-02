@@ -1,10 +1,11 @@
 import axiosInstance from '@/global/api/axiosInstance';
-// import { MentorData } from '@/user/types';
 import { MentorViewData } from '@/user/types';
 
 export const getMentorById = async (mentorId: number): Promise<MentorViewData> => {
   const response = await axiosInstance.get(`/v1/mentor/${mentorId}`);
   const data = response.data.data;
+
+  console.log('멘토 프로필 응답:', response.data);
 
   return {
     nickname: data.nickname ?? '',

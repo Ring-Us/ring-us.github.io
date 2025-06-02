@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { GlobalButton } from '@/global/ui/GlobalButton';
 
 import { getMentorProfile } from '@/user/api/MentorInfoApi';
-import { MentorData } from '@/user/types';
+import { useMentorInfoStore } from '@/user/store/useMentorInfoStore';
 
 import MentorInfoProfile from '@/user/components/profileInfo/MentorInfoProfile';
 import MentorInfoBio from '@/user/components/profileInfo/MentorInfoBio';
@@ -15,7 +15,7 @@ import MentorInfoPortfolio from '@/user/components/profileInfo/MentorInfoPortfol
 
 const MentorInfo = () => {
   const navigate = useNavigate();
-  const [mentorData, setMentorData] = useState<MentorData | null>(null);
+  const { mentorData, setMentorData } = useMentorInfoStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +28,7 @@ const MentorInfo = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [setMentorData]);
 
   if (!mentorData) {
     return <div className="p-4">Loading...</div>;
